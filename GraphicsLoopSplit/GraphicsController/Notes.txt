@@ -1,0 +1,26 @@
+Now that model loading is started, we want to initiate and manage the load from c#,
+and we want the method to load it return an ID that corresponds to its index in a 
+global c++ vector of models (which will later be converted to meshes)
+
+More precisely, and perhaps this is what we should first endeavor to do:
+We want c++ to return a complex struct that we will intrepret (in c#) as a 
+SceneObject, our own variant of the GameObject from Unity.
+
+The SceneObject itself will have an ID that corresponds to its index in a c++ vector,
+AND each child mesh of the SceneObject should also possess ID's corresponding to indices.
+
+
+I've set up model loading from c#. What remains to do is to add a material struct to the mesh class,
+and a shader class to the material struct therein. That way, when a mesh is drawn, the sceneObject configures transform data,
+and the mesh pulls data (like object color) from its material to draw itself with the shader in the material. Or, we could make this easier and simply
+assign the material/shader to the sceneObject itself, and limit sceneObjects to one mesh per SO. 
+
+
+
+However, before you do anything else, the mesh should have a name assigned to it when it gets loaded, as a matter of convenience.
+
+I've switched the c++ project over to use Common Language Runtime support (project->settings->general and c++->general)
+It's important to note that this adds .Net framework as a dependancy of the c++ dll
+Ergo, it CANNOT run on android in this state
+
+So we treat it as if in dev mode.

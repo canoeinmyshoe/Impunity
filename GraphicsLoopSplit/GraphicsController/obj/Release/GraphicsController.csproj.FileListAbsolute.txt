@@ -1,0 +1,7 @@
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GraphicsController\bin\Release\GraphicsController.exe.config
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GraphicsController\bin\Release\GraphicsController.exe
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GraphicsController\bin\Release\GraphicsController.pdb
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GraphicsController\obj\Release\GraphicsController.csprojResolveAssemblyReference.cache
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GraphicsController\obj\Release\GraphicsController.csproj.CoreCompileInputs.cache
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GraphicsController\obj\Release\GraphicsController.exe
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GraphicsController\obj\Release\GraphicsController.pdb

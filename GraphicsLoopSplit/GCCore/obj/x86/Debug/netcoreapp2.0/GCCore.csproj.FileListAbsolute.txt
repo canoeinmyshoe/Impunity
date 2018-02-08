@@ -1,0 +1,11 @@
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GCCore\bin\x86\Debug\netcoreapp2.0\GCCore.deps.json
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GCCore\bin\x86\Debug\netcoreapp2.0\GCCore.runtimeconfig.json
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GCCore\bin\x86\Debug\netcoreapp2.0\GCCore.runtimeconfig.dev.json
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GCCore\bin\x86\Debug\netcoreapp2.0\GCCore.dll
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GCCore\bin\x86\Debug\netcoreapp2.0\GCCore.pdb
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GCCore\obj\x86\Debug\netcoreapp2.0\GCCore.csprojResolveAssemblyReference.cache
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GCCore\obj\x86\Debug\netcoreapp2.0\GCCore.csproj.CoreCompileInputs.cache
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GCCore\obj\x86\Debug\netcoreapp2.0\GCCore.AssemblyInfoInputs.cache
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GCCore\obj\x86\Debug\netcoreapp2.0\GCCore.AssemblyInfo.cs
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GCCore\obj\x86\Debug\netcoreapp2.0\GCCore.dll
+C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GCCore\obj\x86\Debug\netcoreapp2.0\GCCore.pdb

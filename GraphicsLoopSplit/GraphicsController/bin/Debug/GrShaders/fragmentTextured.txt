@@ -1,0 +1,18 @@
+#version 330 core
+
+out vec4 color;
+
+in vec3 myColor;
+in vec2 myTextCoord;
+
+uniform sampler2D myTexture;
+uniform sampler2D myTexture2;
+
+void main()
+{
+	color = mix(texture(myTexture, myTextCoord), texture(myTexture2, 4*myTextCoord), 0.2);
+	//color = texture(myTexture, myTextCoord);	
+
+	//color *= vec4(myColor, 1.0f);
+	
+}

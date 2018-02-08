@@ -1,0 +1,13 @@
+#version 330 core
+
+out vec4 color;
+
+//among other things, the primary purpose of this shader is to figure out
+//what color the resulting fragment will be
+//in this very simple shader, we manually set the color to orange-ish red
+//without regard to lighting
+
+void main()
+{
+	color = vec4(0.8f, 0.1f, 0.0f, 1.0f);
+}

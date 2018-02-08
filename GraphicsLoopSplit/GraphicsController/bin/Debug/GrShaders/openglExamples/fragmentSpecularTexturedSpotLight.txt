@@ -1,0 +1,71 @@
+#version 330 core
+
+struct Material{
+	vec3 ambient;
+	vec3 diffuse;
+	sampler2D diffuseMap;
+	vec3 specular;
+	sampler2D specularMap;
+	float shininess;
+};
+
+//Now, since we're lighting the object with a directional light, we don't need a position\
+//only a direction
+struct Light{
+	vec3 position;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+	
+	vec3 direction;
+	float cutOff;
+	float outerCutOff; //be sure to set this!
+};
+
+
+out vec4 color;
+
+in vec3 Normal;
+in vec3 FragPosition;
+in vec2 TexCoords;
+
+uniform vec3 viewPosition;
+uniform Material material;
+uniform Light light;
+
+uniform bool hasDMap;
+uniform bool hasSMap;
+
+
+void main()
+{
+
+	vec3 lightDirection = normalize(light.position - FragPosition);
+	float theta = dot(lightDirection, normalize(-light.direction));
+	float epsilon = light.cutOff - light.outerCutOff;
+	float intensity = clamp((theta - light.outerCutOff)/ epsilon, 0.0, 1.0);
+	
+		//ambient
+	vec3 ambient = light.ambient * vec3(texture(material.diffuseMap, TexCoords));
+		
+	//diffuse
+	vec3 norm = normalize(Normal);
+	
+	float diff = max(dot(norm, lightDirection), 0.0);
+	vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuseMap, TexCoords));
+	
+	//specular
+	vec3 viewDir = normalize(viewPosition - FragPosition);
+	vec3 reflectDir = reflect(-lightDirection, norm);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+	vec3 specular = light.specular * spec * vec3(texture(material.specularMap, TexCoords));
+	
+	//multiply results by intensity
+	diffuse *= intensity;
+	specular *= intensity;
+	
+	vec3 result = ambient + diffuse + specular;
+	color = vec4(result, 1.0f);
+
+	
+}
