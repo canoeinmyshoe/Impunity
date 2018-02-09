@@ -61,6 +61,7 @@ public:
 	vector<SceneObject> Children;
 	SceneObject* Parent;
 
+
 	Transform transform;
 	Shader * shader;
 	Material material;
@@ -116,6 +117,9 @@ public:
 	//at some point in time, abstract the setting of uniforms away from main
 	//in fact, the sceneObject should have its own shader
 	//also, there should be a vector of shaders to be ref'd by ID by c#, just like scene objects
+
+	//The sceneObject shouldn't do any of this if it's empty!
+
 	void Draw()
 	{
 		LoadedShaders[ShaderNumber]->Use();

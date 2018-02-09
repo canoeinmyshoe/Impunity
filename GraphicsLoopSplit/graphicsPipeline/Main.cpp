@@ -155,7 +155,7 @@ extern "C"
 		if (sceneObjectID >= AllSceneObjects.size())
 			return 1;
 
-		cout << "C++: Setting tile of a sceneObject" << endl;
+		//cout << "C++: Setting tile of a sceneObject" << endl;
 		AllSceneObjects[sceneObjectID].material.xTiling = xtiling;
 		AllSceneObjects[sceneObjectID].material.yTiling = ytiling;
 		return 0;

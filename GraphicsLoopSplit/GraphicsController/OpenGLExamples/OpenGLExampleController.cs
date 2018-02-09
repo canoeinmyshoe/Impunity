@@ -128,6 +128,8 @@ namespace GraphicsController.OpenGLExamples
         public static extern int CreateSpotLight(float x, float y, float z, float dx, float dy, float dz);
 
 
+
+        //These lights need to return data that gets interpreted into its analogous c# counterpart
         void MakeSpotLight(float x, float y, float z,float dx, float dy, float dz)
         {
             int id = CreateSpotLight(x, y, z, dx, dy, dz);
@@ -234,6 +236,7 @@ namespace GraphicsController.OpenGLExamples
 
             try
             {
+                //we need to get data from the textures as well!
                 NativeTranslator translator = new NativeTranslator();
                 List<SceneObject> sceneObs = translator.ParseNativeData(message);
 
@@ -263,17 +266,17 @@ namespace GraphicsController.OpenGLExamples
         public void DrawObjects()
         {
             Console.WriteLine("Creating lights.");
-            //Create some point lights
-            MakePointLight(0, 1.3f, -2.8f);
-            MakePointLight(0, -1.3f, 2.8f);
-            MakePointLight(0, -2.3f, 3.8f);
-            MakePointLight(1.0f, 1.0f, 1.0f);
+            ////Create some point lights
+            //MakePointLight(0, 1.3f, -2.8f);
+            //MakePointLight(0, -1.3f, 2.8f);
+            //MakePointLight(0, -2.3f, 3.8f);
+            //MakePointLight(1.0f, 1.0f, 1.0f);
 
             MakeDirectionalLight(0.5f, 0.2f, 0.5f);
 
-            MakeSpotLight(3.0f, 3.0f, 3.0f, 0.25f, 0.25f, 0.25f);
-            MakeSpotLight(3.0f, 3.0f, 3.0f, 0.25f, 0.25f, 0.25f);
-            MakeSpotLight(3.0f, -3.0f, -3.0f, 0.25f, 0.25f, -0.25f);
+            //MakeSpotLight(3.0f, 3.0f, 3.0f, 0.25f, 0.25f, 0.25f);
+            //MakeSpotLight(3.0f, 3.0f, 3.0f, 0.25f, 0.25f, 0.25f);
+            //MakeSpotLight(3.0f, -3.0f, -3.0f, 0.25f, 0.25f, -0.25f);
 
             int i = InitiateEngine();
             SendFloat();
@@ -344,11 +347,22 @@ namespace GraphicsController.OpenGLExamples
             string desiredSO = "untexturedWall-0";
             //Now, put the smiley face onto the untextured model's mesh
 
+            //The magic number here is 2. Let's make a method to look up a texture
             //all these methods should be in scene object
             SceneObject found = SceneObject.Find(desiredSO);
-            int tresult = Bridge.SwapDiffuseMap(found.ID, 2);//2 is id of smiley
-            int tilingResult = Bridge.SetMaterialTiling(found.ID, 6.0f, 6.0f);
-            Bridge.SetMaterialOffset(found.ID, 0.2f, 0.8f);
+               Texture tex = Texture.FindByID(2);
+
+            int tresult = Bridge.SwapDiffuseMap(found, tex);
+
+            //if success, assign the texture to the scene object
+            if (tresult != 1)//resultTypes
+            {
+                found.material.diffuseMap = Control.AllTextures[2];
+            }
+
+
+            int tilingResult = Bridge.SetMaterialTiling(found, 6.0f, 6.0f);
+            Bridge.SetMaterialOffset(found, 0.2f, 0.8f);
 
             //random stuff - changes a tree's leaves to smileys
             Bridge.SwapDiffuseMap(found.ID-2, 2);//2 is id of smiley

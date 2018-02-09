@@ -108,13 +108,27 @@ namespace GraphicsController.Interoperability
 
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int LoadTextureFromDir(string textureName, string textureDirectory, StringBuilder str, int len);
+
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SwapDiffuseMap(int sceneObjectID, int textureID);
+        public static int SwapDiffuseMap(SceneObject sceneObject, Texture texture)
+        {
+            return SwapDiffuseMap(sceneObject.ID, texture.ID);
+        }
+
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetMaterialTiling(int sceneObjectID,float xtiling, float ytiling);
+        public static int SetMaterialTiling(SceneObject sceneObject, float xtiling, float ytiling)
+        {
+            return SetMaterialTiling(sceneObject.ID, xtiling, ytiling);
+        }
 
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetMaterialOffset(int sceneObjectID, float xOffset, float yOffset);
+        public static int SetMaterialOffset(SceneObject sceneObject, float xOffset, float yOffset)
+        {
+            return SetMaterialOffset(sceneObject.ID, xOffset, yOffset);
+        }
 
     }
 

@@ -49,6 +49,7 @@
     <Compile Include="Interoperability\NativeTranslator.cs" />
     <Compile Include="Light.cs" />
     <Compile Include="ImpunityScript.cs" />
+    <Compile Include="Material.cs" />
     <Compile Include="OpenGLExamples\OpenGLExampleController.cs" />
     <Compile Include="PointLight.cs" />
     <Compile Include="Program.cs" />

@@ -33,7 +33,7 @@ namespace GraphicsController.ExampleImpunityScripts
         public override void Update()
         {
             //base.Update();
-           // sceneObject.transform.position.x += 0.01f;
+            sceneObject.transform.position.x += 0.001f;
             sceneObject.transform.rotation.y += 0.01f;
             //sceneObject.transform.rotation.x += 0.1f;
             //   sceneObject.transform.rotation.z += 0.1f;

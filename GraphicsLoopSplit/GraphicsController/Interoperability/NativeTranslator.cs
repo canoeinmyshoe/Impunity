@@ -151,7 +151,7 @@ namespace GraphicsController.Interoperability
         public Texture ParseTexture(string text)
         {
             Console.WriteLine("Texture data: " + text);
-            Texture texture = new Texture();
+            Texture texture = new Texture(TextureType.None);
 
             if (text.Contains("t:"))
             {
@@ -163,7 +163,7 @@ namespace GraphicsController.Interoperability
                 string name = substr.Substring(0, end);
                 Console.WriteLine("Parsed texture path: " + name);
                 texture.Path = name;
-
+                texture.Type = TextureType.DiffuseMap;
             }
             else
             {

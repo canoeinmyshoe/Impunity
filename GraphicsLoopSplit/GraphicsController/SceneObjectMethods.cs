@@ -8,6 +8,7 @@ namespace GraphicsController
 {
     public partial class SceneObject
     {
+        //Case-insensitive look-up
         public static SceneObject Find(string sceneObjectName)
         {
             foreach (var so in Control.AllSceneObjects)
