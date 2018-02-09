@@ -18,7 +18,8 @@ namespace GraphicsController
         public SceneObject Parent { get; set; }
         public List<SceneObject> Children = new List<SceneObject>();
         public List<ImpunityScript> Imps = new List<ImpunityScript>();
-        public Material material;
+        public Material material = new Material(MaterialType.DefaultTextureless);
+        
 
         public virtual void Start()
         {

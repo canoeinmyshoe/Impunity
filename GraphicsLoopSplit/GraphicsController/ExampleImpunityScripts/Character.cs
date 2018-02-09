@@ -38,6 +38,7 @@ namespace GraphicsController.ExampleImpunityScripts
             //sceneObject.transform.rotation.x += 0.1f;
             //   sceneObject.transform.rotation.z += 0.1f;
 
+            
             Bridge.SetMaterialOffset(sceneObject.Children[0].ID, xIncrementer, xIncrementer);
             IncrementIndefinitely();
         }

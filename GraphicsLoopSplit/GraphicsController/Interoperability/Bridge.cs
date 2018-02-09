@@ -130,6 +130,8 @@ namespace GraphicsController.Interoperability
             return SetMaterialOffset(sceneObject.ID, xOffset, yOffset);
         }
 
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int ReportTextures();
     }
 
 }

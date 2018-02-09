@@ -41,6 +41,9 @@ namespace GraphicsController.Interoperability
                     Console.WriteLine("Texture detected");
                     try
                     {
+                        //don't add it if we already have it
+                       // Texture texture = ParseTexture(chunks[i]);
+                       
                         Control.AllTextures.Add(ParseTexture(chunks[i]));
                     }
                     catch { }
@@ -48,6 +51,8 @@ namespace GraphicsController.Interoperability
                 }
 
                 SceneObject so =  ProcessChunk(chunks[i]);
+                //We need to add to control, not local...
+                Control.AllSceneObjects.Add(so);
                 NewSceneObjects.Add(so);
             }
 
@@ -179,6 +184,16 @@ namespace GraphicsController.Interoperability
                 {
                     int end = substr.IndexOf("*");
                     string term = substr.Substring(0, end);
+                    int id;
+                    if (int.TryParse(term, out id))
+                    {
+                        texture.ID = id;
+                    }
+                    else
+                    {
+                        Console.WriteLine("WARNING: Texture ID parse failed. TERM:" + term);
+                    }
+
                     try
                     {
                         texture.ID = int.Parse(term);
@@ -196,6 +211,61 @@ namespace GraphicsController.Interoperability
 
                 Console.WriteLine("Parsed texture ID: " + texture.ID);
             }
+            //bool OnSceneObject = false;
+            //int soID = 0;
+            if (text.Contains("ty:"))
+            {
+                int start = text.IndexOf("ty:") + 3;
+                string substr = text.Substring(start, text.Length - start);
+                int end = substr.IndexOf("*");
+                string term = substr.Substring(0, end);
+                Console.WriteLine("Texture type: " + term);
+            }
+            if (text.Contains("tg:"))
+            {
+                int start = text.IndexOf("tg:") +3;
+                string substr = text.Substring(start, text.Length - start);
+                int end = substr.IndexOf("*");
+                string term = substr.Substring(0, end);
+                Console.WriteLine("SceneObject to which texture has been added: " + term);
+                int attempt;
+                if (int.TryParse(term, out attempt))
+                {
+                    //put the texture on the sceneObject... but how?!
+                    //since the sceneObject has already been added to control, we can add it here
+                    //So we need to find the gameObject with ID whatever and set its texture
+                    try
+                    {
+                        SceneObject.FindByID(attempt).material.diffuseMap = texture;
+                        //soID = attempt;
+                        //OnSceneObject = true;
+                    }
+                    catch (NullReferenceException nre)
+                    {
+                        Console.WriteLine("WARNING: Failed to apply texture to sceneObject: " + nre.Message);
+                        //OnSceneObject = false;
+                    }
+                }
+            }
+
+            //bool alreadyLoaded = false;
+            ////do we already have this texture loaded?
+            //Texture analogue;
+            //foreach (var tex in Control.AllTextures)
+            //{
+            //    if (tex.ID == texture.ID) {
+            //        alreadyLoaded = true;
+            //        analogue = tex;
+            //        if (OnSceneObject == true)
+            //            Control.AllSceneObjects[soID].material.diffuseMap = analogue;
+            //        break;
+            //    }
+            //}
+            //if (alreadyLoaded != true)
+            //{
+            //    Control.AllTextures.Add(texture);
+            //}
+
             return texture;
 
         }

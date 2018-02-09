@@ -241,10 +241,7 @@ namespace GraphicsController.OpenGLExamples
                 List<SceneObject> sceneObs = translator.ParseNativeData(message);
 
                 //  List<SceneObject> sceneObs = Interoperability.NativeTranslator.ParseNativeData(message);
-                foreach (var item in sceneObs)
-                {
-                    Control.AllSceneObjects.Add(item);
-                }
+            
             }
             catch (Exception err)
             {
@@ -325,11 +322,11 @@ namespace GraphicsController.OpenGLExamples
                 Console.WriteLine("Texture: " + Control.AllTextures[o].Path + "\r\n" +
                     "Id: " + Control.AllTextures[o].ID);
             }
-            
+
 
             //try out an impunity class
             Character character = new Character(Control.AllSceneObjects[0]);
-            Console.WriteLine("Added character script to " + Control.AllSceneObjects[0].Name);
+        Console.WriteLine("Added character script to " + Control.AllSceneObjects[0].Name);
 
             //load a preconfigured Scene file
             //for right now, the goal is to load/use an untextured model
@@ -359,14 +356,13 @@ namespace GraphicsController.OpenGLExamples
             {
                 found.material.diffuseMap = Control.AllTextures[2];
             }
-
-
+            
             int tilingResult = Bridge.SetMaterialTiling(found, 6.0f, 6.0f);
             Bridge.SetMaterialOffset(found, 0.2f, 0.8f);
 
             //random stuff - changes a tree's leaves to smileys
             Bridge.SwapDiffuseMap(found.ID-2, 2);//2 is id of smiley
-          
+
 
             //for (int o = 0; o < Control.AllSceneObjects.Count; o++)
             //{
@@ -374,6 +370,22 @@ namespace GraphicsController.OpenGLExamples
             //       "ID: " + Control.AllSceneObjects[o].ID + "\r\n" +
             //       "");
             //}
+
+            for (int p = 0; p < Control.AllTextures.Count; p++)
+            {
+                Console.WriteLine($"{Control.AllTextures[p].Path}\r\n" +
+                    $"{Control.AllTextures[p].ID}");
+            }
+
+            //tell c++ to report what textures it has loaded
+            Bridge.ReportTextures();
+
+            for (int o = 0; o < Control.AllSceneObjects.Count; o++)
+            {
+                Console.WriteLine("SceneObject: " + Control.AllSceneObjects[o].Name + "\r\n" +
+                   "ID: " + Control.AllSceneObjects[o].ID + "\r\n" +
+                  $"Texture path: {Control.AllSceneObjects[o].material.diffuseMap.Path}");
+            }
 
 
             while (true)

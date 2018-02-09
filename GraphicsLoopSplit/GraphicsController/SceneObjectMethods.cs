@@ -21,5 +21,17 @@ namespace GraphicsController
             throw new NullReferenceException($"SceneObject \"{sceneObjectName}\" not found.");
         }
 
+        public static SceneObject FindByID(int id)
+        {
+            foreach (var so in Control.AllSceneObjects)
+            {
+                if (so.ID == id)
+                {
+                    return so;
+                }
+            }
+            throw new NullReferenceException($"SceneObject of id \"{id}\" not found.");
+        }
+
     }
 }

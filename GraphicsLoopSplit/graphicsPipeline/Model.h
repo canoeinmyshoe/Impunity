@@ -264,13 +264,33 @@ private:
 				texture.id = CreateTexture(str.C_Str(), this->directory, GL_REPEAT, GL_LINEAR);
 				texture.type = typeName;
 				texture.path = str.C_Str();//May as well be the name of the texture- does not include the directory
-				textures.push_back(texture);
-				textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
+				 // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
 				//Store it in a place where it can be accessed by other models, if need be
-				texture.index = LoadedTextures.size();
+
+				//try c
+				/*const char * test = "123";
+				int testInt = 0;
+				sscanf(test, "%d", &testInt);*/
+
+				size_t sz = LoadedTextures.size();
+				string ss = std::to_string(sz);
+		//		texture.index = LoadedTextures.size();
+			//	texture.index = static_cast<int>(sz);
+				/*stringstream strm(ss);
+				strm >> texture.index;*/
+				const char * mid = ss.c_str();
+				int indx = 0;
+				sscanf(mid, "%d", &indx);
+				texture.index = indx;
+
 				LoadedTextures.push_back(texture);
+				textures.push_back(texture);
+				textures_loaded.push_back(texture);
 
 				cout << "Created texture!" << endl;
+			}
+			else {
+				cout << "C++: SKIPPING TEXTURE" << endl;
 			}
 		}
 		return textures;

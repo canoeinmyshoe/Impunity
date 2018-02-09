@@ -133,6 +133,15 @@ Model * treeModel;
 
 extern "C"
 {
+	__declspec(dllexport) int ReportTextures() 
+	{
+		for each (Texture tex in LoadedTextures)
+		{
+			cout << "C++: Texture Path" << tex.path <<
+			endl << "C++ Texture ID: " << tex.index << endl;
+		}
+		return 0;
+	}
 	//and NOW we will change the OFFSET of the texture!
 	__declspec(dllexport) int SetMaterialOffset(int sceneObjectID, float xOffset, float yOffset) 
 	{
@@ -381,8 +390,9 @@ extern "C"
 		//so.usingShader = 0;//index in LoadedShaders[]
 //		cout << "Amount of shaders loaded: " << LoadedShaders.size() << endl;
 		//by default it gets one of the default shaders
-		so.shader = LoadedShaders[0];
-		so.shader = LoadedShaders[1];//experimental multilight shader
+
+		//we need to return data for the texture... the shader will be assumed to be default unless otherwise specified
+		so.shader = LoadedShaders[1];
 		so.ShaderNumber = 1;
 		cout << "Using MultiLight shader ID " << 1 << endl;
 
@@ -390,29 +400,42 @@ extern "C"
 		for (unsigned int i = 0; i < model.meshes.size(); i++)//newModel.meshes.size()
 		{
 			SceneObject soo(AllSceneObjects.size());
-			soo.shader = LoadedShaders[0];
+		//	soo.shader = LoadedShaders[0];
 			soo.shader = LoadedShaders[1];//experimental multilight shader
 			soo.ShaderNumber = 1;
 			
 			//set up color data
 			soo.material.diffuse = glm::vec3(model.meshes[i].diffuseColor.x, model.meshes[i].diffuseColor.y, model.meshes[i].diffuseColor.z);
 			soo.material.specular = glm::vec3(model.meshes[i].specularColor.x, model.meshes[i].specularColor.y, model.meshes[i].specularColor.z);
+		
 			//debug the colors
-			cout << "==================================" << endl;
+		/*	cout << "==================================" << endl;
 			cout << "Material color: " << soo.material.diffuse.x << ", " << soo.material.diffuse.y << ", " << soo.material.diffuse.z << endl;
 			cout << "==================================" << endl;
-
+*/
 			soo.material.xTiling = 1.0f;
 			soo.material.yTiling = 1.0f;
 			
 		//	soo.Name = newModel.meshes[i].Name;
 			soo.meshes.push_back(model.meshes[i]);//newModel.meshes[i])
 		//	soo.meshes[0].Report();
+
+	
 			
 			string nam = so.Name + "-" + std::to_string(i);
 			soo.Name = nam.c_str();
 			//soo.Name = so.Name + "-" + std::to_string(i);
 			returnData += "n:"+ std::string(soo.Name) + "*i:" + std::to_string(soo.ID) + "*p:" + std::to_string(so.ID) + ",*";
+			//	And now for data from the texture.
+			//new, experimental method of texture information
+				
+				for each (Texture tex in soo.meshes[0].textures)
+				{
+					cout << "C++: TEXTURE INDEX: " << tex.index << endl;
+					returnData += "*i:"+std::to_string(tex.index) +  "*t:" + tex.path + "*ty:" + tex.type + "*tg:"+std::to_string(soo.ID) + "*,";
+				}
+
+			returnData += ",*";
 
 
 			//cout << "C++ SceneObject final name: " << soo.Name << endl;
@@ -427,17 +450,19 @@ extern "C"
 		}
 
 	//	cout << "Child count: " << so.Children.size() << endl;
-		if (totalTextures < LoadedTextures.size()) 
-		{
-			//append something like "t:texture_name_ti:texture_ID" foreach new texture
-			int diff = LoadedTextures.size() - totalTextures;
-			cout << "Loaded " << diff << " new textures" << endl;
-			for (size_t i = totalTextures; i < LoadedTextures.size(); i++)
-			{
-				returnData += "t:" + LoadedTextures[i].path + "*";
-				returnData += "i:" + std::to_string(LoadedTextures[i].index) + ",*";
-			}
-		}
+
+		//the original, working texture message
+		//if (totalTextures < LoadedTextures.size()) 
+		//{
+		//	//append something like "t:texture_name_ti:texture_ID" foreach new texture
+		//	int diff = LoadedTextures.size() - totalTextures;
+		//	cout << "Loaded " << diff << " new textures" << endl;
+		//	for (size_t i = totalTextures; i < LoadedTextures.size(); i++)
+		//	{
+		//		returnData += "t:" + LoadedTextures[i].path + "*";
+		//		returnData += "i:" + std::to_string(LoadedTextures[i].index) + ",*";
+		//	}
+		//}
 
 
 		returnData += "}";
