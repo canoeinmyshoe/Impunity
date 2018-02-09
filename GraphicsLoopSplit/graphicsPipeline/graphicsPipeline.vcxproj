@@ -71,9 +71,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\graphicsPipeline\Dependancies;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\graphicsPipeline\Dependancies;$(LibraryPath)</LibraryPath>
-    <SourcePath>C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\graphicsPipeline\Dependancies;$(SourcePath)</SourcePath>
+    <IncludePath>C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\graphicsPipeline\Dependancies;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\graphicsPipeline\Dependancies;$(LibraryPath)</LibraryPath>
+    <SourcePath>C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\graphicsPipeline\Dependancies;$(SourcePath)</SourcePath>
     <OutDir>..\GraphicsController\bin\Debug</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

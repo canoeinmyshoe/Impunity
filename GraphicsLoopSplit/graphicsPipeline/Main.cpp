@@ -133,6 +133,20 @@ Model * treeModel;
 
 extern "C"
 {
+	//and NOW we will change the OFFSET of the texture!
+	__declspec(dllexport) int SetMaterialOffset(int sceneObjectID, float xOffset, float yOffset) 
+	{
+		if (sceneObjectID >= AllSceneObjects.size())
+			return 1;
+
+		cout << "C++: setting material offset of sceneObject " << AllSceneObjects[sceneObjectID].ID << endl;
+
+		AllSceneObjects[sceneObjectID].material.xOffset = xOffset;
+		AllSceneObjects[sceneObjectID].material.yOffset = yOffset;
+
+		return 0;
+	}
+
 	//We need a method to change the tiling in a SceneObject's material
 	__declspec(dllexport) int SetMaterialTiling(int sceneObjectID, float xtiling, float ytiling) 
 	{

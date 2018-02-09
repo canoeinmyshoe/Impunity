@@ -36,6 +36,9 @@ struct Material {
 	float xTiling;
 	float yTiling;
 
+	float xOffset;
+	float yOffset;
+
 	bool useExtTexture;
 	int extDiffuseIndex;
 
@@ -135,6 +138,11 @@ public:
 		//texture tiling
 		LoadedShaders[ShaderNumber]->SetFloat(material.xTiling, "material.xTiling");
 		LoadedShaders[ShaderNumber]->SetFloat(material.yTiling, "material.yTiling");
+
+		//texture offset
+		LoadedShaders[ShaderNumber]->SetFloat(material.xOffset, "material.xOffset");
+		LoadedShaders[ShaderNumber]->SetFloat(material.yOffset, "material.yOffset");
+
 
 		//Set lighting
 		//IMPORTANT: Uniforms must be set whether the light is out of range or not

@@ -7,3 +7,12 @@ C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GraphicsController\obj\Debu
 C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GraphicsController\obj\Debug\GraphicsController.pdb
 C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GraphicsController\obj\Debug\GraphicsController.Resource1.resources
 C:\Users\tfloyd\Documents\Projects\GraphicsLoopSplit\GraphicsController\obj\Debug\GraphicsController.csproj.GenerateResource.Cache
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\bin\Debug\GraphicsController.exe.config
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\bin\Debug\GraphicsController.exe
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\bin\Debug\GraphicsController.pdb
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\obj\Debug\GraphicsController.csprojResolveAssemblyReference.cache
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\obj\Debug\GraphicsController.Resource1.resources
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\obj\Debug\GraphicsController.csproj.GenerateResource.Cache
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\obj\Debug\GraphicsController.csproj.CoreCompileInputs.cache
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\obj\Debug\GraphicsController.exe
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\obj\Debug\GraphicsController.pdb
