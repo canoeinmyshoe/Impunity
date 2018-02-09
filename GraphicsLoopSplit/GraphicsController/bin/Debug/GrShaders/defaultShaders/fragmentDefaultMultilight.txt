@@ -10,6 +10,9 @@ struct Material{
 	
 	float xTiling;
 	float yTiling;
+	
+	float xOffset;
+	float yOffset;
 };
 
 
@@ -77,14 +80,13 @@ uniform SpotLight spotLights[NR_SPOT_LIGHTS];
 uniform bool hasDMap;
 uniform bool hasSMap;
 
-vec3 CalculateDirectionalLight();
 vec3 CalculatePointLight(int index);
-vec3 CalculateDirectionalLight2(int index);
+vec3 CalculateDirectionalLight(int index);
 vec3 CalculateSpotLight(int index);
 void main()
 {
 	//The next step to making this shader more universal is to 
-	//set wether or not this shader will use a texture
+	//set whether or not this shader will use a texture
 	//and if so, how many times it will be tiled
 	
 	
@@ -93,7 +95,7 @@ void main()
 	
 	for(int i = 0; i <directionalLightCount; i ++)
 	{
-		result += CalculateDirectionalLight2(i);
+		result += CalculateDirectionalLight(i);
 	}
 	
 	for(int i = 0; i < spotLightCount; i++)
@@ -134,7 +136,7 @@ vec3 CalculateSpotLight(int index)
 	if(hasDMap == true)
 	{	
 	//vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
-		ambient = spotLights[index].ambient * vec3(texture(material.texture_diffuse1, vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
+		ambient = spotLights[index].ambient * vec3(texture(material.texture_diffuse1, vec2((TexCoords.x * material.xTiling)+material.xOffset,material.yOffset +(TexCoords.y * material.yTiling))));
 		//ambient = spotLights[index].ambient * vec3(texture(material.texture_diffuse1, TexCoords));
 	}
 	else
@@ -150,7 +152,7 @@ vec3 CalculateSpotLight(int index)
 	if(hasDMap == true)
 	{
 	//vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
-		diffuse = spotLights[index].diffuse * diff * vec3(texture(material.texture_diffuse1, vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
+		diffuse = spotLights[index].diffuse * diff * vec3(texture(material.texture_diffuse1, vec2((TexCoords.x * material.xTiling) + material.xOffset, material.yOffset +(TexCoords.y * material.yTiling))));
 		//diffuse = spotLights[index].diffuse * diff * vec3(texture(material.texture_diffuse1, TexCoords));
 	}
 	else
@@ -167,7 +169,7 @@ vec3 CalculateSpotLight(int index)
 	if(hasSMap == true)
 	{
 	//vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
-		specular = spotLights[index].specular * spec * vec3(texture(material.texture_specular1, vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
+		specular = spotLights[index].specular * spec * vec3(texture(material.texture_specular1, vec2((TexCoords.x * material.xTiling) + material.xOffset, material.yOffset +(TexCoords.y * material.yTiling))));
 		//specular = spotLights[index].specular * spec * vec3(texture(material.texture_specular1, TexCoords));
 	}
 	else
@@ -196,7 +198,7 @@ vec3 CalculatePointLight(int index)
 	vec3 ambient = vec3(0.0);
 	if(hasDMap == true)
 	{
-		ambient = pointLights[index].ambient * vec3(texture(material.texture_diffuse1, vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));//EXPERIMENTAL CODE
+		ambient = pointLights[index].ambient * vec3(texture(material.texture_diffuse1, vec2((TexCoords.x * material.xTiling)+material.xOffset, material.yOffset + (TexCoords.y * material.yTiling))));//EXPERIMENTAL CODE
 		//ambient = pointLights[index].ambient * vec3(texture(material.texture_diffuse1, TexCoords));//WORKING CODE
 	}
 	else
@@ -215,7 +217,7 @@ vec3 CalculatePointLight(int index)
 	if(hasDMap == true)
 	{
 		//vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
-		diffuse = pointLights[index].diffuse * diff * vec3(texture(material.texture_diffuse1, vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
+		diffuse = pointLights[index].diffuse * diff * vec3(texture(material.texture_diffuse1, vec2((TexCoords.x * material.xTiling)+ material.xOffset, material.yOffset +(TexCoords.y * material.yTiling))));
 		//diffuse = pointLights[index].diffuse * diff * vec3(texture(material.texture_diffuse1, TexCoords));
 	}
 	else
@@ -234,7 +236,7 @@ vec3 CalculatePointLight(int index)
 	if(hasSMap == true)
 	{
 		//vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
-		specular = pointLights[index].specular * spec * vec3(texture(material.texture_specular1, vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
+		specular = pointLights[index].specular * spec * vec3(texture(material.texture_specular1, vec2((TexCoords.x * material.xTiling)+ material.xOffset, material.yOffset + (TexCoords.y * material.yTiling))));
 		//specular = pointLights[index].specular * spec * vec3(texture(material.texture_specular1, TexCoords));
 	}
 	else
@@ -256,7 +258,7 @@ vec3 CalculatePointLight(int index)
 }
 
 
-vec3 CalculateDirectionalLight2(int index)
+vec3 CalculateDirectionalLight(int index)
 {
 	//ambient
 	
@@ -265,7 +267,7 @@ vec3 CalculateDirectionalLight2(int index)
 	{
 		
 	//vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
-		ambient = directionalLights[index].ambient * vec3(texture(material.texture_diffuse1, vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
+		ambient = directionalLights[index].ambient * vec3(texture(material.texture_diffuse1, vec2((TexCoords.x * material.xTiling) + material.xOffset, material.yOffset + (TexCoords.y * material.yTiling))));
 		//ambient = directionalLights[index].ambient * vec3(texture(material.texture_diffuse1, TexCoords));
 	}
 	else
@@ -284,7 +286,7 @@ vec3 CalculateDirectionalLight2(int index)
 	{
 		
 	//vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
-		diffuse = directionalLights[index].diffuse * diff * vec3(texture(material.texture_diffuse1, vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
+		diffuse = directionalLights[index].diffuse * diff * vec3(texture(material.texture_diffuse1, vec2((TexCoords.x * material.xTiling) + material.xOffset, material.yOffset +(TexCoords.y * material.yTiling))));
 	}
 	else
 	{
@@ -301,38 +303,12 @@ vec3 CalculateDirectionalLight2(int index)
 	if(hasSMap == true)
 	{
 	//vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
-		specular = directionalLights[index].specular * spec * vec3(texture(material.texture_specular1, vec2(TexCoords.x * material.xTiling, TexCoords.y * material.yTiling)));
+		specular = directionalLights[index].specular * spec * vec3(texture(material.texture_specular1, vec2((TexCoords.x * material.xTiling) + material.xOffset, (TexCoords.y * material.yTiling) + material.yOffset)));
 	}
 	else
 	{
 		specular = (material.specular * spec) * directionalLights[index].specular;
 	}
-	
-	
-	vec3 result = ambient + diffuse + specular;
-	return result;
-}
-
-vec3 CalculateDirectionalLight()
-{
-	//ambient
-	//vec3 ambient = material.ambient * directionalLight.ambient;
-	vec3 ambient = directionalLight.ambient * vec3(texture(material.texture_diffuse1, TexCoords));
-		
-	//diffuse
-	vec3 norm = normalize(Normal);
-	//vec3 lightDirection = normalize(directionalLight.position - FragPosition);
-	vec3 lightDirection = normalize(-directionalLight.direction);
-	float diff = max(dot(norm, lightDirection), 0.0);
-	//vec3 diffuse = (diff * material.diffuse) * directionalLight.diffuse;
-	vec3 diffuse = directionalLight.diffuse * diff * vec3(texture(material.texture_diffuse1, TexCoords));
-	
-	//specular
-	vec3 viewDir = normalize(viewPosition - FragPosition);
-	vec3 reflectDir = reflect(-lightDirection, norm);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
-	//vec3 specular = (material.specular * spec) * directionalLight.specular;
-	vec3 specular = directionalLight.specular * spec * vec3(texture(material.texture_specular1, TexCoords));
 	
 	
 	vec3 result = ambient + diffuse + specular;

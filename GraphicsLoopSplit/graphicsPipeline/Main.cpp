@@ -139,10 +139,12 @@ extern "C"
 		if (sceneObjectID >= AllSceneObjects.size())
 			return 1;
 
-		cout << "C++: setting material offset of sceneObject " << AllSceneObjects[sceneObjectID].ID << endl;
+	//	cout << "C++: setting material offset of sceneObject " << AllSceneObjects[sceneObjectID].ID << endl;
 
 		AllSceneObjects[sceneObjectID].material.xOffset = xOffset;
 		AllSceneObjects[sceneObjectID].material.yOffset = yOffset;
+
+		//Does it actually look any different? You will need to move it continually for a good test!
 
 		return 0;
 	}

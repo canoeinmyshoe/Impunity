@@ -269,7 +269,7 @@ namespace GraphicsController.OpenGLExamples
             MakePointLight(0, -2.3f, 3.8f);
             MakePointLight(1.0f, 1.0f, 1.0f);
 
-            MakeDirectionalLight(0.45f, 0.45f, 0.45f);
+            MakeDirectionalLight(0.5f, 0.2f, 0.5f);
 
             MakeSpotLight(3.0f, 3.0f, 3.0f, 0.25f, 0.25f, 0.25f);
             MakeSpotLight(3.0f, 3.0f, 3.0f, 0.25f, 0.25f, 0.25f);
@@ -348,17 +348,19 @@ namespace GraphicsController.OpenGLExamples
             SceneObject found = SceneObject.Find(desiredSO);
             int tresult = Bridge.SwapDiffuseMap(found.ID, 2);//2 is id of smiley
             int tilingResult = Bridge.SetMaterialTiling(found.ID, 6.0f, 6.0f);
+            Bridge.SetMaterialOffset(found.ID, 0.2f, 0.8f);
 
             //random stuff - changes a tree's leaves to smileys
             Bridge.SwapDiffuseMap(found.ID-2, 2);//2 is id of smiley
           
 
-            for (int o = 0; o < Control.AllSceneObjects.Count; o++)
-            {
-                Console.WriteLine("SceneObject: " + Control.AllSceneObjects[o].Name + "\r\n" +
-                   "ID: " + Control.AllSceneObjects[o].ID + "\r\n" +
-                   "");
-            }
+            //for (int o = 0; o < Control.AllSceneObjects.Count; o++)
+            //{
+            //    Console.WriteLine("SceneObject: " + Control.AllSceneObjects[o].Name + "\r\n" +
+            //       "ID: " + Control.AllSceneObjects[o].ID + "\r\n" +
+            //       "");
+            //}
+
 
             while (true)
             {
