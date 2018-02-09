@@ -349,14 +349,14 @@ namespace GraphicsController.OpenGLExamples
             SceneObject found = SceneObject.Find(desiredSO);
                Texture tex = Texture.FindByID(2);
 
-            int tresult = Bridge.SwapDiffuseMap(found, tex);
+             int tresult = Bridge.SwapDiffuseMap(found, tex);
 
-            //if success, assign the texture to the scene object
+            ////if success, assign the texture to the scene object
             if (tresult != 1)//resultTypes
             {
-                found.material.diffuseMap = Control.AllTextures[2];
+                found.material.diffuseMap = tex;
             }
-            
+
             int tilingResult = Bridge.SetMaterialTiling(found, 6.0f, 6.0f);
             Bridge.SetMaterialOffset(found, 0.2f, 0.8f);
 
