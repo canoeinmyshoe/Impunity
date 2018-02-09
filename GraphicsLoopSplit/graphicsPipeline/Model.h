@@ -272,17 +272,13 @@ private:
 				int testInt = 0;
 				sscanf(test, "%d", &testInt);*/
 
-				size_t sz = LoadedTextures.size();
+				/*size_t sz = LoadedTextures.size();
 				string ss = std::to_string(sz);
-		//		texture.index = LoadedTextures.size();
-			//	texture.index = static_cast<int>(sz);
-				/*stringstream strm(ss);
-				strm >> texture.index;*/
 				const char * mid = ss.c_str();
 				int indx = 0;
-				sscanf(mid, "%d", &indx);
-				texture.index = indx;
-
+				sscanf(mid, "%d", &indx);*/
+				//texture.index = indx;
+				texture.index = LoadedTextures.size();
 				LoadedTextures.push_back(texture);
 				textures.push_back(texture);
 				textures_loaded.push_back(texture);
