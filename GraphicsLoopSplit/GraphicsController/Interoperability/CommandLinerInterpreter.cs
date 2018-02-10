@@ -8,16 +8,19 @@ using System.IO;
 
 using ImpunityEngine.OpenGLExamples;
 using ImpunityEngine.SceneManipulation;
+using System.Collections;
 
 namespace ImpunityEngine
 {
     public class CommandLinerInterpreter
     {
-
-        public  void InterpretOpeningArgs(string[] args)
+        private Stack RecentCommands = new Stack();
+        public  void InterpretOpeningArgs(string[] args) // broken up by spaces, basically
         {
             if (args.Length == 0)
                 return;
+            //First, add this to our list of recent commands
+          
 
             foreach (var item in args)
             {
@@ -42,6 +45,24 @@ namespace ImpunityEngine
         //Most actions taken will result in a save file string log.... thing
         public void ProcessInput(string input)
         {
+
+            if (input == "^")
+            {
+                //use the last command
+                if (RecentCommands.Count > 1)
+                {
+                    var thing = RecentCommands.Peek();
+                    input = (string)thing;
+                }
+            }
+            else
+            {
+                if (RecentCommands.Count > 3)
+                {
+                    RecentCommands.Pop();
+                }
+                RecentCommands.Push(input);
+            }
             string[] args = input.Split(' ');
             foreach (var item in args)
             {
@@ -119,22 +140,22 @@ namespace ImpunityEngine
         void Create(string arg, int index, string[] args)
         {
             string key = arg.ToLower();
-            if (key == "pointlight" || key == "plight")
+            if (key == "pointlight" || key == "plight" || key == "plght")
             {
                 Console.WriteLine("Creating point light.");
                 SceneMaster.CreatePointLight();
             }
-            else if (key == "directionallight" || key == "directionalight" || key == "dlight")
+            else if (key == "directionallight" || key == "directionalight" || key == "dlight" || key == "dlght")
             {
                 Console.WriteLine("Creating directional light");
                 SceneMaster.CreateDirectionalLight();
             }
-            else if (key == "spotlight" || key == "slight")
+            else if (key == "spotlight" || key == "slight" || key == "slght")
             {
                 Console.WriteLine("Creating spot light.");
                 SceneMaster.CreateSpotLight();
             }
-            else if (key == "model")
+            else if (key == "model" || key == "mdl")
             {
                 Console.WriteLine("Creating model");
                 LoadModel(index, args);
@@ -163,9 +184,15 @@ namespace ImpunityEngine
             //we're expecting a vec3 after the first arg (a name or an ID). Is there actually a following vec3?
             if (index + 3 > args.Length - 1) { Console.WriteLine("ERROR: INVALID COMMAND"); return; }
             //what is the position?
-            float x = Convert.ToSingle(args[index + 1]);
-            float y = Convert.ToSingle(args[index + 2]);
-            float z = Convert.ToSingle(args[index + 3]);
+            float x, y, z;
+            x = 0; y = 0; z = 0;
+            try
+            {
+                 z = Convert.ToSingle(args[index + 3]);
+                 x = Convert.ToSingle(args[index + 1]);
+                 y = Convert.ToSingle(args[index + 2]);
+            }
+            catch { Console.WriteLine("Input in invalid form."); return; }
             Vector3 position = new Vector3(x, y, z);
 
             Console.WriteLine("Parsed vector3: " + x + ", " + y + ", " +  z);

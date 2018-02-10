@@ -58,13 +58,14 @@ namespace ImpunityEngine.SceneManipulation
 
         public static void LoadFromDirectory(string path)
         {
-          //  var path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
+            //  var path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
             //int start = path.IndexOf("\\") + 1;
             //path = path.Substring(start, path.Length - start);
 
             //path += "\\Models\\tree02\\tree.obj";
 
             //   Console.WriteLine("Path: " + path);
+            
 
             StringBuilder cmessage = new StringBuilder(10000);//256 chars at most
 
