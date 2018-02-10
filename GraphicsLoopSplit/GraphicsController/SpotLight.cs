@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ImpunityEngine.Interoperability;
 namespace ImpunityEngine
 {
     public class SpotLight : SceneObject
@@ -65,11 +66,18 @@ namespace ImpunityEngine
             {
                 if (light is SpotLight)
                 {
-                    if (light.ID == id)
-                        return (SpotLight)light;
+                    SpotLight sl = (SpotLight)light;
+                    if (sl.LightID == id)
+                        return sl;
                 }
             }
             throw new NullReferenceException($"Spot light ID \"{id}\" not found");
+        }
+
+        public void SetPosition(Vector3 pos)
+        {
+            position = pos;
+            Bridge.SetSpotLightPosition(LightID, position);
         }
 
     }

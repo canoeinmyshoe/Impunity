@@ -748,13 +748,38 @@ extern "C"
 
 
 #pragma region Light Mutability
-#pragma region PointLightMethods
+#pragma region Point Light Methods
 	__declspec(dllexport) int SetPointLightPosition(int id, float x, float y, float z) {
 	
 		if (id > ScenePointLights.size())//c# must check for being less than 0
 			return -1;
 
 		ScenePointLights[id].position = glm::vec3(x, y, z);
+
+		return 0;
+	}
+
+#pragma endregion
+
+#pragma region Directional Light Methods
+	__declspec(dllexport) int SetDirLightDirection(int id, float x, float y, float z) {
+		if (id > SceneDirectionalLights.size())
+			return -1;
+
+		SceneDirectionalLights[id].direction = glm::vec3(x, y, z);
+		cout << "C++: Set Directional Light ID: " << id << endl;
+		
+		return 0;
+	}
+#pragma endregion
+
+#pragma region
+	__declspec(dllexport) int SetSpotLightPosition(int id, float x, float y, float z) {
+		if (id > SceneSpotLights.size())
+			return -1;
+
+		SceneSpotLights[id].position = glm::vec3(x, y, x);
+		cout << "C++: set position of spotlight" << endl;
 
 		return 0;
 	}

@@ -24,3 +24,14 @@ It's important to note that this adds .Net framework as a dependancy of the c++ 
 Ergo, it CANNOT run on android in this state
 
 So we treat it as if in dev mode.
+
+
+
+key words:
+
+create - creates a SceneObject or Light
+
+setPosition - sets the position of a SceneObject or Light by name or ID
+
+example 1: create pointLight
+example 2: setPosition int(index) Vector3(position)  type(optional)

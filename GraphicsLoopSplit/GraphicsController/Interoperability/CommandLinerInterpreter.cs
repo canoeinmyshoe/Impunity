@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.IO;
+
 using ImpunityEngine.OpenGLExamples;
 using ImpunityEngine.SceneManipulation;
 
@@ -41,45 +43,114 @@ namespace ImpunityEngine
         public void ProcessInput(string input)
         {
             string[] args = input.Split(' ');
-            //foreach (var item in args)
-            //{
-            //    Console.WriteLine(item);
-            //}
+            foreach (var item in args)
+            {
+                //Console.WriteLine(item);
+                item.Replace(" ", string.Empty);
+            }
 
             bool creation = false;
             bool setPosition = false;
+            bool listObjects = false;
             for (int i = 0; i < args.Length; i++)
             {
                 if (creation == true)
                 {
                     creation = false;
-                    Create(args[i]);
+                    Create(args[i], i, args);
                 }
                 else if (setPosition == true)
                 {
                     setPosition = false;
                     SetPosition(i, args);
                 }
-                else if (args[i] == "create")
+                else if (listObjects == true)
+                {
+                    listObjects = false;
+
+                }
+                else if (args[i] == "create" || args[i] == "crt")
                 {
                     //Create the next thing that comes up
                     creation = true;
                 }
-                else if (args[i] == "setPosition")
+                else if (args[i].ToLower() == "setposition")
                 {
                     setPosition = true;
+
+                }
+                else if (args[i].ToLower() == "list")
+                {
+                    listObjects = true;
+                }
+                else
+                {
+                    // Console.WriteLine("Teapots.");
                 }
             }
         }
-
-        void Create(string arg)
+        void ShowList(int index, string[] args)
         {
-            if (arg == "pointlight")
+            if (index + 1 > args.Length - 1)
+                return;
+
+            string key = args[index + 1].ToLower();
+            if (key == "sceneObjects" || key == "sos")
+            {
+                foreach (var so in Control.AllSceneObjects)
+                {
+                    if (so.ID < 0)
+                        continue;
+                    Console.WriteLine($"Name:{so.Name}--ID:{so.ID}--");
+                }
+            }
+            else if (key == "pointlight" || key == "plight")
+            {
+                
+            }
+        }
+        void Create(string arg, int index, string[] args)
+        {
+            string key = arg.ToLower();
+            if (key == "pointlight" || key == "plight")
             {
                 Console.WriteLine("Creating point light.");
                 SceneMaster.CreatePointLight();
             }
+            else if (key == "directionallight" || key == "directionalight" || key == "dlight")
+            {
+                Console.WriteLine("Creating directional light");
+                SceneMaster.CreateDirectionalLight();
+            }
+            else if (key == "spotlight" || key == "slight")
+            {
+                Console.WriteLine("Creating spot light.");
+                SceneMaster.CreateSpotLight();
+            }
+            else if (key == "model")
+            {
+                Console.WriteLine("Creating model");
+                LoadModel(index, args);
+            }
         }
+
+        void LoadModel(int index, string[] args)//index of the key
+        {
+            //we're expecting the next argument to be a 3-D object file
+            if (index + 1 > args.Length - 1)
+                return;
+
+            string path = args[index + 1];
+            if (!File.Exists(path))
+            {
+                Console.WriteLine("ERROR: NO SUCH FILE!");
+                return;
+            }
+
+            SceneMaster.LoadFromDirectory(path);
+
+        }
+        
         void SetPosition(int index, string[] args)
         {
             //we're expecting a vec3 after the first arg (a name or an ID). Is there actually a following vec3?
@@ -93,39 +164,59 @@ namespace ImpunityEngine
             Console.WriteLine("Parsed vector3: " + x + ", " + y + ", " +  z);
 
             //the user may have specied a light type(or other) and the end of this line
-
+            Console.WriteLine("ID or Name: " + args[index]);
 
             bool useID = false;
             int result;
             if (int.TryParse(args[index], out result))
             {
-                //find and set by ID
-                Console.WriteLine("Setting position of sceneObject " + result);
-                SetByID(result, position);
+              
                 useID = true;
             }
 
 
             if (index + 4 <= args.Length - 1)
             {
-                if (args[index + 4] == "pointLight" || args[index + 4] == "pLight")
+                if (args[index + 4].ToLower() == "pointlight" || args[index + 4].ToLower() == "plight")
                 {
                     //set the pLight position...which is done in the class itself, if found
+                    Console.WriteLine("Setting point light position!");
                     try
                     {
                         if (useID == true)
-                            PointLight.FindLightByID(result).SetPosition(position);
+                        {
+                            PointLight plight = PointLight.FindLightByID(result);
+                            plight.SetPosition(position);
+                          //  PointLight.FindLightByID(result).SetPosition(position);
+                        }
                     }
-                    catch { Console.WriteLine("Point light " + (index + 4) + " not found"); }
+                    catch(Exception ERR) { Console.WriteLine("The Point light " + (result) + " not found: " + ERR.Message ); }
                     return;
                 }
-                else if (args[index + 4] == "directionalLight" || args[index + 4] == "dLight")
+                else if (args[index + 4].ToLower() == "directionallight" || args[index + 4].ToLower() == "dlight")
                 {
-
+                    Console.WriteLine("Directional lights don't have a position. Setting rotation instead.");
+                    if (useID == true)
+                    {
+                        try
+                        {
+                            DirectionalLight dlight = DirectionalLight.FindLightByID(result);
+                            dlight.SetDirection(position);
+                        }
+                        catch (NullReferenceException nex) { Console.WriteLine(nex.Message); }
+                    }
+                    return;
                 }
-                else if (args[index + 4] == "spotLight" || args[index + 4] == "sLight")
+                else if (args[index + 4].ToLower() == "spotlight" || args[index + 4].ToLower() == "slight")
                 {
-
+                    Console.WriteLine("Setting position of spotlight");
+                    try
+                    {
+                        SpotLight spot = SpotLight.FindLightByID(result);
+                        spot.SetPosition(position);
+                    }
+                    catch (NullReferenceException nex){ Console.WriteLine(nex.Message); }
+                    return;
                 }
             }
 

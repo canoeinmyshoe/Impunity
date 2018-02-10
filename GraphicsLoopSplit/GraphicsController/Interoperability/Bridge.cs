@@ -140,7 +140,19 @@ namespace ImpunityEngine.Interoperability
             return SetPointLightPosition(id, position.x, position.y, position.z);
         }
 
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetDirLightDirection(int id, float x, float y, float z);
+        public static int SetDirLightDirection(int id, Vector3 direction)
+        {
+            return SetDirLightDirection(id, direction.x, direction.y, direction.z);
+        }
 
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetSpotLightPosition(int id, float x, float y, float z);
+        public static int SetSpotLightPosition(int id, Vector3 position)
+        {
+            return SetSpotLightPosition(id, position.x, position.y, position.z);
+        }
 
     }
 

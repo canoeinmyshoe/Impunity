@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ImpunityEngine.Interoperability;
+
 namespace ImpunityEngine
 {
     public class DirectionalLight : SceneObject
@@ -51,11 +53,16 @@ namespace ImpunityEngine
             {
                 if (light is DirectionalLight)
                 {
-                    if (light.ID == id)
-                        return (DirectionalLight)light;
+                    DirectionalLight d = (DirectionalLight)light;
+                    if (d.LightID == id)
+                        return d;
                 }
             }
             throw new NullReferenceException($"Directional light ID \"{id}\" not found");
+        }
+
+        public void SetDirection(Vector3 vec) {
+            Bridge.SetDirLightDirection(LightID, vec);
         }
 
     }

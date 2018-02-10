@@ -43,12 +43,14 @@ namespace ImpunityEngine
             {
                 string input = Console.ReadLine();
                 Commands.Add(input);
+                Console.WriteLine("Ya don't say...");
             }
         }
 
         private void RunImpunity()
         {
-            //Console.WriteLine("Starting Impunity.");
+
+            Console.WriteLine("Entered run loop.");
             //ONLY initiate and loop the engine. Other than that, the Interpreter and the Listener share a list of commands (to be created)
             int success = Bridge.InitiateEngine();
             CommandLinerInterpreter listener = new CommandLinerInterpreter();

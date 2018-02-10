@@ -71,8 +71,10 @@ namespace ImpunityEngine
             {
                 if (light is PointLight)
                 {
-                    if (light.ID == id)
-                        return (PointLight)light;
+                    PointLight p = (PointLight)light;
+                    if (p.LightID == id) {
+                        return p;
+                    }
                 }
             }
             throw new NullReferenceException($"Point light ID \"{id}\" not found");
