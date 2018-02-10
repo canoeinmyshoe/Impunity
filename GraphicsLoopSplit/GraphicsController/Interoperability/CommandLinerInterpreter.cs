@@ -97,7 +97,7 @@ namespace ImpunityEngine
                     //Create the next thing that comes up
                     creation = true;
                 }
-                else if (word == "setposition")
+                else if (word == "setposition" || word == "setpos")
                 {
                     setPosition = true;
 
@@ -111,6 +111,16 @@ namespace ImpunityEngine
                 {
                     Console.WriteLine("Setting ambient level.");
                     SetAmbientLevel(i, args);
+                }
+                else if (word == "setdiffuse" || word == "setdiff")
+                {
+                    Console.WriteLine("Setting diffuse level.");
+                    SetDiffuseLevel(i, args);
+                }
+                else if (word == "setspecular" || word == "setspec")
+                {
+                    Console.WriteLine("Setting specular level.");
+                    SetSpecularLevel(i, args);
                 }
                 else
                 {
@@ -155,6 +165,82 @@ namespace ImpunityEngine
                 return;
             }
         }
+        void SetDiffuseLevel(int index, string[] args)
+        {
+            //we are expecting (after index) 
+            //args[index + ]  - ID of light
+            //args[index + 2-5] - new ambient value
+            //args[index + 6] - type of light
+            if (index + 5 > args.Length - 1)
+                return;
+            int result;
+            if (!int.TryParse(args[index + 1], out result))
+                return;
+            float x = 0, y = 0, z = 0;
+            try
+            {
+                x = Convert.ToSingle(args[index + 2]);
+                y = Convert.ToSingle(args[index + 3]);
+                z = Convert.ToSingle(args[index + 4]);
+            }
+            catch { return; }
+            Vector3 color = new Vector3(x, y, z);
+            string key = args[5].ToLower();
+            if (key == "pointlight" || key == "plight")
+            {
+                try { PointLight.FindLightByID(result).SetDiffuse(color); } catch { Console.WriteLine("Failed to set diffuse point light level."); }
+                return;
+            }
+            else if (key == "spotlight" || key == "slight")
+            {
+                try { SpotLight.FindLightByID(result).SetDiffuse(color); } catch { }
+                return;
+            }
+            else if (key == "directionallight" || key == "dlight")
+            {
+                try { DirectionalLight.FindLightByID(result).SetDiffuse(color); } catch { }
+                return;
+            }
+        }
+        void SetSpecularLevel(int index, string[] args)
+        {
+            //we are expecting (after index) 
+            //args[index + ]  - ID of light
+            //args[index + 2-5] - new ambient value
+            //args[index + 6] - type of light
+            if (index + 5 > args.Length - 1)
+                return;
+            int result;
+            if (!int.TryParse(args[index + 1], out result))
+                return;
+            float x = 0, y = 0, z = 0;
+            try
+            {
+                x = Convert.ToSingle(args[index + 2]);
+                y = Convert.ToSingle(args[index + 3]);
+                z = Convert.ToSingle(args[index + 4]);
+            }
+            catch { return; }
+            Vector3 color = new Vector3(x, y, z);
+            string key = args[5].ToLower();
+            if (key == "pointlight" || key == "plight")
+            {
+                try { PointLight.FindLightByID(result).SetSpecular(color); } catch { Console.WriteLine("Failed to set specular point light level."); }
+                return;
+            }
+            else if (key == "spotlight" || key == "slight")
+            {
+                try { SpotLight.FindLightByID(result).SetSpecular(color); } catch { }
+                return;
+            }
+            else if (key == "directionallight" || key == "dlight")
+            {
+                try { DirectionalLight.FindLightByID(result).SetSpecular(color); } catch { }
+                return;
+            }
+        }
+
+
         void ShowList(int index, string[] args)
         {
 

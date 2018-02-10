@@ -154,26 +154,70 @@ namespace ImpunityEngine.Interoperability
             return SetSpotLightPosition(id, position.x, position.y, position.z);
         }
 
+        #region Point Light Values
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetPLightAmbient(int id, float x, float y, float z);
         public static int SetPLightAmbient(int id, Vector3 color)
         {
             return SetPLightAmbient(id, color.x, color.y, color.z);
         }
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetPLightDiffuse(int id, float x, float y, float z);
+        public static int SetPLightDiffuse(int id, Vector3 color)
+        {
+            return SetPLightDiffuse(id, color.x, color.y, color.z);
+        }
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetPLightSpecular(int id, float x, float y, float z);
+        public static int SetPLightSpecular(int id, Vector3 color)
+        {
+            return SetPLightSpecular(id, color.x, color.y, color.z);
+        }
+        #endregion
 
+        #region SpotLight values
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetSLightAmbient(int id, float x, float y, float z);
         public static int SetSLightAmbient(int id, Vector3 color)
         {
             return SetSLightAmbient(id, color.x, color.y, color.z);
         }
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetSLightDiffuse(int id, float x, float y, float z);
+        public static int SetSLightDiffuse(int id, Vector3 color)
+        {
+            return SetSLightDiffuse(id, color.x, color.y, color.z);
+        }
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetSLightSpecular(int id, float x, float y, float z);
+        public static int SetSLightSpecular(int id, Vector3 color)
+        {
+            return SetSLightSpecular(id, color.x, color.y, color.z);
+        }
 
+        #endregion
+
+
+        #region Directional Light values
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetDLightAmbient(int id, float x, float y, float z);
         public static int SetDLightAmbient(int id, Vector3 color)
         {
             return SetDLightAmbient(id, color.x, color.y, color.z);
         }
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetDLightDiffuse(int id, float x, float y, float z);
+        public static int SetDLightDiffuse(int id, Vector3 color)
+        {
+            return SetDLightDiffuse(id, color.x, color.y, color.z);
+        }
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetDLightSpecular(int id, float x, float y, float z);
+        public static int SetDLightSpecular(int id, Vector3 color)
+        {
+            return SetDLightSpecular(id, color.x, color.y, color.z);
+        }
+        #endregion
 
     }
 

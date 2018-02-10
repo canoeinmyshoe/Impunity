@@ -765,6 +765,20 @@ extern "C"
 		//cout << "C++: Set point light ambient level" << endl;
 		return 0;
 	}
+	__declspec(dllexport) int SetPLightDiffuse(int id, float x, float y, float z) {
+		if (id > ScenePointLights.size() - 1)
+			return -1;
+		ScenePointLights[id].diffuse = glm::vec3(x, y, z);
+	//	cout << "C++: Set point light diffuse level" << endl;
+		return 0;
+	}
+	__declspec(dllexport) int SetPLightSpecular(int id, float x, float y, float z) {
+		if (id > ScenePointLights.size() - 1)
+			return -1;
+		ScenePointLights[id].specular = glm::vec3(x, y, z);
+	//	cout << "C++: Set point light specular level" << endl;
+		return 0;
+	}
 
 #pragma endregion
 
@@ -783,6 +797,20 @@ extern "C"
 			return -1;
 		SceneDirectionalLights[id].ambient = glm::vec3(x, y, z);
 	//	cout << "C++: set ambient of directional light" << endl;
+		return 0;
+	}
+	__declspec(dllexport) int SetDLightDiffuse(int id, float x, float y, float z) {
+		if (id > SceneDirectionalLights.size() - 1)
+			return -1;
+		SceneDirectionalLights[id].diffuse = glm::vec3(x, y, z);
+			cout << "C++: set diffuse of directional light" << endl;
+		return 0;
+	}
+	__declspec(dllexport) int SetDLightSpecular(int id, float x, float y, float z) {
+		if (id > SceneDirectionalLights.size() - 1)
+			return -1;
+		SceneDirectionalLights[id].specular = glm::vec3(x, y, z);
+			cout << "C++: set specular of directional light" << endl;
 		return 0;
 	}
 #pragma endregion
@@ -804,7 +832,20 @@ extern "C"
 		//cout << "C++: set ambient of spot light" << endl;
 		return 0;
 	}
-
+		__declspec(dllexport) int SetSLightDiffuse(int id, float x, float y, float z) {
+			if (id > SceneSpotLights.size() - 1)
+				return -1;
+			SceneSpotLights[id].diffuse = glm::vec3(x, y, z);
+		//	cout << "C++: set diffuse of spot light" << endl;
+			return 0;
+	}
+		__declspec(dllexport) int SetSLightSpecular(int id, float x, float y, float z) {
+			if (id > SceneSpotLights.size() - 1)
+				return -1;
+			SceneSpotLights[id].specular = glm::vec3(x, y, z);
+		//	cout << "C++: set specular of spot light" << endl;
+			return 0;
+		}
 #pragma endregion
 
 #pragma endregion

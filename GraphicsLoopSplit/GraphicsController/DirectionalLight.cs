@@ -69,6 +69,15 @@ namespace ImpunityEngine
             ambient = color;
             Bridge.SetDLightAmbient(LightID, ambient);
         }
-
+        public void SetDiffuse(Vector3 color)
+        {
+            diffuse = color;
+            Bridge.SetDLightDiffuse(LightID, diffuse);
+        }
+        public void SetSpecular(Vector3 color)
+        {
+            specular = color;
+            Bridge.SetDLightSpecular(LightID, specular);
+        }
     }
 }

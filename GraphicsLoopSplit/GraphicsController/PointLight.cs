@@ -102,10 +102,21 @@ namespace ImpunityEngine
             Bridge.SetPointLightPosition(LightID, x, y, z);
         }
 
+        //now for diffuse...
         public void SetAmbient(Vector3 amb)
         {
             ambient = amb;
             Bridge.SetPLightAmbient(LightID, ambient);
+        }
+        public void SetDiffuse(Vector3 col)
+        {
+            diffuse = col;
+            Bridge.SetPLightDiffuse(LightID, diffuse);
+        }
+        public void SetSpecular(Vector3 col)
+        {
+            specular = col;
+            Bridge.SetPLightSpecular(LightID, specular);
         }
 
         //We need methods for setting other values, too.
