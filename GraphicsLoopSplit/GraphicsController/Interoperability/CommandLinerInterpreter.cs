@@ -45,7 +45,7 @@ namespace ImpunityEngine
             string[] args = input.Split(' ');
             foreach (var item in args)
             {
-                //Console.WriteLine(item);
+              //  Console.WriteLine(item);
                 item.Replace(" ", string.Empty);
             }
 
@@ -67,7 +67,8 @@ namespace ImpunityEngine
                 else if (listObjects == true)
                 {
                     listObjects = false;
-
+                    ShowList(i, args);
+                    Console.WriteLine("List time");
                 }
                 else if (args[i] == "create" || args[i] == "crt")
                 {
@@ -81,6 +82,7 @@ namespace ImpunityEngine
                 }
                 else if (args[i].ToLower() == "list")
                 {
+                    //Console.WriteLine("List?");
                     listObjects = true;
                 }
                 else
@@ -91,11 +93,16 @@ namespace ImpunityEngine
         }
         void ShowList(int index, string[] args)
         {
-            if (index + 1 > args.Length - 1)
+
+            Console.WriteLine("Key: " + args[index]);
+
+            if (index > args.Length - 1)
                 return;
 
-            string key = args[index + 1].ToLower();
-            if (key == "sceneObjects" || key == "sos")
+            Console.WriteLine("Index: " + index);
+
+            string key = args[index].ToLower();
+            if (key == "sceneobjects" || key == "sos" || key == "sceneobjects")
             {
                 foreach (var so in Control.AllSceneObjects)
                 {
@@ -224,9 +231,23 @@ namespace ImpunityEngine
             {
                 SetByID(result, position);
             }
+            else
+            {
+                SetByName(args[index], position);
+            }
 
         }
+        void SetByName(string name, Vector3 position)
+        {
+            try
+            {
+                SceneObject so = SceneObject.Find(name);
+                so.transform.position = position;
+                return;
+            }
+            catch (NullReferenceException nex) { Console.WriteLine(nex.Message); }
 
+        }
         void SetByID(int ID, Vector3 position)
         {
             try
