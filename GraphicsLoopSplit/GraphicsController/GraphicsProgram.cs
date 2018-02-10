@@ -21,12 +21,25 @@ namespace ImpunityEngine
 
             //    bool test = false;
             //    Debug.Assert(test, "Message");
-           CommandLinerInterpreter Reader = new CommandLinerInterpreter();
-            Reader.InterpretOpeningArgs(args);
+            // Console.WriteLine("Hello.");
+            //CommandLinerInterpreter Reader = new CommandLinerInterpreter();
+            // Reader.InterpretOpeningArgs(args);
 
-            //if(runDebugMode == true)
-            Console.WriteLine("End of the line.");
-            Console.ReadKey();
+
+
+            //Console.WriteLine("Taking the dive...");
+            //CLE cle = new CLE();
+            //cle.Run();
+
+
+
+            ////if(runDebugMode == true)
+            //Console.WriteLine("Any key to quit.");
+            //Console.ReadKey();
+
+            Control c = new Control();
+            OpenGLExampleController ogl = new OpenGLExampleController();
+            ogl.DrawObjects();
         }
         
     }

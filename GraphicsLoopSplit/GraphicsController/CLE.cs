@@ -5,42 +5,87 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
+using ImpunityEngine.Interoperability;
 
 namespace ImpunityEngine
 {
     public class CLE//The Command Line Editor
     {
         //In one thread, the command line.
-        private bool shouldRun = true;
+        private bool shouldRun = false;
+        private List<string> Commands = new List<string>();
+        
         //In another, the c# logic for rendering the scene, putting things in the scene,
         //configuring the sceneObjects, and saving their configuration so it can be loaded
-        public void Run()
+        public bool Run()
         {
+
+            if (shouldRun == true)
+                return false;
+
+            shouldRun = true;
             //You'll have to break out the web server for thread info!
+            //Task task1 = Task.Factory.StartNew(() => ListenForCommands());
+            //Task task2 = Task.Factory.StartNew(() => RunImpunity());
+
             
+
+            Console.WriteLine("Well?");
+
             Thread CommandListenerT = new Thread(() =>
             {
                 ListenForCommands();
             });
             CommandListenerT.Start();
+            Console.WriteLine("Test.");
+            RunImpunity();
 
-            //And now a separate thread for rendering and doing stuff
-            Thread GraphicsThreadT = new Thread(() => 
-            {
+            // And now a separate thread for rendering and doing stuff
+            //Thread GraphicsThreadT = new Thread(() =>
+            //{
+            //    RunImpunity();
+            //});
+            //GraphicsThreadT.Start();
 
-            });
-            GraphicsThreadT.Start();
+            // Task.WaitAll();
+            return shouldRun;
         }
 
         private void ListenForCommands()
         {
             Console.WriteLine("Impunity Command Line Editor 1.0");
-            CommandLinerInterpreter listener = new CommandLinerInterpreter();
             while (shouldRun == true)
             {
                 string input = Console.ReadLine();
                 //processCommandLineInput(input);
-                listener.ProcessInput(input);
+                //  listener.ProcessInput(input);
+                Commands.Add(input);
+                Console.WriteLine("Gee, that's something...");
+            }
+        }
+
+        private void RunImpunity()
+        {
+            Console.WriteLine("Starting Impunity.");
+            //ONLY initiate and loop the engine. Other than that, the Interpreter and the Listener share a list of commands (to be created)
+            int success = Bridge.InitiateEngine();
+            CommandLinerInterpreter listener = new CommandLinerInterpreter();
+
+            while (shouldRun == true)
+            {
+                for (int i = 0; i < Commands.Count; i++)
+                {
+                    listener.ProcessInput(Commands[i]);
+                    Commands.Remove(Commands[i]);
+                }
+                //change any positions, variables, etc
+                //add forces to rigidbodies, create, etc
+                foreach (var so in Control.AllSceneObjects)
+                {
+                    so.Update();
+                }
+
+                int r = Bridge.RenderAll();
             }
         }
 

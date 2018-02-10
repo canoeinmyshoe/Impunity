@@ -4,3 +4,4 @@ C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\bin\Debu
 C:\Data\Projects\Impunity\impunity\Launcher\Launcher\obj\Debug\SceneEditLauncher.csproj.CoreCompileInputs.cache
 C:\Data\Projects\Impunity\impunity\Launcher\Launcher\obj\Debug\SceneEditLauncher.exe
 C:\Data\Projects\Impunity\impunity\Launcher\Launcher\obj\Debug\SceneEditLauncher.pdb
+C:\Data\Projects\Impunity\impunity\Launcher\Launcher\obj\Debug\SceneEditLauncher.csprojResolveAssemblyReference.cache

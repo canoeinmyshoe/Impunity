@@ -4110,7 +4110,8 @@ string exeDirectory()
 
 	//this returns the full path of the .exe
 	//so we need to truncate it
-	string end = "graphicsPipeline.exe";
+	//cout << "wut: " << wut << endl;
+	string end = "ImpunityEngine.exe";
 	unsigned int last = (wut.length() - end.length());
 	string dir = wut.substr(0, last);
 	return dir;

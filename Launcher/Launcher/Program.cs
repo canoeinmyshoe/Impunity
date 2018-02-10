@@ -33,11 +33,12 @@ namespace SceneEditLauncher
            // Console.WriteLine("Process Directory: " + dir);
 
             //I guess it turns out we don't need the directory..
-            Process.Start("GraphicsController.exe", "openGLexamples secondArg ThirdArg");
+            Process.Start("ImpunityEngine.exe", "editor secondArg ThirdArg");
 
-            ProcessStartInfo processInfo = new ProcessStartInfo("GraphicsController.exe", "Hey hey!");
-            processInfo.CreateNoWindow = false;
-            processInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            //ProcessStartInfo processInfo = new ProcessStartInfo("GraphicsController.exe", "Hey hey!");
+            //processInfo.CreateNoWindow = true;
+            //processInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            
         //    Process.Start()
 
            // Console.ReadKey();

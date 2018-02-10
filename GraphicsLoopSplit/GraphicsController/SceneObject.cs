@@ -9,7 +9,8 @@ namespace ImpunityEngine
     public partial class SceneObject
     {
         public string Name { get; set; }
-        public int ID { get; set; }
+        public string Tag { get; set; }
+        public virtual int ID { get; set; }
         public int MeshID { get; set; }
         public int ShaderID { get; set; }
         public int ParentID { get; set; }
@@ -19,7 +20,16 @@ namespace ImpunityEngine
         public List<SceneObject> Children = new List<SceneObject>();
         public List<ImpunityScript> Imps = new List<ImpunityScript>();
         public Material material = new Material(MaterialType.DefaultTextureless);
-        
+
+        public SceneObject()
+        {
+            Name = "SceneObject";
+            Tag = string.Empty;
+            ID = -1;
+            MeshID = 0;
+            ShaderID = 0;
+
+        }
 
         public virtual void Start()
         {
@@ -37,7 +47,6 @@ namespace ImpunityEngine
                 imp.Update();
             }
 
-            transform.SetTransform(ID);
 
             foreach (var child in Children)
             {
@@ -46,6 +55,9 @@ namespace ImpunityEngine
                 child.transform.SetTransform(child.ID);
             }
 
+            if (ID < 0)
+                return;
+            transform.SetTransform(ID);
         }
     }
 }

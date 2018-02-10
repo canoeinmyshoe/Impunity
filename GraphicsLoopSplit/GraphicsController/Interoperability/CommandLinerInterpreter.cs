@@ -39,21 +39,9 @@ namespace ImpunityEngine
         //Most actions taken will result in a save file string log.... thing
         public void ProcessInput(string input)
         {
-
+            Console.WriteLine("You said: " + input);
         }
         
-        void RunEditor()
-        {
-            Control c = new Control();
-            //OpenGLExampleController ogl = new OpenGLExampleController();
-            //ogl.DrawObjects();
-            CLE GT = new CLE();
-            //This thread initiates the c++/openGL affair, and continuosly loops while polling
-            //for input from the command line. This allows us to set postions or add scripts, pause, play
-            //and most importantly, create a .ImpunityScene file, from which we can load
-            //allowing us to create a growing colleciton of scenes, which would constitute...
-            //anything from a game to a web browser. Buttons and text coming soon.
-        }
 
         void SpaghettiScene()
         {

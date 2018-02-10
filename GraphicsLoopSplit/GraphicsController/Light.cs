@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace ImpunityEngine
 {
-    public class Light
+    public class Light : SceneObject
     {
         //Has all the props of the parent
         public int LightID { get; set; }
 
-        public virtual void Update()
+        public override void Update()
         {
             //Do Light-specific stuff
         }

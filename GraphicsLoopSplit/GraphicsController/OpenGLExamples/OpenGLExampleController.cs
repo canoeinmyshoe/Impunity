@@ -140,10 +140,13 @@ namespace ImpunityEngine.OpenGLExamples
             int id = CreateDirectionalLight(x, y, z);
             Console.WriteLine("C#: Directional Light ID: " + id);
         }
+        
         void MakePointLight(float x, float y, float z)
         {
             int i = CreatePointLight(x, y, z);
             Console.WriteLine("C#: Point light ID: " + i);
+
+
         }
         void BuildStrings()
         {
@@ -159,7 +162,7 @@ namespace ImpunityEngine.OpenGLExamples
             var path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
             int start = path.IndexOf("\\") + 1;
             path = path.Substring(start, path.Length - start);
-            path += "\\GrTextures\\awesomeface.png";
+            path += "\\Textures\\awesomeface.png";
 
             //get the name of the texture
             int nstart = path.LastIndexOf("\\") + 1;
@@ -219,7 +222,7 @@ namespace ImpunityEngine.OpenGLExamples
             int start = path.IndexOf("\\") + 1;
             path = path.Substring(start, path.Length - start);
 
-            path += "\\GrModels\\tree02\\tree.obj";
+            path += "\\Models\\tree02\\tree.obj";
 
          //   Console.WriteLine("Path: " + path);
 
@@ -264,7 +267,7 @@ namespace ImpunityEngine.OpenGLExamples
         {
             Console.WriteLine("Creating lights.");
             ////Create some point lights
-            //MakePointLight(0, 1.3f, -2.8f);
+            MakePointLight(0, 1.3f, -2.8f);
             //MakePointLight(0, -1.3f, 2.8f);
             //MakePointLight(0, -2.3f, 3.8f);
             //MakePointLight(1.0f, 1.0f, 1.0f);
@@ -346,6 +349,7 @@ namespace ImpunityEngine.OpenGLExamples
 
             //The magic number here is 2. Let's make a method to look up a texture
             //all these methods should be in scene object
+            
             SceneObject found = SceneObject.Find(desiredSO);
             Texture tex = Texture.FindByID(2);
 
@@ -406,7 +410,7 @@ namespace ImpunityEngine.OpenGLExamples
             int start = path.IndexOf("\\") + 1;
             path = path.Substring(start, path.Length - start);
 
-            path += "\\GrModels\\Misfits\\untexturedWall.obj";
+            path += "\\Models\\Misfits\\untexturedWall.obj";
 
             //   Console.WriteLine("Path: " + path);
 
