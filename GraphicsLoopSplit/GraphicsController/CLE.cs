@@ -24,15 +24,13 @@ namespace ImpunityEngine
                 return false;
 
             shouldRun = true;
-
-            Console.WriteLine("Well?");
-
+            
             Thread CommandListenerT = new Thread(() =>
             {
                 ListenForCommands();
             });
             CommandListenerT.Start();
-            Console.WriteLine("Test.");
+
             RunImpunity();
             
             return shouldRun;
@@ -40,20 +38,17 @@ namespace ImpunityEngine
 
         private void ListenForCommands()
         {
-            Console.WriteLine("Impunity Command Line Editor 1.0");
+         //   Console.WriteLine("Impunity Command Line Editor 1.0");
             while (shouldRun == true)
             {
                 string input = Console.ReadLine();
-                //processCommandLineInput(input);
-                //  listener.ProcessInput(input);
                 Commands.Add(input);
-                Console.WriteLine("Gee, that's something...");
             }
         }
 
         private void RunImpunity()
         {
-            Console.WriteLine("Starting Impunity.");
+            //Console.WriteLine("Starting Impunity.");
             //ONLY initiate and loop the engine. Other than that, the Interpreter and the Listener share a list of commands (to be created)
             int success = Bridge.InitiateEngine();
             CommandLinerInterpreter listener = new CommandLinerInterpreter();

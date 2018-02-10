@@ -26,10 +26,9 @@ namespace ImpunityEngine
             // Reader.InterpretOpeningArgs(args);
 
 
-
-            //Console.WriteLine("Taking the dive...");
-            //CLE cle = new CLE();
-            //cle.Run();
+            Console.WriteLine("Starting Impunity Command Line Editor 1.0");
+            CLE cle = new CLE();
+            cle.Run();
 
 
 
@@ -37,9 +36,9 @@ namespace ImpunityEngine
             //Console.WriteLine("Any key to quit.");
             //Console.ReadKey();
 
-            Control c = new Control();
-            OpenGLExampleController ogl = new OpenGLExampleController();
-            ogl.DrawObjects();
+            //Control c = new Control();
+            //OpenGLExampleController ogl = new OpenGLExampleController();
+            //ogl.DrawObjects();
         }
         
     }

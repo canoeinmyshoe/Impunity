@@ -132,6 +132,16 @@ namespace ImpunityEngine.Interoperability
 
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int ReportTextures();
+
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetPointLightPosition(int id, float x, float y, float z);
+        public static int SetPointLightPosition(int id, Vector3 position)
+        {
+            return SetPointLightPosition(id, position.x, position.y, position.z);
+        }
+
+
+
     }
 
 }

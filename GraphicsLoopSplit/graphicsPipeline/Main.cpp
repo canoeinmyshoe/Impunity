@@ -747,6 +747,21 @@ extern "C"
 	}
 
 
+#pragma region Light Mutability
+#pragma region PointLightMethods
+	__declspec(dllexport) int SetPointLightPosition(int id, float x, float y, float z) {
+	
+		if (id > ScenePointLights.size())//c# must check for being less than 0
+			return -1;
+
+		ScenePointLights[id].position = glm::vec3(x, y, z);
+
+		return 0;
+	}
+
+#pragma endregion
+
+#pragma endregion
 
 
 #pragma region Practice code

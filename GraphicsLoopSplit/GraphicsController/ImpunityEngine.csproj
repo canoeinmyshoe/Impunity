@@ -48,7 +48,6 @@
     <Compile Include="ExampleImpunityScripts\Character.cs" />
     <Compile Include="CLE.cs" />
     <Compile Include="Interoperability\Bridge.cs" />
-    <Compile Include="Interoperability\CLECommand.cs" />
     <Compile Include="Interoperability\CommandLinerInterpreter.cs" />
     <Compile Include="Interoperability\NativeTranslator.cs" />
     <Compile Include="ImpunityScript.cs" />
@@ -62,6 +61,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
+    <Compile Include="SceneManipulation\SceneMaster.cs" />
     <Compile Include="SceneObject.cs" />
     <Compile Include="SceneObjectMethods.cs" />
     <Compile Include="SpotLight.cs" />
