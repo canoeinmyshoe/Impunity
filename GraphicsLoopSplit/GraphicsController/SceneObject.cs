@@ -28,7 +28,6 @@ namespace ImpunityEngine
             ID = -1;
             MeshID = 0;
             ShaderID = 0;
-
         }
 
         public virtual void Start()

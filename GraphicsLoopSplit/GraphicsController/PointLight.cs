@@ -17,12 +17,40 @@ namespace ImpunityEngine
         public float constant { get; set; }
         public float linear { get; set; }
         public float quadratic { get; set; }
+        public float maxDistance { get; set; }
         public bool enabled { get; set; }
 
         public PointLight(int id)
         {
             LightID = id;//index in the c++ vector of pointlights....
             ID = -1;//should never correspond to an actual SceneObject in the c++ vector
+
+            //defualt values
+            position = new Vector3(0);
+            ambient = new Vector3(0.2f, 0.2f, 0.2f);
+            diffuse = new Vector3(0.5f, 0.5f, 0.5f);
+            specular = new Vector3(1.0f);
+            constant = 1.0f;
+            linear = 0.09f;
+            quadratic = 0.032f;
+            maxDistance = 10.0f;
+            enabled = true;
+        }
+        public PointLight(int id, Vector3 inposition)
+        {
+            LightID = id;//index in the c++ vector of pointlights....
+            ID = -1;//should never correspond to an actual SceneObject in the c++ vector
+
+            //defualt values
+            position = inposition;
+            ambient = new Vector3(0.2f, 0.2f, 0.2f);
+            diffuse = new Vector3(0.5f, 0.5f, 0.5f);
+            specular = new Vector3(1.0f);
+            constant = 1.0f;
+            linear = 0.09f;
+            quadratic = 0.032f;
+            maxDistance = 10.0f;
+            enabled = true;
         }
 
         public override void Update()

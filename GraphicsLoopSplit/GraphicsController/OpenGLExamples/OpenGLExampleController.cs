@@ -145,8 +145,8 @@ namespace ImpunityEngine.OpenGLExamples
         {
             int i = CreatePointLight(x, y, z);
             Console.WriteLine("C#: Point light ID: " + i);
-
-
+            PointLight plight = new PointLight(i, new Vector3(x,y,z));
+            Console.WriteLine("Wow!");
         }
         void BuildStrings()
         {
