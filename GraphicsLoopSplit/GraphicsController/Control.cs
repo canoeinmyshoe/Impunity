@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace GraphicsController
+namespace ImpunityEngine
 {
     //This is where all the openGL method declarations can go
     public class Control

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
  
 
-using GraphicsController;
-using GraphicsController.Interoperability;
-namespace GraphicsController.ExampleImpunityScripts
+
+using ImpunityEngine.Interoperability;
+namespace ImpunityEngine.ExampleImpunityScripts
 {
     public class Character : ImpunityScript
     {

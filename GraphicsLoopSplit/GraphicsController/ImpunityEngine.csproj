@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3E3A24AA-392D-4B53-99A7-1EFD118F6FDA}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>GraphicsController</RootNamespace>
-    <AssemblyName>GraphicsController</AssemblyName>
+    <RootNamespace>ImpunityEngine</RootNamespace>
+    <AssemblyName>ImpunityEngine</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

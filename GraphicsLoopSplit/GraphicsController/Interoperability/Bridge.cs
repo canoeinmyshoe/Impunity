@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace GraphicsController.Interoperability
+namespace ImpunityEngine.Interoperability
 {
     public class Bridge//Contains all the C++ pInvoke stuff
     {

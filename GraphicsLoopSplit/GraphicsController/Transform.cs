@@ -1,8 +1,8 @@
 ﻿
 using System;
-using GraphicsController.Interoperability;
+using ImpunityEngine.Interoperability;
 
-namespace GraphicsController
+namespace ImpunityEngine
 {
     public struct Transform
     {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using GraphicsController.OpenGLExamples;
+using ImpunityEngine.OpenGLExamples;
 
-namespace GraphicsController.Interoperability
+namespace ImpunityEngine
 {
     public class CommandLinerInterpreter
     {

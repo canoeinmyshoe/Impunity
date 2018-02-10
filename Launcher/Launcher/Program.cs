@@ -33,7 +33,7 @@ namespace SceneEditLauncher
            // Console.WriteLine("Process Directory: " + dir);
 
             //I guess it turns out we don't need the directory..
-            Process.Start("GraphicsController.exe", "editor secondArg ThirdArg");
+            Process.Start("GraphicsController.exe", "openGLexamples secondArg ThirdArg");
 
             ProcessStartInfo processInfo = new ProcessStartInfo("GraphicsController.exe", "Hey hey!");
             processInfo.CreateNoWindow = false;

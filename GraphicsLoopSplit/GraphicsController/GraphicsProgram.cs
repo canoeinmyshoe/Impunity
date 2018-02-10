@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 using System.Diagnostics;
 
-using GraphicsController.OpenGLExamples;
-namespace GraphicsController
+using ImpunityEngine.OpenGLExamples;
+namespace ImpunityEngine
 {
     public class GraphicsProgram
     {
@@ -21,7 +21,7 @@ namespace GraphicsController
 
             //    bool test = false;
             //    Debug.Assert(test, "Message");
-            Interoperability.CommandLinerInterpreter Reader = new Interoperability.CommandLinerInterpreter();
+           CommandLinerInterpreter Reader = new CommandLinerInterpreter();
             Reader.InterpretOpeningArgs(args);
 
             //if(runDebugMode == true)

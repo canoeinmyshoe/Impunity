@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace GraphicsController
+
+namespace ImpunityEngine
 {
     public class CLE//The Command Line Editor
     {
@@ -34,7 +35,7 @@ namespace GraphicsController
         private void ListenForCommands()
         {
             Console.WriteLine("Impunity Command Line Editor 1.0");
-            Interoperability.CommandLinerInterpreter listener = new Interoperability.CommandLinerInterpreter();
+            CommandLinerInterpreter listener = new CommandLinerInterpreter();
             while (shouldRun == true)
             {
                 string input = Console.ReadLine();

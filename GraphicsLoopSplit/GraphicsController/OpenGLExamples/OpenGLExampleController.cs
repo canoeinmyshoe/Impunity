@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-using GraphicsController.Interoperability;
-using GraphicsController.ExampleImpunityScripts;
+using ImpunityEngine.Interoperability;
+using ImpunityEngine.ExampleImpunityScripts;
 
-namespace GraphicsController.OpenGLExamples
+namespace ImpunityEngine.OpenGLExamples
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack =1)]
     public struct TestStruct{

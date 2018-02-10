@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "graphicsPipeline", "graphicsPipeline.vcxproj", "{61554F69-416B-470E-A9A8-ECB69EBB2A54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicsController", "..\GraphicsController\GraphicsController.csproj", "{3E3A24AA-392D-4B53-99A7-1EFD118F6FDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImpunityEngine", "..\GraphicsController\ImpunityEngine.csproj", "{3E3A24AA-392D-4B53-99A7-1EFD118F6FDA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{61554F69-416B-470E-A9A8-ECB69EBB2A54} = {61554F69-416B-470E-A9A8-ECB69EBB2A54}
 	EndProjectSection
