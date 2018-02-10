@@ -75,6 +75,7 @@ namespace ImpunityEngine
             bool listObjects = false;
             for (int i = 0; i < args.Length; i++)
             {
+                string word = args[i].ToLower();
                 if (creation == true)
                 {
                     creation = false;
@@ -91,25 +92,67 @@ namespace ImpunityEngine
                     ShowList(i, args);
                     Console.WriteLine("List time");
                 }
-                else if (args[i] == "create" || args[i] == "crt")
+                else if (word == "create" || word == "crt")
                 {
                     //Create the next thing that comes up
                     creation = true;
                 }
-                else if (args[i].ToLower() == "setposition")
+                else if (word == "setposition")
                 {
                     setPosition = true;
 
                 }
-                else if (args[i].ToLower() == "list")
+                else if (word == "list")
                 {
                     //Console.WriteLine("List?");
                     listObjects = true;
+                }
+                else if (word == "setambient" || word == "setamb")
+                {
+                    Console.WriteLine("Setting ambient level.");
+                    SetAmbientLevel(i, args);
                 }
                 else
                 {
                     // Console.WriteLine("Teapots.");
                 }
+            }
+        }
+        void SetAmbientLevel(int index, string[] args)
+        {
+            //we are expecting (after index) 
+            //args[index + ]  - ID of light
+            //args[index + 2-5] - new ambient value
+            //args[index + 6] - type of light
+            if (index + 5 > args.Length - 1)
+                return;
+            int result;
+            if (!int.TryParse(args[index + 1],out result))
+                return;
+            float x = 0,y= 0, z = 0;
+            try
+            {
+                x = Convert.ToSingle(args[index + 2]);
+                y = Convert.ToSingle(args[index + 3]);
+                z = Convert.ToSingle(args[index + 4]);
+            }
+            catch { return; }
+            Vector3 ambient = new Vector3(x, y, z);
+            string key = args[5].ToLower();
+            if (key == "pointlight" || key == "plight")
+            {
+                try { PointLight.FindLightByID(result).SetAmbient(ambient); } catch { Console.WriteLine("Failed to set ambient point light level."); }
+                return;
+            }
+            else if (key == "spotlight" || key == "slight")
+            {
+                try { SpotLight.FindLightByID(result).SetAmbient(ambient); } catch { }
+                return;
+            }
+            else if (key == "directionallight" || key == "dlight")
+            {
+                try { DirectionalLight.FindLightByID(result).SetAmbient(ambient); } catch { }
+                return;
             }
         }
         void ShowList(int index, string[] args)
@@ -134,7 +177,36 @@ namespace ImpunityEngine
             }
             else if (key == "pointlight" || key == "plight")
             {
-                
+                foreach (var light in Control.AllSceneObjects)
+                {
+                    if (light is PointLight)
+                    {
+                        PointLight pl = (PointLight)light;
+                        Console.WriteLine("Point Light ID: " + pl.LightID);
+                    }
+                }
+            }
+            else if (key == "directionallight" || key == "dlight")
+            {
+                foreach (var light in Control.AllSceneObjects)
+                {
+                    if (light is DirectionalLight)
+                    {
+                        DirectionalLight pl = (DirectionalLight)light;
+                        Console.WriteLine("Directional Light ID: " + pl.LightID);
+                    }
+                }
+            }
+            else if (key == "spotlight" || key == "slight")
+            {
+                foreach (var light in Control.AllSceneObjects)
+                {
+                    if (light is SpotLight)
+                    {
+                        SpotLight pl = (SpotLight)light;
+                        Console.WriteLine("Spot Light ID: " + pl.LightID);
+                    }
+                }
             }
         }
         void Create(string arg, int index, string[] args)

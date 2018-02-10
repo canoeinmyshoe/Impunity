@@ -154,6 +154,27 @@ namespace ImpunityEngine.Interoperability
             return SetSpotLightPosition(id, position.x, position.y, position.z);
         }
 
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetPLightAmbient(int id, float x, float y, float z);
+        public static int SetPLightAmbient(int id, Vector3 color)
+        {
+            return SetPLightAmbient(id, color.x, color.y, color.z);
+        }
+
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetSLightAmbient(int id, float x, float y, float z);
+        public static int SetSLightAmbient(int id, Vector3 color)
+        {
+            return SetSLightAmbient(id, color.x, color.y, color.z);
+        }
+
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetDLightAmbient(int id, float x, float y, float z);
+        public static int SetDLightAmbient(int id, Vector3 color)
+        {
+            return SetDLightAmbient(id, color.x, color.y, color.z);
+        }
+
     }
 
 }

@@ -102,6 +102,12 @@ namespace ImpunityEngine
             Bridge.SetPointLightPosition(LightID, x, y, z);
         }
 
+        public void SetAmbient(Vector3 amb)
+        {
+            ambient = amb;
+            Bridge.SetPLightAmbient(LightID, ambient);
+        }
+
         //We need methods for setting other values, too.
     }
 }

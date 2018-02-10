@@ -751,11 +751,18 @@ extern "C"
 #pragma region Point Light Methods
 	__declspec(dllexport) int SetPointLightPosition(int id, float x, float y, float z) {
 	
-		if (id > ScenePointLights.size())//c# must check for being less than 0
+		if (id > ScenePointLights.size()-1)//c# must check for being less than 0
 			return -1;
 
 		ScenePointLights[id].position = glm::vec3(x, y, z);
 
+		return 0;
+	}
+	__declspec(dllexport) int SetPLightAmbient(int id, float x, float y, float z) {
+		if (id > ScenePointLights.size() - 1)
+			return -1;
+		ScenePointLights[id].ambient = glm::vec3(x, y, z);
+		//cout << "C++: Set point light ambient level" << endl;
 		return 0;
 	}
 
@@ -767,20 +774,34 @@ extern "C"
 			return -1;
 
 		SceneDirectionalLights[id].direction = glm::vec3(x, y, z);
-		cout << "C++: Set Directional Light ID: " << id << endl;
+	//	cout << "C++: Set Directional Light ID: " << id << endl;
 		
+		return 0;
+	}
+	__declspec(dllexport) int SetDLightAmbient(int id, float x, float y, float z) {
+		if (id > SceneDirectionalLights.size() - 1)
+			return -1;
+		SceneDirectionalLights[id].ambient = glm::vec3(x, y, z);
+	//	cout << "C++: set ambient of directional light" << endl;
 		return 0;
 	}
 #pragma endregion
 
-#pragma region
+#pragma region Spot Light Methods
 	__declspec(dllexport) int SetSpotLightPosition(int id, float x, float y, float z) {
-		if (id > SceneSpotLights.size())
+		if (id > SceneSpotLights.size()-1)
 			return -1;
 
 		SceneSpotLights[id].position = glm::vec3(x, y, x);
-		cout << "C++: set position of spotlight" << endl;
+		//cout << "C++: set position of spotlight" << endl;
 
+		return 0;
+	}
+	__declspec(dllexport) int SetSLightAmbient(int id, float x, float y, float z) {
+		if (id > SceneSpotLights.size() - 1)
+			return -1;
+		SceneSpotLights[id].ambient = glm::vec3(x, y, z);
+		//cout << "C++: set ambient of spot light" << endl;
 		return 0;
 	}
 

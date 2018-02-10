@@ -80,5 +80,11 @@ namespace ImpunityEngine
             Bridge.SetSpotLightPosition(LightID, position);
         }
 
+        public void SetAmbient(Vector3 color)
+        {
+            ambient = color;
+            Bridge.SetSLightAmbient(LightID, ambient);
+        }
+
     }
 }
