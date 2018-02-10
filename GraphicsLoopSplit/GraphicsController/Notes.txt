@@ -31,6 +31,11 @@ key words:
 
 create - creates a SceneObject, Light, or Model (as a sceneObject)
 setPosition - sets the position of a SceneObject or Light by name or ID
+TODO: setRotation - sets the rotation of a sceneObject or Light by name/ID
+TODO:Set each and every variable of every type of light!
+TODO:And perhaps uniforms, too
+TODO: Buttons, text, textfields, general GUI-ndc stuff
+
 
 example 1: create pointLight
 example 2: setPosition int(index) Vector3(position)  type(optional)
