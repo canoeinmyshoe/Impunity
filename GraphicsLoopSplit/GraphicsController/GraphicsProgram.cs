@@ -25,7 +25,8 @@ namespace GraphicsController
             Reader.InterpretOpeningArgs(args);
 
             //if(runDebugMode == true)
-         
+            Console.WriteLine("End of the line.");
+            Console.ReadKey();
         }
         
     }

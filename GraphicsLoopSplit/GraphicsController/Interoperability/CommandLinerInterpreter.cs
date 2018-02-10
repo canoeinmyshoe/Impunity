@@ -16,6 +16,11 @@ namespace GraphicsController.Interoperability
             if (args.Length == 0)
                 return;
 
+            foreach (var item in args)
+            {
+                Console.WriteLine(item);
+            }
+
             if (args[0] == "openGLexamples")
             {
                 SpaghettiScene();
@@ -23,7 +28,7 @@ namespace GraphicsController.Interoperability
             else if (args[0] == "editor")
             {
                 CLE cle = new CLE();
-                
+                cle.Run();
             }
             else
             {
