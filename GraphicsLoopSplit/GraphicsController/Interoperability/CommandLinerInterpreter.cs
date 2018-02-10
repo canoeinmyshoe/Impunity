@@ -122,12 +122,143 @@ namespace ImpunityEngine
                     Console.WriteLine("Setting specular level.");
                     SetSpecularLevel(i, args);
                 }
+                else if (word == "setmaxdist" || word == "setmaxdistance" || word == "smd")
+                {
+                    Console.WriteLine("Setting max distance");
+                    SetMaxDist(i, args);
+                }
+                else if (word == "enable" || word == "setactive")
+                {
+                    Console.WriteLine("Enabling");
+                    SetEnabled(i, args);
+                   }
                 else
                 {
                     // Console.WriteLine("Teapots.");
                 }
             }
         }
+        void SetEnabled(int index, string[] args)
+        {
+            //we're expecting either an ID or a name args[index + 1]
+            //followed by a true or false args[index + 2]
+            //followed by optional further clarification of light type args[index + 3]
+
+
+            if (index + 2 > args.Length - 1) { Console.WriteLine("ERROR: INVALID COMMAND"); return; }
+         
+
+            //the user may have specied a light type(or other) and the end of this line
+            Console.WriteLine("ID or Name: " + args[index + 1]);
+
+            bool useID = false;
+            int result;
+            if (int.TryParse(args[index + 1], out result))
+            {
+                useID = true;
+            }
+            bool enableState = false;
+            if (args[index + 2].ToLower() == "true" || args[index + 2].ToLower() == "t")
+            {
+                enableState = true;
+            }
+
+            if (index + 3 <= args.Length - 1)
+            {
+                if (args[index + 3].ToLower() == "pointlight" || args[index + 3].ToLower() == "plight")
+                {
+                    //set the pLight position...which is done in the class itself, if found
+                    Console.WriteLine("Setting point light enabled="+enableState.ToString());
+                    try
+                    {
+                        if (useID == true)
+                        {
+                            PointLight plight = PointLight.FindLightByID(result);
+                            plight.SetEnabled(enableState);
+                            //  PointLight.FindLightByID(result).SetPosition(position);
+                        }
+                    }
+                    catch (Exception ERR) { Console.WriteLine("The Point light " + (result) + " not found: " + ERR.Message); }
+                    return;
+                }
+                else if (args[index + 3].ToLower() == "directionallight" || args[index + 3].ToLower() == "dlight")
+                {
+                    Console.WriteLine("Setting enable directional light");
+                    if (useID == true)
+                    {
+                        try
+                        {
+                            DirectionalLight dlight = DirectionalLight.FindLightByID(result);
+                            //   dlight.SetDirection(position);
+                            dlight.SetEnabled(enableState);
+                        }
+                        catch (NullReferenceException nex) { Console.WriteLine(nex.Message); }
+                    }
+                    return;
+                }
+                else if (args[index + 3].ToLower() == "spotlight" || args[index + 3].ToLower() == "slight")
+                {
+                    Console.WriteLine("Setting enable spotlight");
+                    try
+                    {
+                        SpotLight spot = SpotLight.FindLightByID(result);
+                        //   spot.SetPosition(position);
+                        spot.SetEnabled(enableState);
+                    }
+                    catch (NullReferenceException nex) { Console.WriteLine(nex.Message); }
+                    return;
+                }
+            }
+
+            return;
+
+            if (useID == true)
+            {
+             //   SetByID(result, position);
+            }
+            else
+            {
+               // SetByName(args[index], position);
+            }
+
+        }
+
+        void SetMaxDist(int index, string[] args)
+        {
+            //we are expecting (after index) 
+            //args[index + 1]  - ID of light
+            //args[index + 2] - new ambient value
+            //args[index + 3} - light type to search for
+            if (index + 3 > args.Length - 1)
+                return;
+            int result;
+            if (!int.TryParse(args[index + 1], out result))
+                return;
+            float x = 0;
+            try
+            {
+                x = Convert.ToSingle(args[index + 2]);
+            }
+            catch { return; }
+
+            string key = args[3].ToLower();
+            if (key == "pointlight" || key == "plight")
+            {
+                try { PointLight.FindLightByID(result).SetMaxDistance(x); } catch { Console.WriteLine("Failed to set maxdist point light level."); }
+                return;
+            }
+            else if (key == "spotlight" || key == "slight")
+            {
+            //    try { SpotLight.FindLightByID(result).SetAmbient(ambient); } catch { }
+                return;
+            }
+            else if (key == "directionallight" || key == "dlight")
+            {
+            //    try { DirectionalLight.FindLightByID(result).SetAmbient(ambient); } catch { }
+                return;
+            }
+        }
+
         void SetAmbientLevel(int index, string[] args)
         {
             //we are expecting (after index) 

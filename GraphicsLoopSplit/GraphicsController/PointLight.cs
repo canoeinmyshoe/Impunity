@@ -118,6 +118,25 @@ namespace ImpunityEngine
             specular = col;
             Bridge.SetPLightSpecular(LightID, specular);
         }
+        public void SetMaxDistance(float radius)
+        {
+            maxDistance = radius;
+            Bridge.SetMaxDistancePLight(LightID, radius);
+        }
+        public void SetEnabled(bool enable)
+        {
+            int value = 0;
+            if (enable == true){
+                value = 1;
+                enabled = true;
+            }
+            else {
+                value = 0;
+                enabled = false;
+            }
+
+            Bridge.SetPLightEnabled(LightID, value);
+        }
 
         //We need methods for setting other values, too.
     }

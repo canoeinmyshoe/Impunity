@@ -173,6 +173,11 @@ namespace ImpunityEngine.Interoperability
         {
             return SetPLightSpecular(id, color.x, color.y, color.z);
         }
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetMaxDistancePLight(int id, float radius);
+
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetPLightEnabled(int id, int enabled);
         #endregion
 
         #region SpotLight values
@@ -194,6 +199,8 @@ namespace ImpunityEngine.Interoperability
         {
             return SetSLightSpecular(id, color.x, color.y, color.z);
         }
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetSLightEnabled(int id, int enabled);
 
         #endregion
 
@@ -217,6 +224,9 @@ namespace ImpunityEngine.Interoperability
         {
             return SetDLightSpecular(id, color.x, color.y, color.z);
         }
+
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetDLightEnabled(int id, int enabled);
         #endregion
 
     }

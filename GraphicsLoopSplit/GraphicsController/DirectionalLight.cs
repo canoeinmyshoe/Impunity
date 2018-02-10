@@ -79,5 +79,21 @@ namespace ImpunityEngine
             specular = color;
             Bridge.SetDLightSpecular(LightID, specular);
         }
+        public void SetEnabled(bool enable)
+        {
+            int value = 0;
+            if (enable == true)
+            {
+                value = 1;
+                enabled = true;
+            }
+            else
+            {
+                value = 0;
+                enabled = false;
+            }
+
+            Bridge.SetDLightEnabled(LightID, value);
+        }
     }
 }

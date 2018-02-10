@@ -32,6 +32,12 @@ key words:
 create - creates a SceneObject, Light, or Model (as a sceneObject)
 setPosition - sets the position of a SceneObject or Light by name or ID
 setambient/setamb - id vec3 lightType
+list sceneObj/lightType -print a list of objects
+setAmbient - set ambient value
+setDiffuse - set diffuse value
+setSpecular  - set specular value
+enable - enabled/disable a so/light
+
 TODO: setRotation - sets the rotation of a sceneObject or Light by name/ID
 TODO:Set each and every variable of every type of light!
 TODO:And perhaps uniforms, too
@@ -40,4 +46,9 @@ TODO: Buttons, text, textfields, general GUI-ndc stuff
 
 example 1: create pointLight
 example 2: setPosition int(index) Vector3(position)  type(optional)
+example 2b: setpos tree -1 6 -2.3
 example 3: create model c:\someDirectory\myModel.obj
+example 4:setdiff 2 0.6 0.4 0.4 spotlight
+example 5: setspecular 1 .8 .8 .8 plight
+example 6: enable tree false
+example 7: enable 2 true plight

@@ -779,6 +779,28 @@ extern "C"
 	//	cout << "C++: Set point light specular level" << endl;
 		return 0;
 	}
+	__declspec(dllexport) int SetMaxDistancePLight(int id, float x) {
+		if (id > ScenePointLights.size() - 1)
+			return -1;
+		ScenePointLights[id].maxDistance = x;
+		//	cout << "C++: Set point light max distance" << endl;
+		return 0;
+	}
+	__declspec(dllexport) int SetPLightEnabled(int id, int enabled) 
+	{
+		if (id > ScenePointLights.size() - 1)
+			return -1;
+
+		if (enabled == 0) 
+		{
+			ScenePointLights[id].enabled = false;
+		}
+		else 
+		{
+			ScenePointLights[id].enabled = true;
+		}
+		return 0;
+	}
 
 #pragma endregion
 
@@ -811,6 +833,22 @@ extern "C"
 			return -1;
 		SceneDirectionalLights[id].specular = glm::vec3(x, y, z);
 			cout << "C++: set specular of directional light" << endl;
+		return 0;
+	}
+	__declspec(dllexport) int SetDLightEnabled(int id, int enabled)
+	{
+		if (id > SceneDirectionalLights.size() - 1)
+			return -1;
+
+		if (enabled == 0)
+		{
+			SceneDirectionalLights[id].enabled = false;
+		}
+		else
+		{
+			SceneDirectionalLights[id].enabled = true;
+		}
+		cout << "C++: set enable directional light" << endl;
 		return 0;
 	}
 #pragma endregion
@@ -846,6 +884,24 @@ extern "C"
 		//	cout << "C++: set specular of spot light" << endl;
 			return 0;
 		}
+		__declspec(dllexport) int SetSLightEnabled(int id, int enabled)
+		{
+			if (id > SceneSpotLights.size() - 1)
+				return -1;
+
+			if (enabled == 0)
+			{
+				SceneSpotLights[id].enabled = false;
+			}
+			else
+			{
+				SceneSpotLights[id].enabled = true;
+			}
+
+			cout << "C++ set enable spotLight" << endl;
+			return 0;
+		}
+
 #pragma endregion
 
 #pragma endregion
@@ -4387,6 +4443,8 @@ void DrawDebuggingLights()
 	glm::mat4 model;
 	for (size_t i = 0; i < ScenePointLights.size(); i++)
 	{
+		if (ScenePointLights[i].enabled != true)
+			continue;
 		model = glm::mat4();
 		model = glm::translate(model, ScenePointLights[i].position);
 		model = glm::scale(model, glm::vec3(0.05f)); // Make it a smaller cube
@@ -4402,6 +4460,8 @@ void DrawDebuggingLights()
 
 	for (size_t i = 0; i < SceneDirectionalLights.size(); i++)
 	{
+		if (SceneDirectionalLights[i].enabled != true)
+			continue;
 		glm::vec3 position = glm::vec3(0.0, i, 0.0);
 
 		model = glm::mat4();
@@ -4419,6 +4479,8 @@ void DrawDebuggingLights()
 
 	for (size_t i = 0; i < SceneSpotLights.size(); i++)
 	{
+		if (SceneSpotLights[i].enabled != true)
+			continue;
 		model = glm::mat4();
 		model = glm::translate(model, SceneSpotLights[i].position);
 		model = glm::scale(model, glm::vec3(0.05f)); // Make it a smaller cube

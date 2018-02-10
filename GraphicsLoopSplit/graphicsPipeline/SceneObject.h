@@ -122,6 +122,9 @@ public:
 
 	void Draw()
 	{
+		if (Enabled != true)
+			return; 
+
 		LoadedShaders[ShaderNumber]->Use();
 		LoadedShaders[ShaderNumber]->setMat4("view", ViewMatrix);
 		LoadedShaders[ShaderNumber]->setMat4("projection", ProjectionMatrix);
@@ -154,10 +157,10 @@ public:
 		//and let the shader work out the distance, as well as whether or not it should use light
 		for (size_t i = 0; i < ScenePointLights.size(); i++)
 		{
-			if (ScenePointLights[i].enabled != true) 
+		/*	if (ScenePointLights[i].enabled != true) 
 			{
 				continue;
-			}
+			}*/
 		
 			string eye = std::to_string(i);
 			std::string s = "pointLights[" + eye + "].position";
@@ -186,12 +189,32 @@ public:
 			pos = &s[0u];
 			LoadedShaders[ShaderNumber]->SetFloat(ScenePointLights[i].maxDistance, pos);
 
+			if (ScenePointLights[i].enabled != true)
+			{
+				s = "pointLights[" + eye + "].maxRange";
+				pos = &s[0u];
+				LoadedShaders[ShaderNumber]->SetFloat(0, pos);
+			}
+
 		}
 
 		for (size_t i = 0; i < SceneDirectionalLights.size(); i++)
 		{
 			if (SceneDirectionalLights[i].enabled != true) 
 			{
+				string eye = std::to_string(i);
+				std::string s = "directionalLights[" + eye + "].direction";
+				GLchar * pos = &s[0u];
+				LoadedShaders[ShaderNumber]->SetVec3(SceneDirectionalLights[i].direction.x, SceneDirectionalLights[i].direction.y, SceneDirectionalLights[i].direction.z, pos);
+				s = "directionalLights[" + eye + "].ambient";
+				pos = &s[0u];
+				LoadedShaders[ShaderNumber]->SetVec3(0, 0, 0, pos);
+				s = "directionalLights[" + eye + "].diffuse";
+				pos = &s[0u];
+				LoadedShaders[ShaderNumber]->SetVec3(0, 0, 0, pos);
+				s = "directionalLights[" + eye + "].specular";
+				pos = &s[0u];
+				LoadedShaders[ShaderNumber]->SetVec3(0, 0, 0, pos);
 
 				continue;
 			}
@@ -214,10 +237,10 @@ public:
 
 		for (size_t i = 0; i < SceneSpotLights.size(); i++)
 		{
-			if (SceneSpotLights[i].enabled != true) 
+		/*	if (SceneSpotLights[i].enabled != true) 
 			{
 				continue;
-			}
+			}*/
 		
 			string eye = std::to_string(i);
 			std::string s = "spotLights[" + eye + "].position";
@@ -245,6 +268,13 @@ public:
 			s = "spotLights[" + eye + "].maxRange";
 			pos = &s[0u];
 			LoadedShaders[ShaderNumber]->SetFloat(SceneSpotLights[i].maxDistance, pos);
+
+		if (SceneSpotLights[i].enabled != true)
+			{
+			s = "spotLights[" + eye + "].maxRange";
+			pos = &s[0u];
+			LoadedShaders[ShaderNumber]->SetFloat(0, pos);
+			}
 
 
 		}
