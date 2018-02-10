@@ -201,7 +201,10 @@ namespace ImpunityEngine.Interoperability
         }
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetSLightEnabled(int id, int enabled);
-
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetMaxDistanceSLight(int id, float radius);
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetSpotLightCutOff(int id, float x, float ox);
         #endregion
 
 

@@ -79,8 +79,6 @@ namespace ImpunityEngine
             }
             throw new NullReferenceException($"Point light ID \"{id}\" not found");
         }
-
-
         public void SetPosition()//the light would do this if it's dynamic
         {
             //This method will tell c++ to Directly set the pointLight's Position

@@ -901,6 +901,25 @@ extern "C"
 			cout << "C++ set enable spotLight" << endl;
 			return 0;
 		}
+		//and a few more values...
+		__declspec(dllexport) int SetMaxDistanceSLight(int id, float x) {
+			if (id > SceneSpotLights.size() - 1)
+				return -1;
+			SceneSpotLights[id].maxDistance = x;
+				cout << "C++: Set spot light max distance" << endl;
+			return 0;
+		}
+		__declspec(dllexport) int SetSpotLightCutOff(int id, float x, float ox) {
+			if (id > SceneSpotLights.size() - 1)
+				return -1;
+
+			SceneSpotLights[id].cutOff = x;
+			SceneSpotLights[id].outerCutOff = ox;
+
+			cout << "C++: set spot light cutOff values." << endl;
+
+			return 0;
+		}
 
 #pragma endregion
 

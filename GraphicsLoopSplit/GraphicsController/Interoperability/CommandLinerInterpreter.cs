@@ -131,11 +131,39 @@ namespace ImpunityEngine
                 {
                     Console.WriteLine("Enabling");
                     SetEnabled(i, args);
-                   }
+                }
+                else if (word == "cutoff" || word == "spotlightangle" || word == "slightangle")
+                {
+                    Console.WriteLine("Setting cutoff");
+                    SetCutOff(i, args);
+                }
                 else
                 {
                     // Console.WriteLine("Teapots.");
                 }
+            }
+        }
+        void SetCutOff(int index, string[] args) {
+            //we are expecting 
+            //args[index + 1] -- spotLight ID
+            //args[index + 2] -- angle
+
+            if (index + 2 > args.Length - 1)
+                return;
+
+            int result;
+            if (!int.TryParse(args[index + 1], out result))
+                return;
+            float angle = 0;
+            try { angle = Convert.ToSingle(args[index + 2]); }catch { return; }
+
+            try
+            {
+                SpotLight.FindLightByID(result).SetCutOff(angle);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Failed to set spot light cutOff");
             }
         }
         void SetEnabled(int index, string[] args)
@@ -249,11 +277,12 @@ namespace ImpunityEngine
             }
             else if (key == "spotlight" || key == "slight")
             {
-            //    try { SpotLight.FindLightByID(result).SetAmbient(ambient); } catch { }
+                try { SpotLight.FindLightByID(result).SetMaxDistance(x); } catch { }
                 return;
             }
             else if (key == "directionallight" || key == "dlight")
             {
+                Console.WriteLine("Directional lights do not have a max distance property");
             //    try { DirectionalLight.FindLightByID(result).SetAmbient(ambient); } catch { }
                 return;
             }
