@@ -1,0 +1,13 @@
+C:\Data\Projects\Impunity\impunity\Launcher\Launcher\bin\Debug\Launcher.exe.config
+C:\Data\Projects\Impunity\impunity\Launcher\Launcher\bin\Debug\Launcher.exe
+C:\Data\Projects\Impunity\impunity\Launcher\Launcher\bin\Debug\Launcher.pdb
+C:\Data\Projects\Impunity\impunity\Launcher\Launcher\bin\Debug\GraphicsController.exe
+C:\Data\Projects\Impunity\impunity\Launcher\Launcher\bin\Debug\GraphicsController.pdb
+C:\Data\Projects\Impunity\impunity\Launcher\Launcher\bin\Debug\GraphicsController.exe.config
+C:\Data\Projects\Impunity\impunity\Launcher\Launcher\obj\Debug\Launcher.csprojResolveAssemblyReference.cache
+C:\Data\Projects\Impunity\impunity\Launcher\Launcher\obj\Debug\Launcher.csproj.CoreCompileInputs.cache
+C:\Data\Projects\Impunity\impunity\Launcher\Launcher\obj\Debug\Launcher.exe
+C:\Data\Projects\Impunity\impunity\Launcher\Launcher\obj\Debug\Launcher.pdb
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\bin\Debug\Launcher.exe.config
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\bin\Debug\Launcher.exe
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\bin\Debug\Launcher.pdb

@@ -19,9 +19,13 @@ namespace GraphicsController
             //AS either dev or player
 
 
-        //    bool test = false;
-        //    Debug.Assert(test, "Message");
+            //    bool test = false;
+            //    Debug.Assert(test, "Message");
 
+            foreach (string arg in args)
+            {
+                Console.WriteLine(arg);
+            }
             
 
 
@@ -31,5 +35,6 @@ namespace GraphicsController
             OpenGLExampleController ogl = new OpenGLExampleController();
             ogl.DrawObjects();
         }
+        
     }
 }
