@@ -21,19 +21,11 @@ namespace GraphicsController
 
             //    bool test = false;
             //    Debug.Assert(test, "Message");
-
-            foreach (string arg in args)
-            {
-                Console.WriteLine(arg);
-            }
-            
-
-
+            Interoperability.CommandLinerInterpreter Reader = new Interoperability.CommandLinerInterpreter();
+            Reader.InterpretOpeningArgs(args);
 
             //if(runDebugMode == true)
-            Control c = new Control();
-            OpenGLExampleController ogl = new OpenGLExampleController();
-            ogl.DrawObjects();
+         
         }
         
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using System.Diagnostics;
 
-namespace Launcher
+namespace SceneEditLauncher
 {
     class Program
     {
@@ -33,7 +33,7 @@ namespace Launcher
            // Console.WriteLine("Process Directory: " + dir);
 
             //I guess it turns out we don't need the directory..
-            Process.Start("GraphicsController.exe", "Hey hey!");
+            Process.Start("GraphicsController.exe", "editor secondArg ThirdArg");
 
             ProcessStartInfo processInfo = new ProcessStartInfo("GraphicsController.exe", "Hey hey!");
             processInfo.CreateNoWindow = false;

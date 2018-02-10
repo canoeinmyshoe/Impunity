@@ -45,7 +45,9 @@
   <ItemGroup>
     <Compile Include="Control.cs" />
     <Compile Include="ExampleImpunityScripts\Character.cs" />
+    <Compile Include="CLE.cs" />
     <Compile Include="Interoperability\Bridge.cs" />
+    <Compile Include="Interoperability\CommandLinerInterpreter.cs" />
     <Compile Include="Interoperability\NativeTranslator.cs" />
     <Compile Include="Light.cs" />
     <Compile Include="ImpunityScript.cs" />
