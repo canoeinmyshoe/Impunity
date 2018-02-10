@@ -347,7 +347,7 @@ namespace GraphicsController.OpenGLExamples
             //The magic number here is 2. Let's make a method to look up a texture
             //all these methods should be in scene object
             SceneObject found = SceneObject.Find(desiredSO);
-               Texture tex = Texture.FindByID(2);
+            Texture tex = Texture.FindByID(2);
 
              int tresult = Bridge.SwapDiffuseMap(found, tex);
 
