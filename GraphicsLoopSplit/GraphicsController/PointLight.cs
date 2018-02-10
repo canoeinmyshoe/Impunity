@@ -35,6 +35,7 @@ namespace ImpunityEngine
             quadratic = 0.032f;
             maxDistance = 10.0f;
             enabled = true;
+            isStatic = false;
         }
         public PointLight(int id, Vector3 inposition)
         {
@@ -51,6 +52,7 @@ namespace ImpunityEngine
             quadratic = 0.032f;
             maxDistance = 10.0f;
             enabled = true;
+            isStatic = false;
         }
 
         public override void Update()

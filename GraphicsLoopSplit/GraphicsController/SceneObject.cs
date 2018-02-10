@@ -15,6 +15,7 @@ namespace ImpunityEngine
         public int ShaderID { get; set; }
         public int ParentID { get; set; }
         public bool isChild { get; set; }
+        public bool isStatic { get; set; }
         public Transform transform = new Transform(true);
         public SceneObject Parent { get; set; }
         public List<SceneObject> Children = new List<SceneObject>();
@@ -28,6 +29,7 @@ namespace ImpunityEngine
             ID = -1;
             MeshID = 0;
             ShaderID = 0;
+            isStatic = false;
         }
 
         public virtual void Start()
@@ -45,6 +47,9 @@ namespace ImpunityEngine
             {
                 imp.Update();
             }
+
+            if (isStatic == true)
+                return;
 
 
             foreach (var child in Children)

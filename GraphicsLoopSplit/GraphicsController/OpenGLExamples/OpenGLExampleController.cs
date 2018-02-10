@@ -134,11 +134,15 @@ namespace ImpunityEngine.OpenGLExamples
         {
             int id = CreateSpotLight(x, y, z, dx, dy, dz);
             Console.WriteLine("C#: Spot Light ID: " + id);
+            SpotLight spot = new SpotLight(id, new Vector3(x, y, z), new Vector3(dx, dy, dz));
+            Console.WriteLine("Added new spotlight!");
         }
         void MakeDirectionalLight(float x, float y, float z)
         {
             int id = CreateDirectionalLight(x, y, z);
             Console.WriteLine("C#: Directional Light ID: " + id);
+            DirectionalLight dlight = new DirectionalLight(id, new Vector3(x,y,z));
+            Console.WriteLine("Added a new directional light.");
         }
         
         void MakePointLight(float x, float y, float z)
@@ -274,7 +278,7 @@ namespace ImpunityEngine.OpenGLExamples
 
             MakeDirectionalLight(0.5f, 0.2f, 0.5f);
 
-            //MakeSpotLight(3.0f, 3.0f, 3.0f, 0.25f, 0.25f, 0.25f);
+            MakeSpotLight(3.0f, 3.0f, 3.0f, 0.25f, 0.25f, 0.25f);
             //MakeSpotLight(3.0f, 3.0f, 3.0f, 0.25f, 0.25f, 0.25f);
             //MakeSpotLight(3.0f, -3.0f, -3.0f, 0.25f, 0.25f, -0.25f);
 

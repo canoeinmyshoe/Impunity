@@ -24,11 +24,6 @@ namespace ImpunityEngine
                 return false;
 
             shouldRun = true;
-            //You'll have to break out the web server for thread info!
-            //Task task1 = Task.Factory.StartNew(() => ListenForCommands());
-            //Task task2 = Task.Factory.StartNew(() => RunImpunity());
-
-            
 
             Console.WriteLine("Well?");
 
@@ -39,15 +34,7 @@ namespace ImpunityEngine
             CommandListenerT.Start();
             Console.WriteLine("Test.");
             RunImpunity();
-
-            // And now a separate thread for rendering and doing stuff
-            //Thread GraphicsThreadT = new Thread(() =>
-            //{
-            //    RunImpunity();
-            //});
-            //GraphicsThreadT.Start();
-
-            // Task.WaitAll();
+            
             return shouldRun;
         }
 

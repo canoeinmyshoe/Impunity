@@ -6,56 +6,70 @@ using System.Threading.Tasks;
 
 namespace ImpunityEngine
 {
-    public class DirectionalLight : SceneObject
+    public class SpotLight : SceneObject
     {
         public int LightID { get; set; }
-        public Vector3 direction { get; set; }
+        public Vector3 position { get; set; }
         public Vector3 ambient { get; set; }
         public Vector3 diffuse { get; set; }
         public Vector3 specular { get; set; }
+        public Vector3 direction { get; set; }
+        public float cutOff { get; set; }
+        public float outerCutOff { get; set; }
+        public float maxDistance { get; set; }
         public bool enabled { get; set; }
 
-        public DirectionalLight(int id)
+        public SpotLight(int id)
         {
             LightID = id;
             ID = -1;
-            direction = new Vector3(0.0f);
+            position = new Vector3(0);
+            direction = new Vector3(0);
+            cutOff = 12.5f;
+            outerCutOff = 15.0f;
             ambient = new Vector3(0.2f);
             diffuse = new Vector3(0.5f);
             specular = new Vector3(1.0f);
-            enabled = true;
+            maxDistance = 25.0f;
             isStatic = false;
         }
-        public DirectionalLight(int id, Vector3 indirection)
+        public SpotLight(int id, Vector3 inposition, Vector3 indirection)
         {
             LightID = id;
             ID = -1;
+            position = inposition;
             direction = indirection;
+            cutOff = 12.5f;
+            outerCutOff = 15.0f;
             ambient = new Vector3(0.2f);
             diffuse = new Vector3(0.5f);
             specular = new Vector3(1.0f);
-            enabled = true;
+            maxDistance = 25.0f;
             isStatic = false;
         }
+
+
 
         public override void Update()
         {
-          //  base.Update();
+            //  base.Update();
+            //do nothing
 
-            //Update the directional light's transform
+            //set the light transform in a different way, as it corresponds to a different vector in c++
         }
 
-        public static DirectionalLight FindLightByID(int id)
+
+        public static SpotLight FindLightByID(int id)
         {
             foreach (var light in Control.AllSceneObjects)
             {
-                if (light is DirectionalLight)
+                if (light is SpotLight)
                 {
                     if (light.ID == id)
-                        return (DirectionalLight)light;
+                        return (SpotLight)light;
                 }
             }
-            throw new NullReferenceException($"Directional light ID \"{id}\" not found");
+            throw new NullReferenceException($"Spot light ID \"{id}\" not found");
         }
 
     }

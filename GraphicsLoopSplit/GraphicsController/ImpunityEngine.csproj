@@ -64,6 +64,7 @@
     </Compile>
     <Compile Include="SceneObject.cs" />
     <Compile Include="SceneObjectMethods.cs" />
+    <Compile Include="SpotLight.cs" />
     <Compile Include="Texture.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="Vector3.cs" />
