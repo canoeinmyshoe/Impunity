@@ -52,8 +52,6 @@ namespace ImpunityEngine
             isStatic = false;
         }
 
-
-
         public override void Update()
         {
             //  base.Update();
@@ -76,13 +74,29 @@ namespace ImpunityEngine
             }
             throw new NullReferenceException($"Spot light ID \"{id}\" not found");
         }
+        public static SpotLight FindLightByGuid(Guid gid)
+        {
+
+            foreach (var light in Control.AllSceneObjects)
+            {
+                if (light.guid == gid)
+                {
+                    return (SpotLight)light;
+                }
+            }
+            throw new NullReferenceException();
+        }
 
         public void SetPosition(Vector3 pos)
         {
             position = pos;
             Bridge.SetSpotLightPosition(LightID, position);
         }
-
+        public void SetDirection(Vector3 dir)
+        {
+            direction = dir;
+            Bridge.SetSpotLightDirection(LightID, position);
+        }
         public void SetAmbient(Vector3 color)
         {
             ambient = color;
@@ -127,5 +141,7 @@ namespace ImpunityEngine
             //Console.WriteLine("Outer cutoff: " + outerCutOff);
             Bridge.SetSpotLightCutOff(LightID, cutOff, outerCutOff);
         }
+
+
     }
 }

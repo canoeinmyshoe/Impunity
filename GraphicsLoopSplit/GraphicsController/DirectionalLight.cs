@@ -62,8 +62,21 @@ namespace ImpunityEngine
             }
             throw new NullReferenceException($"Directional light ID \"{id}\" not found");
         }
+        public static DirectionalLight FindLightByGuid(Guid gid)
+        {
+
+            foreach (var light in Control.AllSceneObjects)
+            {
+                if (light.guid == gid)
+                {
+                    return (DirectionalLight)light;
+                }
+            }
+            throw new NullReferenceException();
+        }
 
         public void SetDirection(Vector3 vec) {
+            direction = vec;
             Bridge.SetDirLightDirection(LightID, vec);
         }
         public void SetAmbient(Vector3 color)

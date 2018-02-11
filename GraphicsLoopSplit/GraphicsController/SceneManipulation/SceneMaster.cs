@@ -215,7 +215,16 @@ namespace ImpunityEngine.SceneManipulation
             }
             foreach (var item in scene.AllPointLights)
             {
-              //  DetailPointLight(item, scene.AllPointLights);
+              DetailPointLight(item, scene.AllPointLights);
+            }
+            foreach (var item in scene.AllSpotLights)
+            {
+                DetailSpotLight(item, scene.AllSpotLights);
+            }
+
+            foreach (var item in scene.AllDirectionalLights)
+            {
+                DetailDirLight(item, scene.AllDirectionalLights);
             }
         }
         private static void DetailSceneObject(SerializableSceneObject ser, List<SerializableSceneObject> allSer)
@@ -244,8 +253,7 @@ namespace ImpunityEngine.SceneManipulation
 
         private static void DetailPointLight(SerializablePointLight ser, List<SerializablePointLight> allSer)
         {
-            if (ser.ID < 0)
-                return;
+
             //Find the PointLight by Guid
             PointLight so;
             try { so = PointLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find PointLight " + ser.guid.ToString()); return; }
@@ -264,7 +272,97 @@ namespace ImpunityEngine.SceneManipulation
             //to set material values yet
 
             //We can also manage complex child/parent relationships here
+
+            //point light variables
+            so.SetPosition(ser.position);
+            so.SetAmbient(ser.ambient);
+            so.SetDiffuse(ser.diffuse);
+            so.SetSpecular(ser.specular);
+            so.constant = ser.constant;
+            so.linear = ser.linear;
+            so.quadratic = ser.quadratic;
+            so.SetMaxDistance(ser.maxDistance);
+            so.SetEnabled(ser.enabled);
+
+            //you actually need to call the methods to set this...
         }
+
+        private static void DetailSpotLight(SerializableSpotLight ser, List<SerializableSpotLight> allSer)
+        {
+
+            //Find the PointLight by Guid
+            SpotLight so;
+            try { so = SpotLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find spot light " + ser.guid.ToString()); return; }
+
+            so.Name = ser.Name;
+            so.Tag = ser.Tag;
+            so.isStatic = ser.isStatic;
+            so.transform = ser.transform;
+            foreach (var imp in ser.Imps)//unknown if this works
+            {
+                so.Imps.Add(imp);
+            }
+            //we will have to set custom material/texture/shader details 
+            //one property at a time
+            //so don't worry about that, as we don't even have methods
+            //to set material values yet
+
+            //We can also manage complex child/parent relationships here
+
+            //point light variables
+            so.SetPosition(ser.position);
+            so.SetAmbient(ser.ambient);
+            so.SetDiffuse(ser.diffuse);
+            so.SetSpecular(ser.specular);
+
+            so.cutOffRatio = ser.cutOffRatio;
+            so.SetDirection(ser.direction);
+            so.SetCutOff(ser.cutOff);
+
+            so.SetMaxDistance(ser.maxDistance);
+            so.SetEnabled(ser.enabled);
+
+            //you actually need to call the methods to set this...
+        }
+
+        private static void DetailDirLight(SerializableDirectionalLight ser, List<SerializableDirectionalLight> allSer)
+        {
+
+            //Find the PointLight by Guid
+            DirectionalLight so;
+            try { so = DirectionalLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find spot light " + ser.guid.ToString()); return; }
+
+            so.Name = ser.Name;
+            so.Tag = ser.Tag;
+            so.isStatic = ser.isStatic;
+            so.transform = ser.transform;
+            foreach (var imp in ser.Imps)//unknown if this works
+            {
+                so.Imps.Add(imp);
+            }
+            //we will have to set custom material/texture/shader details 
+            //one property at a time
+            //so don't worry about that, as we don't even have methods
+            //to set material values yet
+
+            //We can also manage complex child/parent relationships here
+
+            //point light variables
+           // so.SetPosition(ser.position);
+            so.SetAmbient(ser.ambient);
+            so.SetDiffuse(ser.diffuse);
+            so.SetSpecular(ser.specular);
+
+            //so.cutOffRatio = ser.cutOffRatio;
+            so.SetDirection(ser.direction);
+          //  so.SetCutOff(ser.cutOff);
+
+          //  so.SetMaxDistance(ser.maxDistance);
+            so.SetEnabled(ser.enabled);
+
+            //you actually need to call the methods to set this...
+        }
+
 
         private static void LoadSceneObject(SerializableSceneObject ser) {
 
@@ -439,6 +537,7 @@ namespace ImpunityEngine.SceneManipulation
             sp.enabled = pl.enabled;
             sp.modelPath = so.modelPath;
             sp.enabled = pl.enabled;
+            sp.direction = pl.direction;
 
             sp.Name = pl.Name;
             sp.Tag = pl.Tag;
@@ -482,6 +581,7 @@ namespace ImpunityEngine.SceneManipulation
             sp.outerCutOff = pl.outerCutOff;
             sp.cutOffRatio = pl.cutOffRatio;
             sp.modelPath = so.modelPath;
+            sp.direction = pl.direction;
 
             sp.Name = pl.Name;
             sp.Tag = pl.Tag;

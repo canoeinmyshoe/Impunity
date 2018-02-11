@@ -810,7 +810,8 @@ extern "C"
 			return -1;
 
 		SceneDirectionalLights[id].direction = glm::vec3(x, y, z);
-	//	cout << "C++: Set Directional Light ID: " << id << endl;
+	//	cout << "C++: Set Directional Light direction: " << x <<
+	//		", " << y << ", " << z << endl;
 		
 		return 0;
 	}
@@ -848,7 +849,7 @@ extern "C"
 		{
 			SceneDirectionalLights[id].enabled = true;
 		}
-		cout << "C++: set enable directional light" << endl;
+		//cout << "C++: set enable directional light" << endl;
 		return 0;
 	}
 #pragma endregion
@@ -859,6 +860,15 @@ extern "C"
 			return -1;
 
 		SceneSpotLights[id].position = glm::vec3(x, y, x);
+		//cout << "C++: set position of spotlight" << endl;
+
+		return 0;
+	}
+	__declspec(dllexport) int SetSpotLightDirection(int id, float x, float y, float z) {
+		if (id > SceneSpotLights.size() - 1)
+			return -1;
+
+		SceneSpotLights[id].direction = glm::vec3(x, y, x);
 		//cout << "C++: set position of spotlight" << endl;
 
 		return 0;
@@ -920,6 +930,7 @@ extern "C"
 
 			return 0;
 		}
+
 
 #pragma endregion
 

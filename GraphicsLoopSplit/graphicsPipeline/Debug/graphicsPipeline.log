@@ -19,60 +19,61 @@ c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(7
 c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(783): warning C4018: '>': signed/unsigned mismatch
 c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(791): warning C4018: '>': signed/unsigned mismatch
 c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(809): warning C4018: '>': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(818): warning C4018: '>': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(825): warning C4018: '>': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(832): warning C4018: '>': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(840): warning C4018: '>': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(858): warning C4018: '>': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(867): warning C4018: '>': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(874): warning C4018: '>': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(881): warning C4018: '>': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(889): warning C4018: '>': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(906): warning C4018: '>': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(913): warning C4018: '>': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(997): warning C4018: '<': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1023): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1040): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1147): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1234): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1251): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1395): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1562): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1579): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1708): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1822): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1839): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1968): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2089): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2106): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2236): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2325): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2342): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2470): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2660): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2736): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2753): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2850): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2931): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2948): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3048): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3120): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3137): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3236): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3426): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3492): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3508): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3610): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4030): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4203): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4381): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4382): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4386): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4387): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4389): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4390): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4421): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4449): warning C4018: '<': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(819): warning C4018: '>': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(826): warning C4018: '>': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(833): warning C4018: '>': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(841): warning C4018: '>': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(859): warning C4018: '>': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(868): warning C4018: '>': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(877): warning C4018: '>': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(884): warning C4018: '>': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(891): warning C4018: '>': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(899): warning C4018: '>': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(916): warning C4018: '>': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(923): warning C4018: '>': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1008): warning C4018: '<': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1034): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1051): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1158): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1245): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1262): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1406): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1573): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1590): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1719): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1833): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1850): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1979): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2100): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2117): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2247): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2336): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2353): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2481): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2671): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2747): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2764): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2861): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2942): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2959): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3059): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3131): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3148): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3247): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3437): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3503): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3519): warning C4244: 'argument': conversion from 'GLfloat' to 'GLsizei', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(3621): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4041): warning C4244: 'argument': conversion from 'GLfloat' to 'int', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4214): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4392): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4393): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4397): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4398): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4400): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4401): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4432): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(4460): warning C4018: '<': signed/unsigned mismatch
   GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
   GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
   SOIL.lib(SOIL.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance

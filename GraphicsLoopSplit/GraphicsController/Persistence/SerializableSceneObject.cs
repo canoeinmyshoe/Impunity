@@ -33,7 +33,7 @@ namespace ImpunityEngine.Persistence
         public Vector3 ambient { get; set; }
         public Vector3 diffuse { get; set; }
         public Vector3 specular { get; set; }
-        public bool enabled { get; set; }
+ //       public bool enabled { get; set; }
     }
     public class SerializablePointLight : SerializableSceneObject
     {
@@ -46,7 +46,7 @@ namespace ImpunityEngine.Persistence
         public float linear { get; set; }
         public float quadratic { get; set; }
         public float maxDistance { get; set; }
-        public bool enabled { get; set; }
+      //  public bool enabled { get; set; }
     }
     public class SerializableSpotLight : SerializableSceneObject
     {
@@ -59,7 +59,7 @@ namespace ImpunityEngine.Persistence
         public float cutOff { get; set; }
         public float outerCutOff { get; set; }
         public float maxDistance { get; set; }
-        public bool enabled { get; set; }
+      //  public bool enabled { get; set; }
         public float cutOffRatio = 0.8333f;
     }
 }
