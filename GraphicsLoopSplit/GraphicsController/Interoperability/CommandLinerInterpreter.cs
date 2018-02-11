@@ -144,13 +144,22 @@ namespace ImpunityEngine
                 }
                 else if (word == "scene" || word == "koad") {
                     Console.WriteLine("Loading...");
-                    //LoadScene(i, args);
+                    LoadScene(i, args);
                 }
                 else
                 {
                     // Console.WriteLine("Teapots.");
                 }
             }
+        }
+
+        void LoadScene(int index, string[] args) {
+            //we are expecting 
+            //args[index + 1] -- filepath of scene file
+            if (index + 1 > args.Length - 1)
+                return;
+
+            SceneMaster.LoadSceneFile(args[index + 1]);
         }
         void SaveScene(int index, string[] args) {
             //we are expecting

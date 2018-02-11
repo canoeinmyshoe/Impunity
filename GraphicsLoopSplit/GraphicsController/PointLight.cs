@@ -31,7 +31,8 @@ namespace ImpunityEngine
             ShaderID = -1;
             ParentID = -1;
             isChild = false;
-            
+            guid = Guid.NewGuid();
+
 
             //defualt values
             position = new Vector3(0);
@@ -50,6 +51,7 @@ namespace ImpunityEngine
             LightID = id;//index in the c++ vector of pointlights....
             ID = -1;//should never correspond to an actual SceneObject in the c++ vector
 
+            guid = Guid.NewGuid();
             //defualt values
             position = inposition;
             ambient = new Vector3(0.2f, 0.2f, 0.2f);

@@ -83,7 +83,6 @@ namespace ImpunityEngine.SceneManipulation
             {
                 NativeTranslator translator = new NativeTranslator();
                 List<SceneObject> sceneObs = translator.ParseNativeData(message, path);
-                
             }
             catch (Exception err)
             {
@@ -93,6 +92,72 @@ namespace ImpunityEngine.SceneManipulation
             cmessage.Clear();
         }
 
+
+        public static void LoadSceneFile(string filename)
+        {
+
+            if (!File.Exists(filename))
+            {
+                Console.WriteLine("No such file " + filename);
+                return;
+            }
+
+            SceneFile scene;
+            using (var sr = new StreamReader(filename))
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(SceneFile));
+                scene = (SceneFile)xs.Deserialize(sr);
+                sr.Close();
+            }
+
+            //1st, we take a pass at loading everything from disk/blob
+            Console.WriteLine("Scene Load Results: ");
+            foreach (var item in scene.AllSceneObjects)
+            {
+                Console.WriteLine(item.Name);
+                LoadSceneObject(item);
+            }
+            foreach (var item in scene.AllPointLights)
+            {
+                Console.WriteLine("Point Light: " + item.LightID);
+            }
+            foreach (var item in scene.AllSpotLights)
+            {
+                Console.WriteLine("Spot light: " + item.LightID);
+            }
+            foreach (var item in scene.AllDirectionalLights)
+            {
+                Console.WriteLine("Directional light: " + item.LightID);
+            }
+            //2nd, we go through every item and set the data to their correct values
+            foreach (var item in scene.AllSceneObjects)
+            {
+                GroomSceneObject(item);
+            }
+        }
+        private static void GroomSceneObject(SerializableSceneObject ser)
+        {
+            if (ser.ID < 0)
+                return;
+            //Find the SceneObject by Guid
+
+            
+        }
+        private static void LoadSceneObject(SerializableSceneObject ser) {
+
+            string pth = ser.modelPath;
+            if (pth.Length > 3 )//It's a Model. Try to load it.
+            {
+                Console.WriteLine("Loading Model...");
+                try {
+                    LoadFromDirectory(ser.modelPath);
+                } catch { }
+            }
+            else //it's a child ignore it for now
+            {
+                Console.WriteLine("Model child");
+            }
+        }
 
         public static void SaveSceneAs(string filename)
         {
@@ -133,7 +198,7 @@ namespace ImpunityEngine.SceneManipulation
 
             xs.Serialize(tw, sceneFile);
             Console.WriteLine("Saved file " + filename);
-            tw.Dispose();
+            tw.Close();
 
             //FileStream writeStream;
             //try
@@ -191,6 +256,7 @@ namespace ImpunityEngine.SceneManipulation
             sp.LightID = pl.LightID;
             sp.position = pl.position;
             sp.ambient = pl.ambient;
+            sp.guid = so.guid;
             sp.diffuse = pl.diffuse;
             sp.specular = pl.specular;
             sp.constant = pl.constant;
@@ -228,6 +294,7 @@ namespace ImpunityEngine.SceneManipulation
          //   sp.position = pl.position;
             sp.ambient = pl.ambient;
             sp.diffuse = pl.diffuse;
+            sp.guid = so.guid;
             sp.specular = pl.specular;
        //     sp.constant = pl.constant;
             //sp.linear = pl.linear;
@@ -264,6 +331,7 @@ namespace ImpunityEngine.SceneManipulation
             sp.position = pl.position;
             sp.ambient = pl.ambient;
             sp.diffuse = pl.diffuse;
+            sp.guid = so.guid;
             sp.specular = pl.specular;
             //sp.constant = pl.constant;
             //sp.linear = pl.linear;
@@ -308,6 +376,7 @@ namespace ImpunityEngine.SceneManipulation
             sp.ShaderID = so.ShaderID;
             sp.ParentID = so.ParentID;
             sp.modelPath = so.modelPath;
+            sp.guid = so.guid;
 
             sp.isChild = so.isChild;
             sp.isStatic = so.isStatic;

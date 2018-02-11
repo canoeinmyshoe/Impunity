@@ -34,11 +34,13 @@ namespace ImpunityEngine
             specular = new Vector3(1.0f);
             maxDistance = 25.0f;
             isStatic = false;
+            guid = Guid.NewGuid();
         }
         public SpotLight(int id, Vector3 inposition, Vector3 indirection)
         {
             LightID = id;
             ID = -1;
+            guid = Guid.NewGuid();
             position = inposition;
             direction = indirection;
             cutOff = 12.5f;

@@ -23,7 +23,7 @@ namespace ImpunityEngine
         public Material material = new Material(MaterialType.DefaultTextureless);
         public bool enabled { get; set; }
         public string modelPath { get; set; }
-
+        public Guid guid { get; set; }
         public SceneObject()
         {
             Name = "SceneObject";
@@ -35,6 +35,8 @@ namespace ImpunityEngine
             ParentID = -25;
             isChild = false;
             enabled = true;
+            modelPath = "NA";
+            guid = Guid.NewGuid();
         }
 
         public virtual void Start()

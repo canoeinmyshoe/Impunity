@@ -27,6 +27,7 @@ namespace ImpunityEngine
             specular = new Vector3(1.0f);
             enabled = true;
             isStatic = false;
+            guid = Guid.NewGuid();
         }
         public DirectionalLight(int id, Vector3 indirection)
         {
@@ -38,6 +39,7 @@ namespace ImpunityEngine
             specular = new Vector3(1.0f);
             enabled = true;
             isStatic = false;
+            guid = Guid.NewGuid();
         }
 
         public override void Update()
