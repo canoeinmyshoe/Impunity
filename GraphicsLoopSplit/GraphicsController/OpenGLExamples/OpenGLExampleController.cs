@@ -193,6 +193,7 @@ namespace ImpunityEngine.OpenGLExamples
                 try
                 {
                     Texture tex = translator.ParseTextureData(message);
+                    tex.FullPath = path;
                     Control.AllTextures.Add(tex);
                 }
                 catch { }
@@ -245,7 +246,7 @@ namespace ImpunityEngine.OpenGLExamples
             {
                 //we need to get data from the textures as well!
                 NativeTranslator translator = new NativeTranslator();
-                List<SceneObject> sceneObs = translator.ParseNativeData(message);
+                List<SceneObject> sceneObs = translator.ParseNativeData(message, path);
 
                 //  List<SceneObject> sceneObs = Interoperability.NativeTranslator.ParseNativeData(message);
             
@@ -432,7 +433,7 @@ namespace ImpunityEngine.OpenGLExamples
             try
             {
                 NativeTranslator translator = new NativeTranslator();
-                List<SceneObject> sceneObs = translator.ParseNativeData(message);
+                List<SceneObject> sceneObs = translator.ParseNativeData(message, path);
 
                 //  List<SceneObject> sceneObs = Interoperability.NativeTranslator.ParseNativeData(message);
                 foreach (var item in sceneObs)

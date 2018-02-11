@@ -12,6 +12,7 @@ namespace ImpunityEngine
     public class CLE//The Command Line Editor
     {
         //In one thread, the command line.
+        public static bool blockInput = false;
         private bool shouldRun = false;
         private List<string> Commands = new List<string>();
         
@@ -41,7 +42,12 @@ namespace ImpunityEngine
          //   Console.WriteLine("Impunity Command Line Editor 1.0");
             while (shouldRun == true)
             {
+                if (blockInput == true)
+                {
+                    continue;
+                }
                 string input = Console.ReadLine();
+                blockInput = true;
                 Commands.Add(input);
                 Console.WriteLine("Ya don't say...");
             }
@@ -62,6 +68,7 @@ namespace ImpunityEngine
                     listener.ProcessInput(Commands[i]);
                     Commands.Remove(Commands[i]);
                 }
+                blockInput = false;
                 //change any positions, variables, etc
                 //add forces to rigidbodies, create, etc
                 foreach (var so in Control.AllSceneObjects)

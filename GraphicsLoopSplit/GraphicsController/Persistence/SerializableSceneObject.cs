@@ -20,6 +20,7 @@ namespace ImpunityEngine.Persistence
         public int[] ChildIDs;
         public List<ImpunityScript> Imps = new List<ImpunityScript>();
         public Material material = new Material(MaterialType.DefaultTextureless);
+        public string modelPath { get; set; }
     }
 
     public class SerializableDirectionalLight : SerializableSceneObject

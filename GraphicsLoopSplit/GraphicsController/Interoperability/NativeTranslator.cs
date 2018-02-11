@@ -18,7 +18,7 @@ namespace ImpunityEngine.Interoperability
             Texture t = ParseTexture(all);
             return t;
         }
-        public List<SceneObject> ParseNativeData(string text)
+        public List<SceneObject> ParseNativeData(string text, string filePath)
         {
             List<SceneObject> NewSceneObjects = new List<SceneObject>();
             Console.WriteLine("Parsing through c++ data.");
@@ -49,9 +49,15 @@ namespace ImpunityEngine.Interoperability
                     catch { }
                     continue;
                 }
-
                 SceneObject so =  ProcessChunk(chunks[i]);
                 //We need to add to control, not local...
+
+                if (i == 0)
+                {
+                    //MODEL_PATH: c:\\..appdata\\something
+                    so.modelPath = filePath;
+                }
+
                 Control.AllSceneObjects.Add(so);
                 NewSceneObjects.Add(so);
             }

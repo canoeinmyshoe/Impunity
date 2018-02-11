@@ -22,6 +22,7 @@ namespace ImpunityEngine
         public List<ImpunityScript> Imps = new List<ImpunityScript>();
         public Material material = new Material(MaterialType.DefaultTextureless);
         public bool enabled { get; set; }
+        public string modelPath { get; set; }
 
         public SceneObject()
         {

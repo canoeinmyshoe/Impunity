@@ -142,6 +142,10 @@ namespace ImpunityEngine
                     Console.WriteLine("Saving...");
                     SaveScene(i, args);
                 }
+                else if (word == "scene" || word == "koad") {
+                    Console.WriteLine("Loading...");
+                    //LoadScene(i, args);
+                }
                 else
                 {
                     // Console.WriteLine("Teapots.");

@@ -82,7 +82,8 @@ namespace ImpunityEngine.SceneManipulation
             try
             {
                 NativeTranslator translator = new NativeTranslator();
-                List<SceneObject> sceneObs = translator.ParseNativeData(message);
+                List<SceneObject> sceneObs = translator.ParseNativeData(message, path);
+                
             }
             catch (Exception err)
             {
@@ -106,12 +107,33 @@ namespace ImpunityEngine.SceneManipulation
             {
                 ProcessSceneObject(so, sceneFile);
             }
+            string savePath = @"c:\data\" + filename + ".imp";
 
+           // CLE.blockInput = true;
+            if (File.Exists(savePath))
+            {
+                Console.WriteLine("Overwrite file: " + filename + "?");
+               string input = Console.ReadLine();
+                if (input == "y" || input == "yes")
+                {
+                    Console.WriteLine("Overwriting.");
+                    File.Delete(savePath);
+                }
+                else
+                {
+                    Console.WriteLine("Cancelled save");
+                  
+                    return;
+                }
+            }
+            //CLE.blockInput = false;
 
             XmlSerializer xs = new XmlSerializer(typeof(SceneFile));
             TextWriter tw = new StreamWriter(@"c:\data\" + filename + ".imp");
+
             xs.Serialize(tw, sceneFile);
             Console.WriteLine("Saved file " + filename);
+            tw.Dispose();
 
             //FileStream writeStream;
             //try
@@ -146,7 +168,6 @@ namespace ImpunityEngine.SceneManipulation
         {
             if (so is PointLight)
             {
-                //  scene.Add(SerializePointLight(so));
                 scene.AllPointLights.Add(SerializePointLight(so));
             }
             else if (so is DirectionalLight)
@@ -159,7 +180,6 @@ namespace ImpunityEngine.SceneManipulation
             }
             else
             {
-                //add it as a raw sceneObject
                 scene.AllSceneObjects.Add(SerializeSceneObject(so));
             }
         }
@@ -179,6 +199,7 @@ namespace ImpunityEngine.SceneManipulation
             sp.maxDistance = pl.maxDistance;
             sp.enabled = pl.enabled;
 
+            sp.modelPath = so.modelPath;
             sp.Name = pl.Name;
             sp.Tag = pl.Tag;
             sp.ID = pl.ID;
@@ -213,6 +234,7 @@ namespace ImpunityEngine.SceneManipulation
             //sp.quadratic = pl.quadratic;
             //sp.maxDistance = pl.maxDistance;
             sp.enabled = pl.enabled;
+            sp.modelPath = so.modelPath;
 
             sp.Name = pl.Name;
             sp.Tag = pl.Tag;
@@ -252,6 +274,7 @@ namespace ImpunityEngine.SceneManipulation
             sp.cutOff = pl.cutOff;
             sp.outerCutOff = pl.outerCutOff;
             sp.cutOffRatio = pl.cutOffRatio;
+            sp.modelPath = so.modelPath;
 
             sp.Name = pl.Name;
             sp.Tag = pl.Tag;
@@ -284,6 +307,7 @@ namespace ImpunityEngine.SceneManipulation
             sp.MeshID = so.MeshID;
             sp.ShaderID = so.ShaderID;
             sp.ParentID = so.ParentID;
+            sp.modelPath = so.modelPath;
 
             sp.isChild = so.isChild;
             sp.isStatic = so.isStatic;

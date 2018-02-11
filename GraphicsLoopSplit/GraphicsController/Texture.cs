@@ -9,6 +9,7 @@ namespace ImpunityEngine
     public class Texture
     {
         public string Path { get; set; }
+        public string FullPath { get; set; }
         public int ID { get; set; }
         public TextureType Type;
 
@@ -17,18 +18,21 @@ namespace ImpunityEngine
             Path = "Nowhere";
             ID = 0;
             Type = 0;
+            FullPath = "Unknown";
         }
         public Texture(TextureType type)
         {
             Path = "Nowhere";
             ID = 0;
             Type = 0;
+            FullPath = "Unknown";
         }
         public Texture(string path, int id, TextureType type)
         {
             Path = path;
             ID = id;
             Type = type;
+            FullPath = "Unknown";
         }
 
         public static Texture Find(string desired)
