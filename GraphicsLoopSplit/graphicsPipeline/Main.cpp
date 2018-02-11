@@ -52,6 +52,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 static wchar_t * strTowchar(string str);
 void DrawDebuggingLights();
+void DrawDebuggingLightArrows();
 //SceneObject InstantiateSceneObject();
 #pragma endregion
 
@@ -95,6 +96,7 @@ vector<Texture> LoadedTextures;
 
 GLfloat WorldAmbientLight;
 vector<SceneObject> AllSceneObjects;
+Model DebuggingArrow;//needs a special, low-detail shader. use default for now
 #pragma endregion
 
 #pragma region Example Code Variables
@@ -546,7 +548,9 @@ extern "C"
 
 		cout << "Finished making shaders." << endl;
 
+		cout << "Loading the debuggin arrow" << endl;
 
+		DebuggingArrow.Load(d + "\\models\\misfits\\arrow.obj");
 
 		//This seems like a decent place to initiate the model loading process
 
@@ -707,8 +711,8 @@ extern "C"
 		//temporary flashlight, to be reconfigured in c# at a later time
 		if (SceneSpotLights.size() > 0) 
 		{
-			SceneSpotLights[0].position = camera->Position;
-			SceneSpotLights[0].direction = camera->Front;
+		/*	SceneSpotLights[0].position = camera->Position;
+			SceneSpotLights[0].direction = camera->Front;*/
 		}
 
 		for (GLuint i = 0; i < AllSceneObjects.size(); i++)
@@ -738,7 +742,8 @@ extern "C"
 
 
 		
-		DrawDebuggingLights();
+		//DrawDebuggingLights();
+		DrawDebuggingLightArrows();
 	
 
 		// Swap the screen buffers
@@ -4523,7 +4528,67 @@ void DrawDebuggingLights()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
 	}
+}
+void DrawDebuggingLightArrows()
+{
+	lampShader->Use();
+	lampShader->setMat4("view", ViewMatrix);
+	lampShader->setMat4("projection", ProjectionMatrix);
+	glm::mat4 model;
+	for (size_t i = 0; i < ScenePointLights.size(); i++)
+	{
+		if (ScenePointLights[i].enabled != true)
+			continue;
+		model = glm::mat4();
+		model = glm::translate(model, ScenePointLights[i].position);
+		model = glm::scale(model, glm::vec3(0.05f)); // Make it a smaller cube
+		lampShader->setMat4("model", model);
 
+		lampShader->SetVec3(1.0f, 1.0f, 1.0f, "debugColor");
 
+		// Draw the light object (using light's vertex attributes)
+	/*	glBindVertexArray(lightVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);*/
+		DebuggingArrow.Draw(lampShader);
+	}
+
+	for (size_t i = 0; i < SceneDirectionalLights.size(); i++)
+	{
+		if (SceneDirectionalLights[i].enabled != true)
+			continue;
+		glm::vec3 position = glm::vec3(0.0, i, 0.0);
+
+		model = glm::mat4();
+		model = glm::translate(model, position);
+		model = glm::rotate(model, SceneDirectionalLights[i].direction.x, glm::vec3(1, 0, 0));
+		model = glm::rotate(model, SceneDirectionalLights[i].direction.y, glm::vec3(0, 1, 0));
+		model = glm::rotate(model, SceneDirectionalLights[i].direction.z, glm::vec3(0, 0, 1));
+		model = glm::scale(model, glm::vec3(0.05f)); // Make it a smaller cube
+		lampShader->setMat4("model", model);
+
+		lampShader->SetVec3(1.0f, 0.0, 0.0, "debugColor");
+
+		// Draw the light object (using light's vertex attributes)
+		DebuggingArrow.Draw(lampShader);
+	}
+
+	for (size_t i = 0; i < SceneSpotLights.size(); i++)
+	{
+		if (SceneSpotLights[i].enabled != true)
+			continue;
+		model = glm::mat4();
+		model = glm::translate(model, SceneSpotLights[i].position);
+		model = glm::rotate(model, SceneSpotLights[i].direction.x, glm::vec3(1, 0, 0));
+		model = glm::rotate(model, SceneSpotLights[i].direction.y, glm::vec3(0, 1, 0));
+		model = glm::rotate(model, SceneSpotLights[i].direction.z, glm::vec3(0, 0, 1));
+		model = glm::scale(model, glm::vec3(0.05f)); // Make it a smaller cube
+		lampShader->setMat4("model", model);
+
+		lampShader->SetVec3(1.0f, 1.0f, 0.0, "debugColor");
+
+		// Draw the light object (using light's vertex attributes)
+		DebuggingArrow.Draw(lampShader);
+	}
 }
 #pragma endregion
