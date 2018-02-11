@@ -21,6 +21,7 @@ namespace ImpunityEngine
         public List<SceneObject> Children = new List<SceneObject>();
         public List<ImpunityScript> Imps = new List<ImpunityScript>();
         public Material material = new Material(MaterialType.DefaultTextureless);
+        public bool enabled { get; set; }
 
         public SceneObject()
         {
@@ -32,6 +33,7 @@ namespace ImpunityEngine
             isStatic = false;
             ParentID = -25;
             isChild = false;
+            enabled = true;
         }
 
         public virtual void Start()

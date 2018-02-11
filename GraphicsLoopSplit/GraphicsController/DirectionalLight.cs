@@ -15,7 +15,7 @@ namespace ImpunityEngine
         public Vector3 ambient { get; set; }
         public Vector3 diffuse { get; set; }
         public Vector3 specular { get; set; }
-        public bool enabled { get; set; }
+      //  public bool enabled { get; set; }
 
         public DirectionalLight(int id)
         {

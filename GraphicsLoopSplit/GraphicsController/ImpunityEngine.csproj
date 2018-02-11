@@ -53,6 +53,7 @@
     <Compile Include="ImpunityScript.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="OpenGLExamples\OpenGLExampleController.cs" />
+    <Compile Include="Persistence\SerializableSceneObject.cs" />
     <Compile Include="PointLight.cs" />
     <Compile Include="GraphicsProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

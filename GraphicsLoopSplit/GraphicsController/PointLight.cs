@@ -19,12 +19,19 @@ namespace ImpunityEngine
         public float linear { get; set; }
         public float quadratic { get; set; }
         public float maxDistance { get; set; }
-        public bool enabled { get; set; }
+     //   public bool enabled { get; set; }
 
         public PointLight(int id)
         {
             LightID = id;//index in the c++ vector of pointlights....
             ID = -1;//should never correspond to an actual SceneObject in the c++ vector
+            Name = "PointLight" + id;
+            Tag = "none";
+            MeshID = -1;
+            ShaderID = -1;
+            ParentID = -1;
+            isChild = false;
+            
 
             //defualt values
             position = new Vector3(0);

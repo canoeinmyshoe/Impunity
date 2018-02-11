@@ -7,7 +7,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 
-
+using ImpunityEngine.Persistence;
 using ImpunityEngine.Interoperability;
 namespace ImpunityEngine.SceneManipulation
 {
@@ -98,10 +98,20 @@ namespace ImpunityEngine.SceneManipulation
             //  SceneFile scene = new SceneFile();
             // scene.AllSceneObjects = Control.AllSceneObjects;
 
-            XmlSerializer xs = new XmlSerializer(typeof(List<SceneObject>));
+            //We need a SceneObject analogue to save/Load
+
+            SceneFile sceneFile = new SceneFile();
+           // List<SerializableSceneObject> scene = new List<SerializableSceneObject>();
+            foreach (var so in Control.AllSceneObjects)
+            {
+                ProcessSceneObject(so, sceneFile);
+            }
+
+
+            XmlSerializer xs = new XmlSerializer(typeof(SceneFile));
             TextWriter tw = new StreamWriter(@"c:\data\" + filename + ".imp");
-            xs.Serialize(tw, Control.AllSceneObjects);
-            Console.WriteLine("Save file " + filename);
+            xs.Serialize(tw, sceneFile);
+            Console.WriteLine("Saved file " + filename);
 
             //FileStream writeStream;
             //try
@@ -131,12 +141,176 @@ namespace ImpunityEngine.SceneManipulation
 
         }
 
+
+        private static void ProcessSceneObject(SceneObject so, SceneFile scene)
+        {
+            if (so is PointLight)
+            {
+                //  scene.Add(SerializePointLight(so));
+                scene.AllPointLights.Add(SerializePointLight(so));
+            }
+            else if (so is DirectionalLight)
+            {
+                scene.AllDirectionalLights.Add(SerializeDirectionalLight(so));
+            }
+            else if (so is SpotLight)
+            {
+                scene.AllSpotLights.Add(SerializeSpotLight(so));
+            }
+            else
+            {
+                //add it as a raw sceneObject
+                scene.AllSceneObjects.Add(SerializeSceneObject(so));
+            }
+        }
+
+        private static SerializablePointLight SerializePointLight(SceneObject so)
+        {
+            SerializablePointLight sp = new SerializablePointLight();
+            PointLight pl = (PointLight)so;
+            sp.LightID = pl.LightID;
+            sp.position = pl.position;
+            sp.ambient = pl.ambient;
+            sp.diffuse = pl.diffuse;
+            sp.specular = pl.specular;
+            sp.constant = pl.constant;
+            sp.linear = pl.linear;
+            sp.quadratic = pl.quadratic;
+            sp.maxDistance = pl.maxDistance;
+            sp.enabled = pl.enabled;
+
+            sp.Name = pl.Name;
+            sp.Tag = pl.Tag;
+            sp.ID = pl.ID;
+            sp.MeshID = pl.MeshID;
+            sp.ShaderID = pl.ShaderID;
+            sp.ParentID = pl.ParentID;
+
+            sp.isChild = pl.isChild;
+            sp.isStatic = pl.isStatic;
+            sp.transform = pl.transform;
+            sp.ChildIDs = new int[pl.Children.Count];
+            for (int i = 0; i < pl.Children.Count; i++)
+            {
+                sp.ChildIDs[i] = pl.Children[i].ID;
+            }
+            sp.Imps = pl.Imps;
+            sp.material = pl.material;
+
+            return sp;
+        }
+        private static SerializableDirectionalLight SerializeDirectionalLight(SceneObject so)
+        {
+            SerializableDirectionalLight sp = new SerializableDirectionalLight();
+            DirectionalLight pl = (DirectionalLight)so;
+            sp.LightID = pl.LightID;
+         //   sp.position = pl.position;
+            sp.ambient = pl.ambient;
+            sp.diffuse = pl.diffuse;
+            sp.specular = pl.specular;
+       //     sp.constant = pl.constant;
+            //sp.linear = pl.linear;
+            //sp.quadratic = pl.quadratic;
+            //sp.maxDistance = pl.maxDistance;
+            sp.enabled = pl.enabled;
+
+            sp.Name = pl.Name;
+            sp.Tag = pl.Tag;
+            sp.ID = pl.ID;
+            sp.MeshID = pl.MeshID;
+            sp.ShaderID = pl.ShaderID;
+            sp.ParentID = pl.ParentID;
+
+            sp.isChild = pl.isChild;
+            sp.isStatic = pl.isStatic;
+            sp.transform = pl.transform;
+            sp.ChildIDs = new int[pl.Children.Count];
+            for (int i = 0; i < pl.Children.Count; i++)
+            {
+                sp.ChildIDs[i] = pl.Children[i].ID;
+            }
+            sp.Imps = pl.Imps;
+            sp.material = pl.material;
+
+            return sp;
+        }
+        private static SerializableSpotLight SerializeSpotLight(SceneObject so)
+        {
+            SerializableSpotLight sp = new SerializableSpotLight();
+            SpotLight pl = (SpotLight)so;
+            sp.LightID = pl.LightID;
+            sp.position = pl.position;
+            sp.ambient = pl.ambient;
+            sp.diffuse = pl.diffuse;
+            sp.specular = pl.specular;
+            //sp.constant = pl.constant;
+            //sp.linear = pl.linear;
+            //sp.quadratic = pl.quadratic;
+            sp.maxDistance = pl.maxDistance;
+            sp.enabled = pl.enabled;
+
+            sp.cutOff = pl.cutOff;
+            sp.outerCutOff = pl.outerCutOff;
+            sp.cutOffRatio = pl.cutOffRatio;
+
+            sp.Name = pl.Name;
+            sp.Tag = pl.Tag;
+            sp.ID = pl.ID;
+            sp.MeshID = pl.MeshID;
+            sp.ShaderID = pl.ShaderID;
+            sp.ParentID = pl.ParentID;
+
+            sp.isChild = pl.isChild;
+            sp.isStatic = pl.isStatic;
+            sp.transform = pl.transform;
+            sp.ChildIDs = new int[pl.Children.Count];
+            for (int i = 0; i < pl.Children.Count; i++)
+            {
+                sp.ChildIDs[i] = pl.Children[i].ID;
+            }
+            sp.Imps = pl.Imps;
+            sp.material = pl.material;
+
+            return sp;
+        }
+        private static SerializableSceneObject SerializeSceneObject(SceneObject so)
+        {
+            SerializableSceneObject sp = new SerializableSceneObject();
+      
+
+            sp.Name = so.Name;
+            sp.Tag = so.Tag;
+            sp.ID = so.ID;
+            sp.MeshID = so.MeshID;
+            sp.ShaderID = so.ShaderID;
+            sp.ParentID = so.ParentID;
+
+            sp.isChild = so.isChild;
+            sp.isStatic = so.isStatic;
+            sp.transform = so.transform;
+            sp.ChildIDs = new int[so.Children.Count];
+            for (int i = 0; i < so.Children.Count; i++)
+            {
+                sp.ChildIDs[i] = so.Children[i].ID;
+            }
+            sp.Imps = so.Imps;
+            sp.material = so.material;
+
+            return sp;
+        }
+
     }
+
+
+
 
     [Serializable]
     public class SceneFile
     {
-        public List<SceneObject> AllSceneObjects = new List<SceneObject>();
+        public List<SerializableSceneObject> AllSceneObjects = new List<SerializableSceneObject>();
+        public List<SerializablePointLight> AllPointLights = new List<SerializablePointLight>();
+        public List<SerializableDirectionalLight> AllDirectionalLights = new List<SerializableDirectionalLight>();
+        public List<SerializableSpotLight> AllSpotLights = new List<SerializableSpotLight>();
        // public List<Texture> AllTextures = new List<Texture>();
         //Thus far, this is all the information we need to load a new scene
     }
