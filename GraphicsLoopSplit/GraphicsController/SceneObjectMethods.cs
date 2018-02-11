@@ -33,5 +33,14 @@ namespace ImpunityEngine
             throw new NullReferenceException($"SceneObject of id \"{id}\" not found.");
         }
 
+        public static SceneObject FindByGuid(Guid gid)
+        {
+            foreach (var so in Control.AllSceneObjects)
+            {
+                if (so.guid == gid)
+                    return so;
+            }
+            throw new NullReferenceException($"SceneObject of guid \"{gid}\" not found.");
+        }
     }
 }

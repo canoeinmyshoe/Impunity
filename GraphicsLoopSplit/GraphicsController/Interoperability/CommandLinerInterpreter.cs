@@ -445,7 +445,7 @@ namespace ImpunityEngine
                 {
                     if (so.ID < 0)
                         continue;
-                    Console.WriteLine($"Name:{so.Name}--ID:{so.ID}--");
+                    Console.WriteLine($"Name:{so.Name}--ID:{so.ID}--Guid:{so.guid}");
                 }
             }
             else if (key == "pointlight" || key == "plight")
@@ -455,7 +455,7 @@ namespace ImpunityEngine
                     if (light is PointLight)
                     {
                         PointLight pl = (PointLight)light;
-                        Console.WriteLine("Point Light ID: " + pl.LightID);
+                        Console.WriteLine("Point Light ID: " + pl.LightID + "==Guid:"+pl.guid);
                     }
                 }
             }
@@ -466,7 +466,7 @@ namespace ImpunityEngine
                     if (light is DirectionalLight)
                     {
                         DirectionalLight pl = (DirectionalLight)light;
-                        Console.WriteLine("Directional Light ID: " + pl.LightID);
+                        Console.WriteLine("Directional Light ID: " + pl.LightID + "--Guid:"+pl.guid);
                     }
                 }
             }
@@ -477,7 +477,7 @@ namespace ImpunityEngine
                     if (light is SpotLight)
                     {
                         SpotLight pl = (SpotLight)light;
-                        Console.WriteLine("Spot Light ID: " + pl.LightID);
+                        Console.WriteLine("Spot Light ID: " + pl.LightID + "--Guid:" + pl.guid);
                     }
                 }
             }

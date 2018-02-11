@@ -8,7 +8,91 @@ namespace ImpunityEngine.Interoperability
 {
     public class NativeTranslator
     {
+        public List<SceneObject> ParseNativeData(string text, string filePath, Guid parentGuid, List<Guid> ChildGuids)
+        {
+            List<SceneObject> NewSceneObjects = new List<SceneObject>();
+            Console.WriteLine("Parsing through c++ data with GUIDs.");
+            //kill any accidental whitespace
+            text = text.Replace(" ", string.Empty);
+            //get that which is in between brackets
+            int start1 = text.IndexOf("{") + 1;
+            int end1 = text.LastIndexOf("}");
+            string all = text.Substring(start1, end1 - start1);
+            Console.WriteLine("All Chunks:" + all);
+            string[] chunks = all.Split(',');
+            int sosAdded = 0;
+            for (int i = 0; i < chunks.Length; i++)
+            {
+                if (chunks[i].Length < 3)
+                    continue;
+                //if(chunk.contains("t:") - It's a texture, don't create a sceneObject for it.
+                //instead, create a texture struct and add that to the list of loaded textures
+                if (chunks[i].Contains("t:"))
+                {
+                    Console.WriteLine("Texture detected");
+                    try
+                    {
+                        //don't add it if we already have it
+                        // Texture texture = ParseTexture(chunks[i]);
 
+                        Control.AllTextures.Add(ParseTexture(chunks[i]));
+                    }
+                    catch { }
+                    continue;
+                }
+                SceneObject so = ProcessChunk(chunks[i]);
+                //We need to add to control, not local...
+
+                if (i == 0)
+                {
+                    //MODEL_PATH: c:\\..appdata\\something
+                    so.modelPath = filePath;
+                    so.guid = parentGuid;
+                }
+                else if (sosAdded - 1 <= ChildGuids.Count - 1)
+                {
+                    so.guid = ChildGuids[sosAdded - 1];
+                }
+                else
+                {
+                    Console.WriteLine("No dice. " + ChildGuids.Count + " vs. " + (sosAdded - 1) + " ==> i=" + sosAdded);
+                }
+
+                Control.AllSceneObjects.Add(so);
+                NewSceneObjects.Add(so);
+                sosAdded += 1;
+            }
+
+            for (int i = 0; i < NewSceneObjects.Count; i++)
+            {
+                if (NewSceneObjects[i].isChild != true)
+                    continue;
+
+                for (int p = 0; p < NewSceneObjects.Count; p++)
+                {
+                    if (NewSceneObjects[p].isChild == true)
+                        continue;
+                    if (NewSceneObjects[p].ID == NewSceneObjects[i].ParentID)
+                    {
+                        NewSceneObjects[i].Parent = NewSceneObjects[p];
+                        NewSceneObjects[p].Children.Add(NewSceneObjects[i]);
+                        break;
+                    }
+                }
+            }
+
+
+            //now report for debugging
+            //foreach (var so in NewSceneObjects)
+            //{
+            //    foreach (var child in so.Children)
+            //    {
+            //        Console.WriteLine($"{so.Name}'s child: {child.Name}");
+            //    }
+            //}
+
+            return NewSceneObjects;
+        }
         public Texture ParseTextureData(string text)
         {
             text = text.Replace(" ", string.Empty);

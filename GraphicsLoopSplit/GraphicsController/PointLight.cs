@@ -88,6 +88,17 @@ namespace ImpunityEngine
             }
             throw new NullReferenceException($"Point light ID \"{id}\" not found");
         }
+        public static PointLight FindLightByGuid(Guid gid) {
+
+            foreach (var light in Control.AllSceneObjects)
+            {
+                if (light.guid == gid)
+                {
+                    return (PointLight)light;
+                }
+            }
+            throw new NullReferenceException();
+        }
         public void SetPosition()//the light would do this if it's dynamic
         {
             //This method will tell c++ to Directly set the pointLight's Position

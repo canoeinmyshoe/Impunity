@@ -22,6 +22,8 @@ namespace ImpunityEngine.Persistence
         public Material material = new Material(MaterialType.DefaultTextureless);
         public string modelPath { get; set; }
         public Guid guid { get; set; }
+        public List<Guid> ChildGuids { get; set; }
+        public bool enabled { get; set; }
     }
 
     public class SerializableDirectionalLight : SerializableSceneObject

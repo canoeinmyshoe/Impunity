@@ -25,6 +25,16 @@ namespace ImpunityEngine.SceneManipulation
             SelectedSceneObject = plight;
             Control.AllSceneObjects.Add(plight);
         }
+        public static void CreatePointLight(Guid guid)
+        {
+            int i = Bridge.CreatePointLight(0, 0, 0);
+        //    Console.WriteLine("C#: Point light ID: " + i);
+            PointLight plight = new PointLight(i, new Vector3(0));
+          //  Console.WriteLine("Wow!");
+            SelectedSceneObject = plight;
+            plight.guid = guid;
+            Control.AllSceneObjects.Add(plight);
+        }
 
         public static void CreateDirectionalLight()
         {
@@ -38,6 +48,19 @@ namespace ImpunityEngine.SceneManipulation
             SelectedSceneObject = dlight;
             Control.AllSceneObjects.Add(dlight);
         }
+        public static void CreateDirectionalLight(Guid guid)
+        {
+            float x = 0;
+            float y = 0;
+            float z = 0;
+            int id = Bridge.CreateDirectionalLight(x, y, z);
+            Console.WriteLine("C#: Directional Light ID: " + id);
+            DirectionalLight dlight = new DirectionalLight(id, new Vector3(x, y, z));
+            Console.WriteLine("Added a new directional light.");
+            dlight.guid = guid;
+            SelectedSceneObject = dlight;
+            Control.AllSceneObjects.Add(dlight);
+        }
 
         public static void CreateSpotLight()
         {
@@ -47,6 +70,26 @@ namespace ImpunityEngine.SceneManipulation
             Console.WriteLine("C#: Spot Light ID: " + id);
             SpotLight spot = new SpotLight(id, new Vector3(x, y, z), new Vector3(dx, dy, dz));
             Console.WriteLine("Added new spotlight!");
+            Control.AllSceneObjects.Add(spot);
+
+            int count = 0;
+            foreach (var item in Control.AllSceneObjects)
+            {
+                if (item is SpotLight)
+                    count += 1;
+            }
+
+            Console.WriteLine("Spotlight count: " + count);
+        }
+        public static void CreateSpotLight(Guid guid)
+        {
+            float x, y, z, dx, dy, dz;
+            x = 0; y = 0; z = 0; dx = 0; dy = 0; dz = 0;
+            int id = Bridge.CreateSpotLight(x, y, z, dx, dy, dz);
+            Console.WriteLine("C#: Spot Light ID: " + id);
+            SpotLight spot = new SpotLight(id, new Vector3(x, y, z), new Vector3(dx, dy, dz));
+       //     Console.WriteLine("Added new spotlight!");
+            spot.guid = guid;
             Control.AllSceneObjects.Add(spot);
 
             int count = 0;
@@ -91,6 +134,39 @@ namespace ImpunityEngine.SceneManipulation
             
             cmessage.Clear();
         }
+        public static void LoadFromDirectory(string path,Guid guid, List<Guid> kidguids)
+        {
+            //  var path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
+            //int start = path.IndexOf("\\") + 1;
+            //path = path.Substring(start, path.Length - start);
+
+            //path += "\\Models\\tree02\\tree.obj";
+
+            //   Console.WriteLine("Path: " + path);
+
+
+            StringBuilder cmessage = new StringBuilder(10000);//256 chars at most
+
+            int i = Bridge.LoadModelFromDir(path, path.Length, cmessage, 10000);
+
+
+            string message = cmessage.ToString();
+            Console.WriteLine("Result: " + message);
+
+            //Parse the string and create the corresponding sceneObjects
+            try
+            {
+                NativeTranslator translator = new NativeTranslator();
+                List<SceneObject> sceneObs = translator.ParseNativeData(message, path, guid, kidguids);
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine("ERROR: " + err.ToString());
+            }
+
+            cmessage.Clear();
+        }
+
 
 
         public static void LoadSceneFile(string filename)
@@ -120,29 +196,76 @@ namespace ImpunityEngine.SceneManipulation
             foreach (var item in scene.AllPointLights)
             {
                 Console.WriteLine("Point Light: " + item.LightID);
+                LoadPointLight(item);
             }
             foreach (var item in scene.AllSpotLights)
             {
                 Console.WriteLine("Spot light: " + item.LightID);
+                LoadSpotLight(item);
             }
             foreach (var item in scene.AllDirectionalLights)
             {
                 Console.WriteLine("Directional light: " + item.LightID);
+                LoadDirectionalLight(item);
             }
             //2nd, we go through every item and set the data to their correct values
             foreach (var item in scene.AllSceneObjects)
             {
-                GroomSceneObject(item);
+                DetailSceneObject(item, scene.AllSceneObjects);
+            }
+            foreach (var item in scene.AllPointLights)
+            {
+              //  DetailPointLight(item, scene.AllPointLights);
             }
         }
-        private static void GroomSceneObject(SerializableSceneObject ser)
+        private static void DetailSceneObject(SerializableSceneObject ser, List<SerializableSceneObject> allSer)
         {
             if (ser.ID < 0)
                 return;
             //Find the SceneObject by Guid
+            SceneObject so;
+            try { so = SceneObject.FindByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find SceneObject " + ser.guid.ToString());return; }
 
+            so.Name = ser.Name;
+            so.Tag = ser.Tag;
+            so.isStatic = ser.isStatic;
+            so.transform = ser.transform;
+            foreach (var imp in ser.Imps)//unknown if this works
+            {
+                so.Imps.Add(imp);
+            }
+            //we will have to set custom material/texture/shader details 
+            //one property at a time
+            //so don't worry about that, as we don't even have methods
+            //to set material values yet
             
+            //We can also manage complex child/parent relationships here
         }
+
+        private static void DetailPointLight(SerializablePointLight ser, List<SerializablePointLight> allSer)
+        {
+            if (ser.ID < 0)
+                return;
+            //Find the PointLight by Guid
+            PointLight so;
+            try { so = PointLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find PointLight " + ser.guid.ToString()); return; }
+
+            so.Name = ser.Name;
+            so.Tag = ser.Tag;
+            so.isStatic = ser.isStatic;
+            so.transform = ser.transform;
+            foreach (var imp in ser.Imps)//unknown if this works
+            {
+                so.Imps.Add(imp);
+            }
+            //we will have to set custom material/texture/shader details 
+            //one property at a time
+            //so don't worry about that, as we don't even have methods
+            //to set material values yet
+
+            //We can also manage complex child/parent relationships here
+        }
+
         private static void LoadSceneObject(SerializableSceneObject ser) {
 
             string pth = ser.modelPath;
@@ -150,7 +273,9 @@ namespace ImpunityEngine.SceneManipulation
             {
                 Console.WriteLine("Loading Model...");
                 try {
-                    LoadFromDirectory(ser.modelPath);
+                    
+                    LoadFromDirectory(ser.modelPath,ser.guid, ser.ChildGuids);
+                 //   Console.WriteLine("Child Guid count: " + ser.ChildGuids.Count);
                 } catch { }
             }
             else //it's a child ignore it for now
@@ -158,7 +283,16 @@ namespace ImpunityEngine.SceneManipulation
                 Console.WriteLine("Model child");
             }
         }
-
+        private static void LoadPointLight(SerializablePointLight ser)
+        {
+            CreatePointLight(ser.guid);
+        }
+        private static void LoadSpotLight(SerializableSpotLight ser) {
+            CreateSpotLight(ser.guid);
+        }
+        private static void LoadDirectionalLight(SerializableDirectionalLight ser) {
+            CreateDirectionalLight(ser.guid);
+        }
         public static void SaveSceneAs(string filename)
         {
             //  SceneFile scene = new SceneFile();
@@ -277,9 +411,11 @@ namespace ImpunityEngine.SceneManipulation
             sp.isStatic = pl.isStatic;
             sp.transform = pl.transform;
             sp.ChildIDs = new int[pl.Children.Count];
-            for (int i = 0; i < pl.Children.Count; i++)
+            sp.ChildGuids = new List<Guid>();
+            for (int i = 0; i < so.Children.Count; i++)
             {
-                sp.ChildIDs[i] = pl.Children[i].ID;
+                sp.ChildIDs[i] = so.Children[i].ID;
+                sp.ChildGuids.Add(so.Children[i].guid);
             }
             sp.Imps = pl.Imps;
             sp.material = pl.material;
@@ -302,6 +438,7 @@ namespace ImpunityEngine.SceneManipulation
             //sp.maxDistance = pl.maxDistance;
             sp.enabled = pl.enabled;
             sp.modelPath = so.modelPath;
+            sp.enabled = pl.enabled;
 
             sp.Name = pl.Name;
             sp.Tag = pl.Tag;
@@ -314,9 +451,11 @@ namespace ImpunityEngine.SceneManipulation
             sp.isStatic = pl.isStatic;
             sp.transform = pl.transform;
             sp.ChildIDs = new int[pl.Children.Count];
-            for (int i = 0; i < pl.Children.Count; i++)
+            sp.ChildGuids = new List<Guid>();
+            for (int i = 0; i < so.Children.Count; i++)
             {
-                sp.ChildIDs[i] = pl.Children[i].ID;
+                sp.ChildIDs[i] = so.Children[i].ID;
+                sp.ChildGuids.Add(so.Children[i].guid);
             }
             sp.Imps = pl.Imps;
             sp.material = pl.material;
@@ -350,14 +489,17 @@ namespace ImpunityEngine.SceneManipulation
             sp.MeshID = pl.MeshID;
             sp.ShaderID = pl.ShaderID;
             sp.ParentID = pl.ParentID;
+            sp.enabled = pl.enabled;
 
             sp.isChild = pl.isChild;
             sp.isStatic = pl.isStatic;
             sp.transform = pl.transform;
             sp.ChildIDs = new int[pl.Children.Count];
-            for (int i = 0; i < pl.Children.Count; i++)
+            sp.ChildGuids = new List<Guid>();
+            for (int i = 0; i < so.Children.Count; i++)
             {
-                sp.ChildIDs[i] = pl.Children[i].ID;
+                sp.ChildIDs[i] = so.Children[i].ID;
+                sp.ChildGuids.Add(so.Children[i].guid);
             }
             sp.Imps = pl.Imps;
             sp.material = pl.material;
@@ -382,12 +524,15 @@ namespace ImpunityEngine.SceneManipulation
             sp.isStatic = so.isStatic;
             sp.transform = so.transform;
             sp.ChildIDs = new int[so.Children.Count];
+            sp.ChildGuids = new List<Guid>();
             for (int i = 0; i < so.Children.Count; i++)
             {
                 sp.ChildIDs[i] = so.Children[i].ID;
+                sp.ChildGuids.Add(so.Children[i].guid);
             }
             sp.Imps = so.Imps;
             sp.material = so.material;
+            sp.enabled = so.enabled;
 
             return sp;
         }
