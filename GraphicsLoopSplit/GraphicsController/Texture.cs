@@ -12,6 +12,12 @@ namespace ImpunityEngine
         public int ID { get; set; }
         public TextureType Type;
 
+        public Texture()
+        {
+            Path = "Nowhere";
+            ID = 0;
+            Type = 0;
+        }
         public Texture(TextureType type)
         {
             Path = "Nowhere";

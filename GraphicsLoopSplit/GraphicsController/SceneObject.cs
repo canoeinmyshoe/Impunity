@@ -30,6 +30,8 @@ namespace ImpunityEngine
             MeshID = 0;
             ShaderID = 0;
             isStatic = false;
+            ParentID = -25;
+            isChild = false;
         }
 
         public virtual void Start()

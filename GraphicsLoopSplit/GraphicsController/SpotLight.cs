@@ -19,7 +19,7 @@ namespace ImpunityEngine
         public float outerCutOff { get; set; }
         public float maxDistance { get; set; }
         public bool enabled { get; set; }
-        private float cutOffRatio = 0.8333f;
+        public float cutOffRatio = 0.8333f;
 
         public SpotLight(int id)
         {

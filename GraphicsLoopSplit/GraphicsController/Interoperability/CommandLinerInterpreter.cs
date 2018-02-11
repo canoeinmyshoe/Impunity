@@ -137,11 +137,25 @@ namespace ImpunityEngine
                     Console.WriteLine("Setting cutoff");
                     SetCutOff(i, args);
                 }
+                else if (word == "save")
+                {
+                    Console.WriteLine("Saving...");
+                    SaveScene(i, args);
+                }
                 else
                 {
                     // Console.WriteLine("Teapots.");
                 }
             }
+        }
+        void SaveScene(int index, string[] args) {
+            //we are expecting
+            //args[index + 1]  to be a file name
+            if (index + 1 > args.Length - 1)
+                return;
+
+            SceneMaster.SaveSceneAs(args[index + 1]);
+
         }
         void SetCutOff(int index, string[] args) {
             //we are expecting 

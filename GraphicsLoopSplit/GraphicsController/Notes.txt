@@ -25,7 +25,8 @@ Ergo, it CANNOT run on android in this state
 
 So we treat it as if in dev mode.
 
-
+TODO: Create a project called ImpunityEngine.Core
+Which will store all the classes a user needs to avoid circular dependancies
 
 key words:
 

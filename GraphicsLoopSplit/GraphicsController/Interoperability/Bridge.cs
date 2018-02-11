@@ -11,6 +11,7 @@ namespace ImpunityEngine.Interoperability
 {
     public class Bridge//Contains all the C++ pInvoke stuff
     {
+        #region Older Methods
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int EntireCoordinateSystemLesson();
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -146,6 +147,7 @@ namespace ImpunityEngine.Interoperability
         {
             return SetDirLightDirection(id, direction.x, direction.y, direction.z);
         }
+        #endregion
 
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetSpotLightPosition(int id, float x, float y, float z);
@@ -153,6 +155,8 @@ namespace ImpunityEngine.Interoperability
         {
             return SetSpotLightPosition(id, position.x, position.y, position.z);
         }
+
+
 
         #region Point Light Values
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -206,7 +210,6 @@ namespace ImpunityEngine.Interoperability
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetSpotLightCutOff(int id, float x, float ox);
         #endregion
-
 
         #region Directional Light values
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]

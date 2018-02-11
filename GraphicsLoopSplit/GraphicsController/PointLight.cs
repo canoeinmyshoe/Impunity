@@ -99,8 +99,6 @@ namespace ImpunityEngine
             position = new Vector3(x, y, z);
             Bridge.SetPointLightPosition(LightID, x, y, z);
         }
-
-        //now for diffuse...
         public void SetAmbient(Vector3 amb)
         {
             ambient = amb;
