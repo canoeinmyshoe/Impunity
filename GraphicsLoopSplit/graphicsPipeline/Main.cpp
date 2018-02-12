@@ -17,6 +17,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 //Assimp
 #include <assimp/Importer.hpp>
@@ -97,6 +98,11 @@ vector<Texture> LoadedTextures;
 GLfloat WorldAmbientLight;
 vector<SceneObject> AllSceneObjects;
 Model DebuggingArrow;//needs a special, low-detail shader. use default for now
+
+Model XArrow;
+Model YArrow;
+Model ZArrow;
+Model Cube;
 #pragma endregion
 
 #pragma region Example Code Variables
@@ -551,7 +557,10 @@ extern "C"
 		cout << "Loading the debuggin arrow" << endl;
 
 		DebuggingArrow.Load(d + "\\models\\misfits\\arrow.obj");
-
+		XArrow.Load(d + "\\models\\misfits\\xarrow.obj");
+		YArrow.Load(d + "\\models\\misfits\\yarrow.obj");
+		ZArrow.Load(d + "\\models\\misfits\\zarrow.obj");
+		Cube.Load(d + "\\models\\misfits\\cube.obj");
 		//This seems like a decent place to initiate the model loading process
 
 	/*	string mDir = d + "Models\\tree02\\tree.obj";
@@ -4550,7 +4559,8 @@ void DrawDebuggingLightArrows()
 	/*	glBindVertexArray(lightVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);*/
-		DebuggingArrow.Draw(lampShader);
+		/*DebuggingArrow.Draw(lampShader);*/
+		Cube.Draw(lampShader);
 	}
 
 	for (size_t i = 0; i < SceneDirectionalLights.size(); i++)
@@ -4561,16 +4571,33 @@ void DrawDebuggingLightArrows()
 
 		model = glm::mat4();
 		model = glm::translate(model, position);
-		model = glm::rotate(model, SceneDirectionalLights[i].direction.x, glm::vec3(1, 0, 0));
+	/*	model = glm::rotate(model, SceneDirectionalLights[i].direction.x, glm::vec3(1, 0, 0));
 		model = glm::rotate(model, SceneDirectionalLights[i].direction.y, glm::vec3(0, 1, 0));
-		model = glm::rotate(model, SceneDirectionalLights[i].direction.z, glm::vec3(0, 0, 1));
-		model = glm::scale(model, glm::vec3(0.05f)); // Make it a smaller cube
+		model = glm::rotate(model, SceneDirectionalLights[i].direction.z, glm::vec3(0, 0, 1));*/
+		glm::vec3 front;
+		front.x = cos(glm::radians(SceneDirectionalLights[i].direction.y)) * cos(glm::radians(SceneDirectionalLights[i].direction.x));
+		front.y = sin(glm::radians(SceneDirectionalLights[i].direction.x));
+		front.z = sin(glm::radians(SceneDirectionalLights[i].direction.y)) * cos(glm::radians(SceneDirectionalLights[i].direction.x));
+		glm::vec3 Front = glm::normalize(front);
+		// Also re-calculate the Right and Up vector
+		glm::vec3 Right  = glm::normalize(glm::cross(Front, glm::vec3(0,1,0)));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+		glm::vec3 Up  = glm::normalize(glm::cross(Right, Front));
+		glm::mat4 lookDirection = glm::lookAt(glm::vec3(0), Front, Up);
+		model *= lookDirection;
+		//step 1: convert the euler angles to quaternion
+		/*glm::quat qu(SceneDirectionalLights[i].direction);
+		glm::mat4 lightRotation = glm::toMat4(qu);
+		model *= lightRotation;*/
+
+		//model = glm::scale(model, glm::vec3(0.05f)); // Make it a smaller cube
 		lampShader->setMat4("model", model);
 
+		lampShader->SetVec3(0.0f, 0.0, 1.0, "debugColor");
+		ZArrow.Draw(lampShader);
+		lampShader->SetVec3(0.0f, 1.0, 0.0, "debugColor");
+		YArrow.Draw(lampShader);
 		lampShader->SetVec3(1.0f, 0.0, 0.0, "debugColor");
-
-		// Draw the light object (using light's vertex attributes)
-		DebuggingArrow.Draw(lampShader);
+		XArrow.Draw(lampShader);
 	}
 
 	for (size_t i = 0; i < SceneSpotLights.size(); i++)
@@ -4582,13 +4609,15 @@ void DrawDebuggingLightArrows()
 		model = glm::rotate(model, SceneSpotLights[i].direction.x, glm::vec3(1, 0, 0));
 		model = glm::rotate(model, SceneSpotLights[i].direction.y, glm::vec3(0, 1, 0));
 		model = glm::rotate(model, SceneSpotLights[i].direction.z, glm::vec3(0, 0, 1));
-		model = glm::scale(model, glm::vec3(0.05f)); // Make it a smaller cube
+		//model = glm::scale(model, glm::vec3(0.05f)); // Make it a smaller cube
 		lampShader->setMat4("model", model);
 
-		lampShader->SetVec3(1.0f, 1.0f, 0.0, "debugColor");
-
-		// Draw the light object (using light's vertex attributes)
-		DebuggingArrow.Draw(lampShader);
+		lampShader->SetVec3(0.0f, 0.0, 1.0, "debugColor");
+		ZArrow.Draw(lampShader);
+		lampShader->SetVec3(0.0f, 1.0, 0.0, "debugColor");
+		YArrow.Draw(lampShader);
+		lampShader->SetVec3(1.0f, 0.0, 0.0, "debugColor");
+		XArrow.Draw(lampShader);
 	}
 }
 #pragma endregion
