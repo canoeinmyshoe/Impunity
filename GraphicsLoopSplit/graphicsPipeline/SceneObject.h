@@ -219,7 +219,43 @@ public:
 				continue;
 			}
 
+			/*x = cos(yaw)*cos(pitch)
+				y = sin(yaw)*cos(pitch)
+				z = sin(pitch)*/
+
+			//float ex = (glm::cos(glm::radians(SceneDirectionalLights[i].direction.y))*glm::cos(glm::radians(SceneDirectionalLights[i].direction.x)));
+			//float wy = glm::sin(glm::radians(SceneDirectionalLights[i].direction.y))*glm::cos(glm::radians(SceneDirectionalLights[i].direction.x));
+			//float ze = glm::sin(glm::radians(SceneDirectionalLights[i].direction.x));
+
+	/*		float ex = (glm::cos(SceneDirectionalLights[i].direction.y)*glm::cos(SceneDirectionalLights[i].direction.x));
+			float wy = glm::sin(SceneDirectionalLights[i].direction.y)*glm::cos(SceneDirectionalLights[i].direction.x);
+			float ze = glm::sin(SceneDirectionalLights[i].direction.x);*/
+
+			/*float ex = -cos(SceneDirectionalLights[i].direction.y)*sin(SceneDirectionalLights[i].direction.x)*sin(SceneDirectionalLights[i].direction.z) - sin(SceneDirectionalLights[i].direction.y)*cos(SceneDirectionalLights[i].direction.z);
+			float wy = -sin(SceneDirectionalLights[i].direction.y)*sin(SceneDirectionalLights[i].direction.x)*sin(SceneDirectionalLights[i].direction.z) + cos(SceneDirectionalLights[i].direction.y)*cos(SceneDirectionalLights[i].direction.z);
+			float ze = cos(SceneDirectionalLights[i].direction.x)*sin(SceneDirectionalLights[i].direction.z);*/
+
+			float ex = sin(glm::radians(SceneDirectionalLights[i].direction.z));
+			float wy = -(sin(glm::radians(SceneDirectionalLights[i].direction.x)) * cos(glm::radians(SceneDirectionalLights[i].direction.z)));
+			float ze = cos(glm::radians(SceneDirectionalLights[i].direction.x)) * cos(glm::radians(SceneDirectionalLights[i].direction.y));
+
+
+
 			string eye = std::to_string(i);
+			std::string s = "directionalLights[" + eye + "].direction";
+			GLchar * pos = &s[0u];
+			LoadedShaders[ShaderNumber]->SetVec3(ex,wy, ze, pos);
+			s = "directionalLights[" + eye + "].ambient";
+			pos = &s[0u];
+			LoadedShaders[ShaderNumber]->SetVec3(SceneDirectionalLights[i].ambient.x, SceneDirectionalLights[i].ambient.y, SceneDirectionalLights[i].ambient.z, pos);
+			s = "directionalLights[" + eye + "].diffuse";
+			pos = &s[0u];
+			LoadedShaders[ShaderNumber]->SetVec3(SceneDirectionalLights[i].diffuse.x, SceneDirectionalLights[i].diffuse.y, SceneDirectionalLights[i].diffuse.z, pos);
+			s = "directionalLights[" + eye + "].specular";
+			pos = &s[0u];
+			LoadedShaders[ShaderNumber]->SetVec3(SceneDirectionalLights[i].specular.x, SceneDirectionalLights[i].specular.y, SceneDirectionalLights[i].specular.z, pos);
+
+		/*	string eye = std::to_string(i);
 			std::string s = "directionalLights[" + eye + "].direction";
 			GLchar * pos = &s[0u];
 			LoadedShaders[ShaderNumber]->SetVec3(SceneDirectionalLights[i].direction.x, SceneDirectionalLights[i].direction.y, SceneDirectionalLights[i].direction.z, pos);
@@ -231,7 +267,7 @@ public:
 			LoadedShaders[ShaderNumber]->SetVec3(SceneDirectionalLights[i].diffuse.x, SceneDirectionalLights[i].diffuse.y, SceneDirectionalLights[i].diffuse.z, pos);
 			s = "directionalLights[" + eye + "].specular";
 			pos = &s[0u];
-			LoadedShaders[ShaderNumber]->SetVec3(SceneDirectionalLights[i].specular.x, SceneDirectionalLights[i].specular.y, SceneDirectionalLights[i].specular.z, pos);
+			LoadedShaders[ShaderNumber]->SetVec3(SceneDirectionalLights[i].specular.x, SceneDirectionalLights[i].specular.y, SceneDirectionalLights[i].specular.z, pos);*/
 		
 		}
 

@@ -17,7 +17,8 @@ struct PointLight {
 };
 
 struct DirectionalLight {
-	glm::vec3 direction;
+	glm::vec3 direction;//This should really be called eulerAngles
+	//TODO: Change to eulerAngles
 	glm::vec3 ambient;
 	glm::vec3 diffuse;
 	glm::vec3 specular;

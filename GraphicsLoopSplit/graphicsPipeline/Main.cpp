@@ -18,6 +18,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/euler_angles.hpp>
 
 //Assimp
 #include <assimp/Importer.hpp>
@@ -54,6 +55,9 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 static wchar_t * strTowchar(string str);
 void DrawDebuggingLights();
 void DrawDebuggingLightArrows();
+glm::quat toQuaternion(glm::vec3 euler);
+
+glm::quat toQuaternion(double pitch, double roll, double yaw);
 //SceneObject InstantiateSceneObject();
 #pragma endregion
 
@@ -4538,6 +4542,8 @@ void DrawDebuggingLights()
 		glBindVertexArray(0);
 	}
 }
+
+
 void DrawDebuggingLightArrows()
 {
 	lampShader->Use();
@@ -4569,35 +4575,92 @@ void DrawDebuggingLightArrows()
 			continue;
 		glm::vec3 position = glm::vec3(0.0, i, 0.0);
 
-		model = glm::mat4();
-		model = glm::translate(model, position);
+		glm::mat4 model;
 	/*	model = glm::rotate(model, SceneDirectionalLights[i].direction.x, glm::vec3(1, 0, 0));
 		model = glm::rotate(model, SceneDirectionalLights[i].direction.y, glm::vec3(0, 1, 0));
 		model = glm::rotate(model, SceneDirectionalLights[i].direction.z, glm::vec3(0, 0, 1));*/
-		glm::vec3 front;
-		front.x = cos(glm::radians(SceneDirectionalLights[i].direction.y)) * cos(glm::radians(SceneDirectionalLights[i].direction.x));
-		front.y = sin(glm::radians(SceneDirectionalLights[i].direction.x));
-		front.z = sin(glm::radians(SceneDirectionalLights[i].direction.y)) * cos(glm::radians(SceneDirectionalLights[i].direction.x));
-		glm::vec3 Front = glm::normalize(front);
-		// Also re-calculate the Right and Up vector
-		glm::vec3 Right  = glm::normalize(glm::cross(Front, glm::vec3(0,1,0)));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-		glm::vec3 Up  = glm::normalize(glm::cross(Right, Front));
-		glm::mat4 lookDirection = glm::lookAt(glm::vec3(0), Front, Up);
-		model *= lookDirection;
+		//glm::vec3 front;
+		//front.x = cos(glm::radians(SceneDirectionalLights[i].direction.y)) * cos(glm::radians(SceneDirectionalLights[i].direction.x));
+		//front.y = sin(glm::radians(SceneDirectionalLights[i].direction.x));
+		//front.z = sin(glm::radians(SceneDirectionalLights[i].direction.y)) * cos(glm::radians(SceneDirectionalLights[i].direction.x));
+		//glm::vec3 Front = glm::normalize(front);
+		//// Also re-calculate the Right and Up vector
+		//glm::vec3 Right  = glm::normalize(glm::cross(Front, glm::vec3(0,1,0)));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+		//glm::vec3 Up  = glm::normalize(glm::cross(Right, Front));
+		//glm::mat4 lookDirection = glm::lookAt(position, Front, Up);
+		
+
+		//model *= lookDirection;
+
+
+		//ultimately, we simply orient the light as it says from SceneDirectionalLights[i].x,y,z
+		//Then we obtain its Front vector (the z arrow)
+		//Then Right (x arrow)
+		//Then Up (y arrow)
+
+		//step 0: convert the angles to radians
+
+
 		//step 1: convert the euler angles to quaternion
-		/*glm::quat qu(SceneDirectionalLights[i].direction);
+		/*float ex = SceneDirectionalLights[i].direction.x;
+		float wy = SceneDirectionalLights[i].direction.y;
+		float ze = SceneDirectionalLights[i].direction.z;
+*/
+	/*	glm::quat qu(glm::vec3(ex, wy, ze));
 		glm::mat4 lightRotation = glm::toMat4(qu);
 		model *= lightRotation;*/
 
-		//model = glm::scale(model, glm::vec3(0.05f)); // Make it a smaller cube
-		lampShader->setMat4("model", model);
+	/*	glm::mat4 lightRotation = glm::eulerAngleYXZ(wy, ex, ze);
+		model *= lightRotation;*/
 
+		glm::quat qu = toQuaternion(SceneDirectionalLights[i].direction);
+		glm::mat4 lightRotation = glm::toMat4(qu);
+		model *= lightRotation;
+
+
+	/*	glm::mat4 lightRotation = glm::eulerAngleYXZ(SceneDirectionalLights[i].direction.y,
+			SceneDirectionalLights[i].direction.x, SceneDirectionalLights[i].direction.z);
+		model *= lightRotation;*/
+
+		//Z Arrow
+		/*model = glm::mat4();
+		model = glm::translate(model, position);
+		glm::quat qu(Front);
+		glm::mat4 lightRotation = glm::toMat4(qu);
+		model *= lightRotation;*/
+		lampShader->setMat4("model", model);
 		lampShader->SetVec3(0.0f, 0.0, 1.0, "debugColor");
 		ZArrow.Draw(lampShader);
-		lampShader->SetVec3(0.0f, 1.0, 0.0, "debugColor");
-		YArrow.Draw(lampShader);
+
+		//X Arrow
+		/*model = glm::mat4();
+		model = glm::translate(model, position);
+		glm::quat xu(Right);
+		lightRotation = glm::mat4();
+		lightRotation = glm::toMat4(xu);
+		model *= lightRotation;
+		lampShader->setMat4("model", model);*/
 		lampShader->SetVec3(1.0f, 0.0, 0.0, "debugColor");
 		XArrow.Draw(lampShader);
+
+		//Y Arrow
+	/*	model = glm::mat4();
+		model = glm::translate(model, position);
+		glm::quat yu(Up);
+		lightRotation = glm::mat4();
+		lightRotation = glm::toMat4(yu);
+		model *= lightRotation;
+		lampShader->setMat4("model", model);*/
+		lampShader->SetVec3(0.0f, 1.0, 0.0, "debugColor");
+		YArrow.Draw(lampShader);
+
+		//model = glm::scale(model, glm::vec3(0.05f)); // Make it a smaller cube
+		
+
+	/*	lampShader->SetVec3(0.0f, 1.0, 0.0, "debugColor");
+		YArrow.Draw(lampShader);
+		lampShader->SetVec3(1.0f, 0.0, 0.0, "debugColor");
+		XArrow.Draw(lampShader);*/
 	}
 
 	for (size_t i = 0; i < SceneSpotLights.size(); i++)
@@ -4619,5 +4682,69 @@ void DrawDebuggingLightArrows()
 		lampShader->SetVec3(1.0f, 0.0, 0.0, "debugColor");
 		XArrow.Draw(lampShader);
 	}
+
+	
 }
+
+glm::quat toQuaternion(double pitch, double roll, double yaw)
+{
+	glm::quat q;
+	// Abbreviations for the various angular functions
+	double cy = cos(yaw * 0.5);
+	double sy = sin(yaw * 0.5);
+	double cr = cos(roll * 0.5);
+	double sr = sin(roll * 0.5);
+	double cp = cos(pitch * 0.5);
+	double sp = sin(pitch * 0.5);
+
+	q.w = cy * cr * cp + sy * sr * sp;
+	q.x = cy * sr * cp - sy * cr * sp;
+	q.y = cy * cr * sp + sy * sr * cp;
+	q.z = sy * cr * cp - cy * sr * sp;
+	return q;
+}
+glm::quat toQuaternion(glm::vec3 euler)
+{
+	glm::quat q;
+	// Abbreviations for the various angular functions
+	double cy = glm::cos(glm::radians(euler.y) * 0.5);
+	double sy = glm::sin(glm::radians(euler.y) * 0.5);
+	double cr = glm::cos(glm::radians(euler.z) * 0.5);
+	double sr = glm::sin(glm::radians(euler.z) * 0.5);
+	double cp = glm::cos(glm::radians(euler.x) * 0.5);
+	double sp = glm::sin(glm::radians(euler.x) * 0.5);
+
+	q.w = cy * cr * cp + sy * sr * sp;
+	q.x = cy * sr * cp - sy * cr * sp;
+	q.y = cy * cr * sp + sy * sr * cp;
+	q.z = sy * cr * cp - cy * sr * sp;
+
+	//quat combinations - unfortunately we will have to systematically test which one can
+	//accurately represent the rotation of euler angles
+	//series 1            x,y,z,w
+	//glm::quat q1 = glm::quat(q.x, q.y, q.z, q.w);
+	//glm::quat q2 = glm::quat(q.w, q.x, q.y, q.z);
+	//glm::quat q1 = glm::quat(q.z, q.w, q.x, q.y);
+	//glm::quat q1 = glm::quat(q.y, q.z, q.w, q.x);
+
+	////series 2           y,x,z,w
+	//glm::quat q1 = glm::quat(q.y, q.x, q.z, q.w);
+	//glm::quat q1 = glm::quat(q.w, q.y, q.x, q.z);//closest yet
+	//glm::quat q1 = glm::quat(q.z, q.w, q.y, q.x);
+	//glm::quat q1 = glm::quat(q.x, q.z, q.w, q.y);
+
+	////series 3         y, z, x, w
+	//glm::quat q1 = glm::quat(q.y, q.z, q.x, q.w);
+	glm::quat q1 = glm::quat(q.w, q.y, q.z, q.x);//WINNER!
+	//glm::quat q1 = glm::quat(q.x, q.w, q.y, q.z);
+	//glm::quat q1 = glm::quat(q.z, q.x, q.w, q.y);
+
+	//series         
+
+
+	
+
+	return q1;
+}
+
 #pragma endregion

@@ -39,6 +39,10 @@ setDiffuse - set diffuse value
 setSpecular  - set specular value
 enable - enabled/disable a so/light
 
+
+TODO:select an object
+TODO:manipulate a selected object
+TODO: setScale
 TODO: setRotation - sets the rotation of a sceneObject or Light by name/ID
 TODO:Set each and every variable of every type of light!
 TODO:And perhaps uniforms, too
@@ -53,3 +57,40 @@ example 4:setdiff 2 0.6 0.4 0.4 spotlight
 example 5: setspecular 1 .8 .8 .8 plight
 example 6: enable tree false
 example 7: enable 2 true plight
+
+
+
+a     b     c     d   
+a     d     b    c  
+a     c     d     b
+
+b    a     c     d  
+b    d     a     c 
+b     c    d      a 
+
+c    a     b     d
+c    d     a     b
+c     b     d      a
+
+
+a     b     d     c
+a     d     c      b
+a      c     b     d
+
+b     a     d      c 
+b     d      c      a
+b     c       a     a
+
+c      a      d     b
+c      d      b     a
+c       b      a     d
+
+
+
+
+
+
+
+
+
+
