@@ -237,7 +237,7 @@ public:
 
 			float ex = sin(glm::radians(SceneDirectionalLights[i].direction.z));
 			float wy = -(sin(glm::radians(SceneDirectionalLights[i].direction.x)) * cos(glm::radians(SceneDirectionalLights[i].direction.z)));
-			float ze = cos(glm::radians(SceneDirectionalLights[i].direction.x)) * cos(glm::radians(SceneDirectionalLights[i].direction.y));
+			float ze = -1.0*cos(glm::radians(SceneDirectionalLights[i].direction.x)) * cos(glm::radians(SceneDirectionalLights[i].direction.y));
 
 
 
