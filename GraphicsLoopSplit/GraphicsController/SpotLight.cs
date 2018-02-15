@@ -95,7 +95,7 @@ namespace ImpunityEngine
         public void SetDirection(Vector3 dir)
         {
             direction = dir;
-            Bridge.SetSpotLightDirection(LightID, position);
+            Bridge.SetSpotLightDirection(LightID, direction);
         }
         public void SetAmbient(Vector3 color)
         {

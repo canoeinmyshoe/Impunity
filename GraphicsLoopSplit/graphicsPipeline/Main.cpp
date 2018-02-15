@@ -932,7 +932,7 @@ extern "C"
 			return -1;
 
 		SceneSpotLights[id].direction = glm::vec3(x, y, x);
-		//cout << "C++: set position of spotlight" << endl;
+		cout << "C++: set direction of spotlight" << endl;
 
 		return 0;
 	}

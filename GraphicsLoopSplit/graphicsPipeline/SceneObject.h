@@ -48,6 +48,8 @@ struct Material {
 class SceneObject
 {
 public:
+
+#pragma region Public variables
 	//All the variables involved. Everything has an ID!
 	GLuint ID;
 	string Name;
@@ -68,8 +70,10 @@ public:
 	Material material;
 
 	GLuint ShaderNumber = 0;//Index in LoadedShaders of shader to use
-	
+#pragma endregion
 
+
+#pragma region Constructors
 	//set material values in the ctor
 	SceneObject() 
 	{
@@ -113,7 +117,7 @@ public:
 
 	~SceneObject();
 
-	
+#pragma endregion
 
 	//at some point in time, abstract the setting of uniforms away from main
 	//in fact, the sceneObject should have its own shader
@@ -278,6 +282,17 @@ public:
 			{
 				continue;
 			}*/
+			float ex = sin(glm::radians(SceneSpotLights[i].direction.z));
+			float wy = -(sin(glm::radians(SceneSpotLights[i].direction.x)) * cos(glm::radians(SceneSpotLights[i].direction.z)));
+			float ze = -1.0*cos(glm::radians(SceneSpotLights[i].direction.x)) * cos(glm::radians(SceneSpotLights[i].direction.y));
+			//So this time, the shader is actually expecting a direction
+			//and is used to getting one
+
+	/*		front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+			front.y = sin(glm::radians(Pitch));
+			front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+			Front = glm::normalize(front);*/
+
 		
 			string eye = std::to_string(i);
 			std::string s = "spotLights[" + eye + "].position";
@@ -294,7 +309,7 @@ public:
 			LoadedShaders[ShaderNumber]->SetVec3(SceneSpotLights[i].specular.x, SceneSpotLights[i].specular.y, SceneSpotLights[i].specular.z, pos);
 			s = "spotLights[" + eye + "].direction";
 			pos = &s[0u];
-			LoadedShaders[ShaderNumber]->SetVec3(SceneSpotLights[i].direction, pos);
+			LoadedShaders[ShaderNumber]->SetVec3(glm::vec3(ex,wy,ze), pos);
 			s = "spotLights[" + eye + "].cutOff";
 			pos = &s[0u];
 			LoadedShaders[ShaderNumber]->SetFloat(glm::cos(glm::radians(SceneSpotLights[i].cutOff)), pos);

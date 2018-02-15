@@ -44,6 +44,9 @@ list - list a type sceneObject
 save - save the scene with a name
 scene/load - load scene from a directory
 quit - quit the editor
+select - select an object by index and type
+ r axis degree - rotate an object x degrees around axis axis
+ g axis dist - grab and object dist units of dist along axis axis
 
 
 

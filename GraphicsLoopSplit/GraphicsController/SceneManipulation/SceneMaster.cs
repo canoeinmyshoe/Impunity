@@ -663,16 +663,63 @@ namespace ImpunityEngine.SceneManipulation
 
         public static void GrabObject(float dist, string axis)
         {
+            if (SelectedSceneObject == null)
+                return;
+
+            if (SelectedSceneObject is PointLight)
+            {
+                PointLight dl = (PointLight)SelectedSceneObject;
+                if (axis == "x")
+                    dl.SetPosition(new Vector3(dl.position.x + dist,
+                        dl.position.y, dl.position.z));
+                else if (axis == "y")
+                    dl.SetPosition(new Vector3(dl.position.x,
+                       dl.position.y + dist, dl.position.z));
+                else if (axis == "z")
+                    dl.SetPosition(new Vector3(dl.position.x,
+                        dl.position.y, dl.position.z + dist));
+            }
+            else if (SelectedSceneObject is SpotLight)
+            {
+                SpotLight dl = (SpotLight)SelectedSceneObject;
+                if (axis == "x")
+                    dl.SetPosition(new Vector3(dl.position.x + dist,
+                        dl.position.y, dl.position.z));
+                else if (axis == "y")
+                    dl.SetPosition(new Vector3(dl.position.x,
+                       dl.position.y + dist, dl.position.z));
+                else if (axis == "z")
+                    dl.SetPosition(new Vector3(dl.position.x,
+                        dl.position.y, dl.position.z + dist));
+            }
+            else if (SelectedSceneObject is DirectionalLight)
+            {
+                Console.WriteLine("Directional lights don't have a position...");
+            }
+            else
+            {
+                //Regular SceneObject
+                if (axis == "x")
+                    SelectedSceneObject.transform.position.x += dist;
+                else if (axis == "y")
+                    SelectedSceneObject.transform.position.y += dist;
+                else if (axis == "z")
+                    SelectedSceneObject.transform.position.z += dist;
+
+                SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
+            }
 
         }
 
-        public static void RotateObject(float degree, string key)
+        public static void RotateObject(float degree, string axis)
         {
-           // Console.WriteLine("Rotating selected by " + degree + " degrees on " + key + " axis");
+            
             //add degree to the axis of the selected SceneObject
             //Just like blender!
             if (SelectedSceneObject == null)
                 return;
+
+            Console.WriteLine("Rotating selected by " + degree + " degrees on " + axis + " axis");
 
             if (SelectedSceneObject is PointLight)
             {
@@ -681,37 +728,37 @@ namespace ImpunityEngine.SceneManipulation
             else if (SelectedSceneObject is SpotLight)
             {
                 SpotLight dl = (SpotLight)SelectedSceneObject;
-                if (key == "x")
+                if (axis == "x")
                     dl.SetDirection(new Vector3(dl.direction.x + degree,
                         dl.direction.y, dl.direction.z));
-                else if (key == "y")
+                else if (axis == "y")
                     dl.SetDirection(new Vector3(dl.direction.x,
                        dl.direction.y + degree, dl.direction.z));
-                else if (key == "z")
+                else if (axis == "z")
                     dl.SetDirection(new Vector3(dl.direction.x,
                         dl.direction.y, dl.direction.z + degree));
             }
             else if (SelectedSceneObject is DirectionalLight)
             {
                 DirectionalLight dl = (DirectionalLight)SelectedSceneObject;
-                if (key == "x")
+                if (axis == "x")
                     dl.SetDirection(new Vector3(dl.direction.x + degree,
                         dl.direction.y, dl.direction.z));
-                else if (key == "y")
+                else if (axis == "y")
                     dl.SetDirection(new Vector3(dl.direction.x,
                        dl.direction.y + degree, dl.direction.z));
-                else if (key == "z")
+                else if (axis == "z")
                     dl.SetDirection(new Vector3(dl.direction.x,
                         dl.direction.y, dl.direction.z + degree));
             }
             else
             {
                 //Regular SceneObject
-                if (key == "x")
+                if (axis == "x")
                     SelectedSceneObject.transform.rotation.x += degree;
-                else if (key == "y")
+                else if (axis == "y")
                     SelectedSceneObject.transform.rotation.y += degree;
-                else if (key == "z")
+                else if (axis == "z")
                     SelectedSceneObject.transform.rotation.z += degree;
 
                 SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
@@ -731,8 +778,6 @@ namespace ImpunityEngine.SceneManipulation
         public List<SerializablePointLight> AllPointLights = new List<SerializablePointLight>();
         public List<SerializableDirectionalLight> AllDirectionalLights = new List<SerializableDirectionalLight>();
         public List<SerializableSpotLight> AllSpotLights = new List<SerializableSpotLight>();
-       // public List<Texture> AllTextures = new List<Texture>();
-        //Thus far, this is all the information we need to load a new scene
     }
 
 }

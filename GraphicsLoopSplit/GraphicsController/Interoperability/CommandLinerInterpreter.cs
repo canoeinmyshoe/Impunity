@@ -162,6 +162,10 @@ namespace ImpunityEngine
                     //rotate an object on an axis
                     RotateObject(i, args);
                 }
+                else if (word == "grab" || word == "g")
+                {
+                    GrabObject(i, args);
+                }
                 else if (word == "+" || word == "++")
                 {
                     //select the sceneObject above this one
@@ -177,6 +181,22 @@ namespace ImpunityEngine
             }
         }
 
+        void GrabObject(int index, string[] args)
+        {
+            if (index + 2 > args.Length)
+                return;
+
+            float distance = 0;
+            try
+            {
+                distance = Convert.ToSingle(args[index + 2]);
+            }
+            catch { return; }
+
+            string key = args[index + 1].ToLower(); // the axis
+            
+            SceneMaster.GrabObject(distance, key);
+        }
         void RotateObject(int index, string[] args)
         {
             //we are expecting
