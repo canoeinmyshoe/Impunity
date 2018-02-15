@@ -142,7 +142,7 @@ namespace ImpunityEngine
                     Console.WriteLine("Saving...");
                     SaveScene(i, args);
                 }
-                else if (word == "scene" || word == "koad")
+                else if (word == "scene" || word == "load")
                 {
                     Console.WriteLine("Loading...");
                     LoadScene(i, args);
@@ -151,6 +151,16 @@ namespace ImpunityEngine
                 {
                     Console.WriteLine("Have a nice life, bro.");
                     CLE.shouldRun = false;
+                }
+                else if (word == "select" || word == "sel")
+                {
+                    //select a particular sceneObject
+                    SelectSceneObject(i, args);
+                }
+                else if (word == "rotation" || word == "r")
+                {
+                    //rotate an object on an axis
+                    RotateObject(i, args);
                 }
                 else if (word == "+" || word == "++")
                 {
@@ -164,6 +174,60 @@ namespace ImpunityEngine
                 {
                     // Console.WriteLine("Teapots.");
                 }
+            }
+        }
+
+        void RotateObject(int index, string[] args)
+        {
+            //we are expecting
+            //args[index + 1]  ---- axis, eg "z"
+            //args[index + 2] ---- degrees, eg "90"
+
+            if (index + 2 > args.Length)
+                return;
+
+            float degree = 0;
+            try
+            {
+                degree = Convert.ToSingle(args[index + 2]);
+            }catch { return; }
+
+            string key = args[index + 1].ToLower(); // the axis
+
+            //tell c++ to rotate the object by degree degrees around key axis
+            //and set the c# value, too
+            SceneMaster.RotateObject(degree, key);
+            
+        }
+
+        void SelectSceneObject(int index, string[] args)
+        {
+            //we are expecting 
+            //args[index + 1] ---- ID of sceneObject to select
+            //args[index + 2] ---- type of sceneObject to select
+            if (index + 2 > args.Length - 1)
+                return;
+            Console.WriteLine("Selecting scene object: " + args[index + 1]);
+            int result;
+            if (!int.TryParse(args[index + 1], out result))
+                return;
+            string key = args[index + 2].ToLower();
+            if (key == "sceneobject" || key == "so")
+            {
+                //tell/get selection to c++
+                SceneMaster.SelectSceneObject(result, (int)SelectionTypes.regular);
+            }
+            else if (key == "pointlight" || key == "plight")
+            {
+                SceneMaster.SelectSceneObject(result, (int)SelectionTypes.pointlight);
+            }
+            else if (key == "spotlight" || key == "slight")
+            {
+                SceneMaster.SelectSceneObject(result, (int)SelectionTypes.spotlight);
+            }
+            else if (key == "directionallight" || key == "dlight")
+            {
+                SceneMaster.SelectSceneObject(result, (int)SelectionTypes.directionallight);
             }
         }
 
@@ -655,5 +719,14 @@ namespace ImpunityEngine
         }
 
 
+  
+
+    }
+    enum SelectionTypes
+    {
+        regular = 0,
+        pointlight = 1,
+        spotlight = 2,
+        directionallight = 3
     }
 }

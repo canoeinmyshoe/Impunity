@@ -9,6 +9,7 @@ using System.IO;
 
 using ImpunityEngine.Persistence;
 using ImpunityEngine.Interoperability;
+using ImpunityEngine;
 namespace ImpunityEngine.SceneManipulation
 {
     //This could potentially be our save file... with a list of sceneObjects and lights...
@@ -636,6 +637,87 @@ namespace ImpunityEngine.SceneManipulation
 
             return sp;
         }
+
+
+        public static void SelectSceneObject(int index, int type) {
+           int result = Bridge.SelectSceneObject(index, type);
+            if (result == 1)
+                return;
+
+            if (type == (int)SelectionTypes.regular)
+            {
+                SelectedSceneObject = SceneObject.FindByID(index);
+            }
+            else if (type == (int)SelectionTypes.pointlight)
+            {
+                SelectedSceneObject = PointLight.FindLightByID(index);
+            }
+            else if (type == (int)SelectionTypes.spotlight)
+            {
+                SelectedSceneObject = SpotLight.FindLightByID(index);
+            }
+            else if (type == (int)SelectionTypes.directionallight) {
+                SelectedSceneObject = DirectionalLight.FindLightByID(index);
+            }
+        }
+
+        public static void GrabObject(float dist, string axis)
+        {
+
+        }
+
+        public static void RotateObject(float degree, string key)
+        {
+           // Console.WriteLine("Rotating selected by " + degree + " degrees on " + key + " axis");
+            //add degree to the axis of the selected SceneObject
+            //Just like blender!
+            if (SelectedSceneObject == null)
+                return;
+
+            if (SelectedSceneObject is PointLight)
+            {
+                Console.WriteLine("Point lights don't have a rotation...");
+            }
+            else if (SelectedSceneObject is SpotLight)
+            {
+                SpotLight dl = (SpotLight)SelectedSceneObject;
+                if (key == "x")
+                    dl.SetDirection(new Vector3(dl.direction.x + degree,
+                        dl.direction.y, dl.direction.z));
+                else if (key == "y")
+                    dl.SetDirection(new Vector3(dl.direction.x,
+                       dl.direction.y + degree, dl.direction.z));
+                else if (key == "z")
+                    dl.SetDirection(new Vector3(dl.direction.x,
+                        dl.direction.y, dl.direction.z + degree));
+            }
+            else if (SelectedSceneObject is DirectionalLight)
+            {
+                DirectionalLight dl = (DirectionalLight)SelectedSceneObject;
+                if (key == "x")
+                    dl.SetDirection(new Vector3(dl.direction.x + degree,
+                        dl.direction.y, dl.direction.z));
+                else if (key == "y")
+                    dl.SetDirection(new Vector3(dl.direction.x,
+                       dl.direction.y + degree, dl.direction.z));
+                else if (key == "z")
+                    dl.SetDirection(new Vector3(dl.direction.x,
+                        dl.direction.y, dl.direction.z + degree));
+            }
+            else
+            {
+                //Regular SceneObject
+                if (key == "x")
+                    SelectedSceneObject.transform.rotation.x += degree;
+                else if (key == "y")
+                    SelectedSceneObject.transform.rotation.y += degree;
+                else if (key == "z")
+                    SelectedSceneObject.transform.rotation.z += degree;
+
+                SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
+            }
+        }
+
 
     }
 

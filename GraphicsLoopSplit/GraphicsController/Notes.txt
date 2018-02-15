@@ -37,7 +37,14 @@ list sceneObj/lightType -print a list of objects
 setAmbient - set ambient value
 setDiffuse - set diffuse value
 setSpecular  - set specular value
+setMaxDistance - set max distance of light
+cutOff  - set the angle of a spotlight
 enable - enabled/disable a so/light
+list - list a type sceneObject
+save - save the scene with a name
+scene/load - load scene from a directory
+quit - quit the editor
+
 
 
 TODO:select an object

@@ -241,6 +241,11 @@ namespace ImpunityEngine.Interoperability
         public static extern int SetDLightEnabled(int id, int enabled);
         #endregion
 
+        #region SceneObject Selection
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SelectSceneObject(int index, int type);
+        #endregion
+
     }
 
 }

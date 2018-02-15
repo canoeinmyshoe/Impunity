@@ -59,7 +59,10 @@ glm::quat toQuaternion(glm::vec3 euler);
 
 glm::quat toQuaternion(double pitch, double roll, double yaw);
 bool validSceneObjectIndex(int index);
-int DrawArrowsOnSelectedSceneObject(int sType, int index);
+int DrawArrowsOnSelectedSceneObject(int sType);
+bool validPointLightIndex(int index);
+bool validDirectionalLightIndex(int index);
+bool validSpotLightIndex(int index);
 enum SelectedSceneObjectType {
 	regular = 0,
 	pointlight = 1,
@@ -493,10 +496,39 @@ extern "C"
 		strcpy(strIn, returnData.c_str());
 		return 0;
 	}
+	__declspec(dllexport) int SelectSceneObject(int ID, int sType) 
+	{
+		cout << "C++: Selecting SceneObject of index " << ID << ", and type " << sType << endl;
 
+		if (sType == regular && validSceneObjectIndex(ID) == true) {
+			SelectedSceneObjectIndex = ID;
+			SelectedType = (SelectedSceneObjectType)sType;
+		}
+		else if (sType == pointlight && validPointLightIndex(ID) == true) {
+			SelectedSceneObjectIndex = ID;
+			SelectedType = (SelectedSceneObjectType)sType;
+		}
+		else if (sType == spotlight && validSpotLightIndex(ID) == true) {
+			SelectedSceneObjectIndex = ID;
+			SelectedType = (SelectedSceneObjectType)sType;
+		}
+		else if (sType == directionallight && validDirectionalLightIndex(ID) == true) {
+			SelectedSceneObjectIndex = ID;
+			SelectedType = (SelectedSceneObjectType)sType;
+		}
+		else {
+			return 1;
+		}
+
+
+		//this actually needs to return success (0) or failure (1)
+		return 0;
+	}
 
 	__declspec(dllexport) int InitiateEngine() 
 	{
+
+		SelectedType = spotlight;
 
 		glfwInit();
 		// Set all the required options for GLFW
@@ -767,8 +799,9 @@ extern "C"
 
 
 		
-		//DrawDebuggingLights();
-		DrawDebuggingLightArrows();
+		DrawDebuggingLights();
+	//	DrawDebuggingLightArrows();
+		DrawArrowsOnSelectedSceneObject(SelectedType);
 	
 
 		// Swap the screen buffers
@@ -4696,6 +4729,7 @@ void DrawDebuggingLightArrows()
 		YArrow.Draw(lampShader);
 		lampShader->SetVec3(1.0f, 0.0, 0.0, "debugColor");
 		XArrow.Draw(lampShader);
+
 	}
 
 	
@@ -4703,6 +4737,7 @@ void DrawDebuggingLightArrows()
 
 int DrawArrowsOnSelectedSceneObject(int sType) 
 {
+	glDepthFunc(GL_ALWAYS);
 	lampShader->Use();
 	lampShader->setMat4("view", ViewMatrix);
 	lampShader->setMat4("projection", ProjectionMatrix);
@@ -4725,23 +4760,99 @@ int DrawArrowsOnSelectedSceneObject(int sType)
 		lampShader->SetVec3(0.0f, 1.0, 0.0, "debugColor");
 		YArrow.Draw(lampShader);
 	}
-	else if (sType == pointlight) {
-		
-	}
-	else if (sType == spotlight) {
-		
-	}
-	else if (sType == directionallight) {
-		
-	}
+	else if (sType == pointlight && validPointLightIndex(SelectedSceneObjectIndex) == true) {
+		glm::vec3 position = ScenePointLights[SelectedSceneObjectIndex].position;
 
+		glm::mat4 model;
+		model = glm::translate(model, position);
+		/*glm::quat qu = toQuaternion(AllSceneObjects[SelectedSceneObjectIndex].transform.rotation);
+		glm::mat4 lightRotation = glm::toMat4(qu);
+		model *= lightRotation;*/
+		lampShader->setMat4("model", model);
+		lampShader->SetVec3(0.0f, 0.0, 1.0, "debugColor");
+		ZArrow.Draw(lampShader);
+
+		lampShader->SetVec3(1.0f, 0.0, 0.0, "debugColor");
+		XArrow.Draw(lampShader);
+
+		lampShader->SetVec3(0.0f, 1.0, 0.0, "debugColor");
+		YArrow.Draw(lampShader);
+	}
+	else if (sType == spotlight && validSpotLightIndex(SelectedSceneObjectIndex) == true) {
+		glm::vec3 position = SceneSpotLights[SelectedSceneObjectIndex].position;
+		glm::mat4 model;
+		model = glm::translate(model, position);
+		glm::quat qu = toQuaternion(SceneSpotLights[SelectedSceneObjectIndex].direction);
+		glm::mat4 lightRotation = glm::toMat4(qu);
+		model *= lightRotation;
+		lampShader->setMat4("model", model);
+		lampShader->SetVec3(0.0f, 0.0, 1.0, "debugColor");
+		ZArrow.Draw(lampShader);
+		lampShader->SetVec3(1.0f, 0.0, 0.0, "debugColor");
+		XArrow.Draw(lampShader);
+		lampShader->SetVec3(0.0f, 1.0, 0.0, "debugColor");
+		YArrow.Draw(lampShader);
+	}
+	else if (sType == directionallight && validDirectionalLightIndex(SelectedSceneObjectIndex) == true) {
+		glm::vec3 position = glm::vec3(0.0, SelectedSceneObjectIndex, 0.0);
+		glm::mat4 model;
+		model = glm::translate(model, position);
+		glm::quat qu = toQuaternion(SceneDirectionalLights[SelectedSceneObjectIndex].direction);
+		glm::mat4 lightRotation = glm::toMat4(qu);
+		model *= lightRotation;
+		lampShader->setMat4("model", model);
+		lampShader->SetVec3(0.0f, 0.0, 1.0, "debugColor");
+		ZArrow.Draw(lampShader);
+		lampShader->SetVec3(1.0f, 0.0, 0.0, "debugColor");
+		XArrow.Draw(lampShader);
+		lampShader->SetVec3(0.0f, 1.0, 0.0, "debugColor");
+		YArrow.Draw(lampShader);
+	}
+	glDepthFunc(GL_LESS);
 	return 0;
 }
 
  
-bool validSceneObjectIndex(size_t index) 
+bool validSceneObjectIndex(int index) 
 {
+	if (AllSceneObjects.size() == 0)
+		return false;
 	if (AllSceneObjects.size() - 1 < index)
+		return false;
+	if (index < 0)
+		return false;
+
+	return true;
+}
+
+bool validPointLightIndex(int index)
+{
+	if (ScenePointLights.size() == 0)
+		return false;
+	if (ScenePointLights.size() - 1 < index)
+		return false;
+	if (index < 0)
+		return false;
+
+	return true;
+}
+bool validDirectionalLightIndex(int index)
+{
+	if (SceneDirectionalLights.size() == 0)
+		return false;
+	if (SceneDirectionalLights.size() - 1 < index)
+		return false;
+	if (index < 0)
+		return false;
+
+	return true;
+}
+
+bool validSpotLightIndex(int index)
+{
+	if (SceneSpotLights.size() == 0)
+		return false;
+	if (SceneDirectionalLights.size() - 1 < index)
 		return false;
 	if (index < 0)
 		return false;
