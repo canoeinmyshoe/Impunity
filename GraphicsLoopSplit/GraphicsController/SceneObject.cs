@@ -19,7 +19,7 @@ namespace ImpunityEngine
         public Transform transform = new Transform(true);
         public SceneObject Parent { get; set; }
         public List<SceneObject> Children = new List<SceneObject>();
-        public List<ImpunityScript> Imps = new List<ImpunityScript>();
+        public List<ImpunityClass> Imps = new List<ImpunityClass>();
         public Material material = new Material(MaterialType.DefaultTextureless);
         public bool enabled { get; set; }
         public string modelPath { get; set; }

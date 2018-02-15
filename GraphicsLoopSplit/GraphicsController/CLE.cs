@@ -13,7 +13,7 @@ namespace ImpunityEngine
     {
         //In one thread, the command line.
         public static bool blockInput = false;
-        private bool shouldRun = false;
+        public static bool shouldRun = false;
         private List<string> Commands = new List<string>();
         
         //In another, the c# logic for rendering the scene, putting things in the scene,

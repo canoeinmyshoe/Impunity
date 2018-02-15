@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using ImpunityEngine.Interoperability;
 namespace ImpunityEngine.ExampleImpunityScripts
 {
-    public class Character : ImpunityScript
+    public class Character : ImpunityClass
     {
         private float xIncrementer;
   //      public SceneObject sceneObject { get; set; }

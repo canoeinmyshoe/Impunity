@@ -142,9 +142,23 @@ namespace ImpunityEngine
                     Console.WriteLine("Saving...");
                     SaveScene(i, args);
                 }
-                else if (word == "scene" || word == "koad") {
+                else if (word == "scene" || word == "koad")
+                {
                     Console.WriteLine("Loading...");
                     LoadScene(i, args);
+                }
+                else if (word == "quit" || word == "quir" || word == "quiy" || word == "q")
+                {
+                    Console.WriteLine("Have a nice life, bro.");
+                    CLE.shouldRun = false;
+                }
+                else if (word == "+" || word == "++")
+                {
+                    //select the sceneObject above this one
+                }
+                else if (word == "-" || word == "--")
+                {
+                    //select the sceneObject below this one
                 }
                 else
                 {
@@ -455,7 +469,7 @@ namespace ImpunityEngine
                     if (light is PointLight)
                     {
                         PointLight pl = (PointLight)light;
-                        Console.WriteLine("Point Light ID: " + pl.LightID + "==Guid:"+pl.guid);
+                        Console.WriteLine("Point Light ID: " + pl.LightID + "==Guid:" + pl.guid);
                     }
                 }
             }
@@ -466,7 +480,7 @@ namespace ImpunityEngine
                     if (light is DirectionalLight)
                     {
                         DirectionalLight pl = (DirectionalLight)light;
-                        Console.WriteLine("Directional Light ID: " + pl.LightID + "--Guid:"+pl.guid);
+                        Console.WriteLine("Directional Light ID: " + pl.LightID + "--Guid:" + pl.guid);
                     }
                 }
             }
@@ -481,6 +495,7 @@ namespace ImpunityEngine
                     }
                 }
             }
+        
         }
         void Create(string arg, int index, string[] args)
         {

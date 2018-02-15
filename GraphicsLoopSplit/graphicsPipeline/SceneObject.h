@@ -18,6 +18,7 @@ extern vector<SpotLight> SceneSpotLights;
 struct Transform {
 	glm::vec3 position;
 	glm::vec3 rotation;
+	glm::quat orientation;
 	glm::vec3 scale;
 	glm::mat4 matrix;//for use with c# code that sets pos/rot/scale
 	//when you want a "LookAt" algo, just use camera->front

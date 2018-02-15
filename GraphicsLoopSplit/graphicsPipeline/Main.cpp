@@ -58,6 +58,15 @@ void DrawDebuggingLightArrows();
 glm::quat toQuaternion(glm::vec3 euler);
 
 glm::quat toQuaternion(double pitch, double roll, double yaw);
+bool validSceneObjectIndex(int index);
+int DrawArrowsOnSelectedSceneObject(int sType, int index);
+enum SelectedSceneObjectType {
+	regular = 0,
+	pointlight = 1,
+	spotlight = 2,
+	directionallight = 3
+};
+
 //SceneObject InstantiateSceneObject();
 #pragma endregion
 
@@ -107,6 +116,9 @@ Model XArrow;
 Model YArrow;
 Model ZArrow;
 Model Cube;
+size_t SelectedSceneObjectIndex;
+SelectedSceneObjectType SelectedType;
+
 #pragma endregion
 
 #pragma region Example Code Variables
@@ -4047,6 +4059,9 @@ extern "C"
 	{
 
 		std::cout << "Initiating GLFW context, OpenGL 3.3 from stand alone method" << std::endl;
+		SelectedType = regular;
+		SelectedSceneObjectIndex = 0;
+
 		// Init GLFW
 		glfwInit();
 		// Set all the required options for GLFW
@@ -4685,6 +4700,55 @@ void DrawDebuggingLightArrows()
 
 	
 }
+
+int DrawArrowsOnSelectedSceneObject(int sType) 
+{
+	lampShader->Use();
+	lampShader->setMat4("view", ViewMatrix);
+	lampShader->setMat4("projection", ProjectionMatrix);
+	if (sType == regular && validSceneObjectIndex(SelectedSceneObjectIndex) == true) {
+
+		glm::vec3 position = AllSceneObjects[SelectedSceneObjectIndex].transform.position;
+
+		glm::mat4 model;
+		model = glm::translate(model, position);
+		glm::quat qu = toQuaternion(AllSceneObjects[SelectedSceneObjectIndex].transform.rotation);
+		glm::mat4 lightRotation = glm::toMat4(qu);
+		model *= lightRotation;
+		lampShader->setMat4("model", model);
+		lampShader->SetVec3(0.0f, 0.0, 1.0, "debugColor");
+		ZArrow.Draw(lampShader);
+
+		lampShader->SetVec3(1.0f, 0.0, 0.0, "debugColor");
+		XArrow.Draw(lampShader);
+
+		lampShader->SetVec3(0.0f, 1.0, 0.0, "debugColor");
+		YArrow.Draw(lampShader);
+	}
+	else if (sType == pointlight) {
+		
+	}
+	else if (sType == spotlight) {
+		
+	}
+	else if (sType == directionallight) {
+		
+	}
+
+	return 0;
+}
+
+ 
+bool validSceneObjectIndex(size_t index) 
+{
+	if (AllSceneObjects.size() - 1 < index)
+		return false;
+	if (index < 0)
+		return false;
+
+	return true;
+}
+
 
 glm::quat toQuaternion(double pitch, double roll, double yaw)
 {

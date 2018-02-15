@@ -50,7 +50,7 @@
     <Compile Include="Interoperability\Bridge.cs" />
     <Compile Include="Interoperability\CommandLinerInterpreter.cs" />
     <Compile Include="Interoperability\NativeTranslator.cs" />
-    <Compile Include="ImpunityScript.cs" />
+    <Compile Include="ImpunityClass.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="OpenGLExamples\OpenGLExampleController.cs" />
     <Compile Include="Persistence\SerializableSceneObject.cs" />

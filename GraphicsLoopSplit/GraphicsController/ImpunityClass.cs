@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ImpunityEngine
 {
-    public abstract class ImpunityScript
+    public abstract class ImpunityClass
     {
         public SceneObject sceneObject { get; set; }
-        public ImpunityScript() { }
-        public ImpunityScript(SceneObject so)
+        public ImpunityClass() { }
+        public ImpunityClass(SceneObject so)
         {
             sceneObject = so;
         }

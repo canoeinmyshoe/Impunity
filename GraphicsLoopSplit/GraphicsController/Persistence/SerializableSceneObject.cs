@@ -18,7 +18,7 @@ namespace ImpunityEngine.Persistence
         public bool isStatic { get; set; }
         public Transform transform = new Transform(true);
         public int[] ChildIDs;
-        public List<ImpunityScript> Imps = new List<ImpunityScript>();
+        public List<ImpunityClass> Imps = new List<ImpunityClass>();
         public Material material = new Material(MaterialType.DefaultTextureless);
         public string modelPath { get; set; }
         public Guid guid { get; set; }
