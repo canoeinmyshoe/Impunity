@@ -166,6 +166,16 @@ namespace ImpunityEngine
                 {
                     GrabObject(i, args);
                 }
+                else if (word == "swapdiffusemap" || word == "swapdiff")
+                {
+
+                    //SwapDiffuseMap
+                    SwapDiffuseMap(i, args);
+                }
+                else if (word == "tiling" || word == "tile") {
+                    //SetDiffuseTiling(i, args);
+                    SetMaterialTiling(i, args);
+                }
                 else if (word == "+" || word == "++")
                 {
                     //select the sceneObject above this one
@@ -181,6 +191,40 @@ namespace ImpunityEngine
             }
         }
 
+        void SetMaterialTiling(int index, string[] args) {
+            //we're expecting
+            //args[index + 1] ---- x tiling
+            //args[index + 2] ----- y tiling
+            if (index + 2 > args.Length + 1)
+                return;
+
+            float x = 0; float y = 0;
+            try
+            {
+                x = Convert.ToSingle(args[index + 1]);
+                y = Convert.ToSingle(args[index + 2]);
+            }
+            catch { return; }
+            SceneMaster.SetMaterialTiling(x, y);
+        }
+        //Swaps diffuse map of selected object, if possible
+        void SwapDiffuseMap(int index, string[] args)
+        {
+            //we're expecting
+            //args[index + 1]  texture ID
+
+            if (index + 1 > args.Length - 1)
+                return;
+
+            int result;
+            if (!int.TryParse(args[index + 1], out result))
+                return;
+
+            //We need to load the texture first!
+            SceneMaster.SwapDiffuseMap(result);
+        }
+
+        //TODO: ScaleObject
         void GrabObject(int index, string[] args)
         {
             if (index + 2 > args.Length)
@@ -579,6 +623,13 @@ namespace ImpunityEngine
                     }
                 }
             }
+            else if (key == "texture" || key == "tex") {
+                foreach (var tex in Control.AllTextures)
+                {
+                    Console.WriteLine("Texture ID: " + tex.ID + "\r\n"
+                        + "Texture path: " + tex.FullPath);
+                }
+            }
         
         }
         void Create(string arg, int index, string[] args)
@@ -604,8 +655,21 @@ namespace ImpunityEngine
                 Console.WriteLine("Creating model");
                 LoadModel(index, args);
             }
+            else if (key == "texture" || key == "image" || key == "img" || key == "tex") {
+
+                Console.WriteLine("Loading texture...");
+                LoadTexture(index, args);
+            }
         }
 
+        void LoadTexture(int index, string[] args) {
+            //We're expecting
+            //args[index + 1] --- directory of texture
+            if (index + 1 > args.Length + 1)
+                return;
+
+            SceneMaster.LoadTextureFromDirectory(args[index + 1]);
+        }
         void LoadModel(int index, string[] args)//index of the key
         {
             //we're expecting the next argument to be a 3-D object file

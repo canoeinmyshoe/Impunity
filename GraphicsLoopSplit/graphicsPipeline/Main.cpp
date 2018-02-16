@@ -455,6 +455,13 @@ extern "C"
 			returnData += "n:"+ std::string(soo.Name) + "*i:" + std::to_string(soo.ID) + "*p:" + std::to_string(so.ID) + ",*";
 			//	And now for data from the texture.
 			//new, experimental method of texture information
+
+			//Append the texture ID to the sceneObject so c# knows what so has what textures
+			/*for each (Texture tex in soo.meshes[0].textures)
+			{
+				cout << "C++: TEXTURE INDEX: " << tex.index << endl;
+				returnData += "*xi:" + std::to_string(tex.index) + "*t:" + tex.path + "*ty:" + tex.type + "*tg:" + std::to_string(soo.ID) + "*,";
+			}*/
 				
 				for each (Texture tex in soo.meshes[0].textures)
 				{

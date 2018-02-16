@@ -103,6 +103,7 @@ namespace ImpunityEngine.SceneManipulation
             Console.WriteLine("Spotlight count: " + count);
         }
 
+        //Should be call loadModelFromDirectory
         public static void LoadFromDirectory(string path)
         {
             //  var path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
@@ -135,6 +136,56 @@ namespace ImpunityEngine.SceneManipulation
             
             cmessage.Clear();
         }
+
+        public static void LoadTextureFromDirectory(string path) {
+            //get the name of the texture
+            int nstart = path.LastIndexOf("\\") + 1;
+            string tname = path.Substring(nstart);
+            //get the directory of the texture
+            int dend = nstart;
+            string tdirectory = path.Substring(0, dend);
+            Console.WriteLine("Texture directory: " + tdirectory);
+            StringBuilder cmessage = new StringBuilder(10000);//256 chars at most
+            int t = Bridge.LoadTextureFromDir(tname, tdirectory, cmessage, 256);
+            string message = cmessage.ToString();
+            Console.WriteLine("Texture creation result: " + message);
+            if (message != "{already-loaded}")
+            {
+                NativeTranslator translator = new NativeTranslator();
+                try
+                {
+                    Texture tex = translator.ParseTextureData(message);
+                    tex.FullPath = path;
+                    Control.AllTextures.Add(tex);
+                }
+                catch { }
+            }
+            else
+            {
+                Console.WriteLine($"{tname} has already been loaded.");
+            }
+        }
+        public static void SwapDiffuseMap(int textureID) {
+
+            if (SelectedSceneObject == null)
+                return;
+
+            SelectedSceneObject.SetDiffuseMap(textureID);
+         //   Texture tex = Texture.FindByID(textureID);
+            //Again, this is a crutch for a method that should be in the sceneObject itself
+
+         //   int result = Bridge.SwapDiffuseMap(SelectedSceneObject, tex);
+        }
+        public static void SetMaterialTiling(float x, float y) {
+            if (SelectedSceneObject == null)
+                return;
+
+            //   Bridge.SetMaterialTiling(SelectedSceneObject, x, y);
+            //This is a crutch. Call it from the sceneObject itself
+            SelectedSceneObject.SetMaterialTiling(x, y);
+        }
+
+
         public static void LoadFromDirectory(string path,Guid guid, List<Guid> kidguids)
         {
             //  var path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
@@ -364,7 +415,7 @@ namespace ImpunityEngine.SceneManipulation
             //you actually need to call the methods to set this...
         }
 
-
+        
         private static void LoadSceneObject(SerializableSceneObject ser) {
 
             string pth = ser.modelPath;
@@ -404,6 +455,11 @@ namespace ImpunityEngine.SceneManipulation
             foreach (var so in Control.AllSceneObjects)
             {
                 ProcessSceneObject(so, sceneFile);
+            }
+            //also add all the textures and material details
+            foreach (var texture in Control.AllTextures)
+            {
+                //ProcessSceneTextures(texture, sceneFile);
             }
             string savePath = @"c:\data\" + filename + ".imp";
 
@@ -460,7 +516,10 @@ namespace ImpunityEngine.SceneManipulation
 
 
         }
+        private static void ProcessTexture(Texture tex, SceneFile sceneFile)
+        {
 
+        }
 
         private static void ProcessSceneObject(SceneObject so, SceneFile scene)
         {
@@ -778,6 +837,7 @@ namespace ImpunityEngine.SceneManipulation
         public List<SerializablePointLight> AllPointLights = new List<SerializablePointLight>();
         public List<SerializableDirectionalLight> AllDirectionalLights = new List<SerializableDirectionalLight>();
         public List<SerializableSpotLight> AllSpotLights = new List<SerializableSpotLight>();
+        public List<Texture> AllTextures = new List<Texture>();
     }
 
 }

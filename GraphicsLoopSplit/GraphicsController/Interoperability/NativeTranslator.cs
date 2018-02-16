@@ -313,7 +313,7 @@ namespace ImpunityEngine.Interoperability
             }
             if (text.Contains("tg:"))
             {
-                int start = text.IndexOf("tg:") +3;
+                int start = text.IndexOf("tg:") + 3;
                 string substr = text.Substring(start, text.Length - start);
                 int end = substr.IndexOf("*");
                 string term = substr.Substring(0, end);
@@ -327,6 +327,7 @@ namespace ImpunityEngine.Interoperability
                     try
                     {
                         SceneObject.FindByID(attempt).material.diffuseMap = texture;
+                        Console.WriteLine("Set sceneObject's diffuse map to " + texture.Path);
                         //soID = attempt;
                         //OnSceneObject = true;
                     }
@@ -336,6 +337,9 @@ namespace ImpunityEngine.Interoperability
                         //OnSceneObject = false;
                     }
                 }
+            }
+            else {
+                Console.WriteLine("WARNING: No sceneObject data available for this texture.");
             }
 
             //bool alreadyLoaded = false;
