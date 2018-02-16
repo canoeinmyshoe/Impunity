@@ -282,16 +282,40 @@ public:
 			{
 				continue;
 			}*/
-			float ex = sin(glm::radians(SceneSpotLights[i].direction.z));
-			float wy = -(sin(glm::radians(SceneSpotLights[i].direction.x)) * cos(glm::radians(SceneSpotLights[i].direction.z)));
-			float ze = -1.0*cos(glm::radians(SceneSpotLights[i].direction.x)) * cos(glm::radians(SceneSpotLights[i].direction.y));
-			//So this time, the shader is actually expecting a direction
-			//and is used to getting one
 
+
+		//	float ex = sin(glm::radians(SceneSpotLights[i].direction.z));
+		//	float wy = -(sin(glm::radians(SceneSpotLights[i].direction.x)) * cos(glm::radians(SceneSpotLights[i].direction.z)));
+		//	float ze = 1.0*cos(glm::radians(SceneSpotLights[i].direction.x)) * cos(glm::radians(SceneSpotLights[i].direction.y));
+
+
+		//	//So this time, the shader is actually expecting a direction
+		//	//and is used to getting one
+
+		///*	float ex = cos(glm::radians(SceneSpotLights[i].direction.y))  * cos(glm::radians(SceneSpotLights[i].direction.x));
+		//	float wy = sin(glm::radians(SceneSpotLights[i].direction.x));
+		//	float ze = sin(glm::radians(SceneSpotLights[i].direction.y)) * cos(glm::radians(SceneSpotLights[i].direction.x));*/
+		//	glm::vec3 directn = glm::normalize(glm::vec3(ex, wy, ze));
 	/*		front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
 			front.y = sin(glm::radians(Pitch));
 			front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
 			Front = glm::normalize(front);*/
+
+			//https://stackoverflow.com/questions/17038681/direction-of-rotation-in-glm-matrix-using-quaternions
+			//https://www.opengl.org/discussion_boards/showthread.php/175515-Get-Direction-from-Transformation-Matrix-or-Quat
+
+			//Let's try a totally different approach
+			glm::mat4  lightMatrix = glm::mat4(1);
+			lightMatrix = glm::translate(lightMatrix, SceneSpotLights[i].position);
+			glm::quat lightRotation = toQuaternion(SceneSpotLights[i].direction);
+			lightMatrix *= glm::mat4_cast(lightRotation);
+		//	directn = lightMatrix[2].xyz;
+
+			//ACED IT!
+			float ex = -lightMatrix[2][0];
+			float wy = -lightMatrix[2][1];
+			float ze = -lightMatrix[2][2];
+			glm::vec3 directn =  glm::normalize(glm::vec3(ex, wy, ze));
 
 		
 			string eye = std::to_string(i);
@@ -309,7 +333,7 @@ public:
 			LoadedShaders[ShaderNumber]->SetVec3(SceneSpotLights[i].specular.x, SceneSpotLights[i].specular.y, SceneSpotLights[i].specular.z, pos);
 			s = "spotLights[" + eye + "].direction";
 			pos = &s[0u];
-			LoadedShaders[ShaderNumber]->SetVec3(glm::vec3(ex,wy,ze), pos);
+			LoadedShaders[ShaderNumber]->SetVec3(directn, pos);
 			s = "spotLights[" + eye + "].cutOff";
 			pos = &s[0u];
 			LoadedShaders[ShaderNumber]->SetFloat(glm::cos(glm::radians(SceneSpotLights[i].cutOff)), pos);
