@@ -14,6 +14,17 @@ namespace ImpunityEngine
         public static List<SceneObject> AllSceneObjects = new List<SceneObject>();
         public static List<Texture> AllTextures = new List<Texture>();
 
+        public static bool HasTexture(string fullPath) {
+
+            foreach (var texture in AllTextures)
+            {
+                if (texture.FullPath.ToLower() == fullPath)
+                    return true;
+            }
+
+            return false;
+        }
+
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int main();
 

@@ -46,6 +46,17 @@ namespace ImpunityEngine
             }
             throw new NullReferenceException($"Texture: \"{desired}\" not found");
         }
+        public static Texture FindByFullPath(string desired)
+        {
+            foreach (var texture in Control.AllTextures)
+            {
+                if (texture.FullPath.ToLower() == desired.ToLower())
+                {
+                    return texture;
+                }
+            }
+            throw new NullReferenceException($"Texture: \"{desired}\" not found");
+        }
 
         public static Texture FindByID(int desired)
         {

@@ -25,8 +25,8 @@ namespace ImpunityEngine
             diffuse = new Vector3(0.8f);
             specular = new Vector3(1.0f);
             shininess = 32.0f;
-            xTiling = 0;
-            yTiling = 0;
+            xTiling = 1.0f;
+            yTiling = 1.0f;
             xOffset = 0;
             yOffset = 0;
             diffuseMap = new Texture(TextureType.None);

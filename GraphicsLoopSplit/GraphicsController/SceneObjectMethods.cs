@@ -25,6 +25,17 @@ namespace ImpunityEngine
 
             material.diffuseMap = tex;
         }
+        public void SetDiffuseMap(Texture texture)
+        {
+
+          //  Texture tex = Texture.FindByID(textureID);
+
+            int result = Bridge.SwapDiffuseMap(this, texture);
+            if (result != 0)
+                return;
+
+            material.diffuseMap = texture;
+        }
 
         //Case-insensitive look-up
         public static SceneObject Find(string sceneObjectName)

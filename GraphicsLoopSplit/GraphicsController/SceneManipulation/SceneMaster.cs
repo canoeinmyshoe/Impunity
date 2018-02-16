@@ -165,6 +165,48 @@ namespace ImpunityEngine.SceneManipulation
                 Console.WriteLine($"{tname} has already been loaded.");
             }
         }
+        public static Texture LoadTextureFromDirectoryPerScene(string path)
+        {
+            //get the name of the texture
+            int nstart = path.LastIndexOf("\\") + 1;
+            string tname = path.Substring(nstart);
+            //get the directory of the texture
+            int dend = nstart;
+            string tdirectory = path.Substring(0, dend);
+            Console.WriteLine("Texture directory: " + tdirectory);
+            StringBuilder cmessage = new StringBuilder(10000);//256 chars at most
+            int t = Bridge.LoadTextureFromDir(tname, tdirectory, cmessage, 256);
+            string message = cmessage.ToString();
+            Console.WriteLine("Texture creation result: " + message);
+
+            Texture texture;
+            if (message != "{already-loaded}")
+            {
+                NativeTranslator translator = new NativeTranslator();
+                try
+                {
+                   texture = translator.ParseTextureData(message);
+                    texture.FullPath = path;
+                    Control.AllTextures.Add(texture);
+                }
+                catch { throw new Exception("Failed to load texture from directory."); }
+            }
+            else
+            {
+                Console.WriteLine($"{tname} has already been loaded.");
+                //Find the texture in Control and return it
+                try
+                {
+                    texture = Texture.FindByFullPath(path);
+                    return texture;
+                }
+                catch { throw new NullReferenceException("Failed to load texture from pool."); }
+            }
+
+
+
+            return texture;
+        }
         public static void SwapDiffuseMap(int textureID) {
 
             if (SelectedSceneObject == null)
@@ -299,8 +341,35 @@ namespace ImpunityEngine.SceneManipulation
             //one property at a time
             //so don't worry about that, as we don't even have methods
             //to set material values yet
-            
+
+            if (ser.material.diffuseMap.FullPath.ToLower() != so.material.diffuseMap.FullPath.ToLower() && ser.material.diffuseMap.FullPath.ToLower() != "unknown") {
+                Console.WriteLine("Texture discrepancy.");
+               
+                Console.WriteLine("**************$$$$$$$$$$$$$$$$$$$$$$$$$$$***********************ATTENTION: Loading texture from directory.");
+                if (Control.HasTexture(ser.material.diffuseMap.FullPath))
+                {
+                    Texture texture = Texture.FindByFullPath(ser.material.diffuseMap.FullPath);
+                    so.SetDiffuseMap(texture);
+                }
+                else {
+
+                    Texture texture = LoadTextureFromDirectoryPerScene(ser.material.diffuseMap.FullPath);
+                    so.SetDiffuseMap(texture);
+                }
+
+            }
             //We can also manage complex child/parent relationships here
+            //if (ser.material.diffuseMap.FullPath.ToLower() != "unknown" && ser.material.diffuseMap.FullPath.Length > 2)
+            //{
+            //    //Load the texture. Swap the Texture.
+            //    Console.WriteLine("**************$$$$$$$$$$$$$$$$$$$$$$$$$$$***********************ATTENTION: Loading texture from directory.");
+            //    Texture texture = LoadTextureFromDirectoryPerScene(ser.material.diffuseMap.FullPath);
+            //    so.SetDiffuseMap(texture);
+            //}
+            
+            so.SetMaterialTiling(ser.material.xTiling, ser.material.yTiling);
+            //so.setMaterialOffset(ser.material.xOffSet, ser.material.yOffSet);
+            //so.setMaterialAmbient(ser.material....
         }
 
         private static void DetailPointLight(SerializablePointLight ser, List<SerializablePointLight> allSer)
