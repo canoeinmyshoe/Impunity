@@ -353,7 +353,7 @@ extern "C"
 		if (parentID > AllSceneObjects.size() - 1 || childID > AllSceneObjects.size() - 1)
 			return 1;//fail
 
-		AllSceneObjects[childID].transform.matrix *= AllSceneObjects[parentID].transform.matrix;
+		AllSceneObjects[childID].transform.matrix = AllSceneObjects[parentID].transform.matrix*AllSceneObjects[childID].transform.matrix;
 
 		return 0;
 	}
