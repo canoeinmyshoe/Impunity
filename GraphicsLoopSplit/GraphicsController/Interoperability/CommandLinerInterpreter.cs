@@ -178,7 +178,7 @@ namespace ImpunityEngine
                     SetMaterialTiling(i, args);
                 }
                 else if (word == "offset") {
-                    //SetOffset(i, args);
+                    SetMaterialOffset(i, args);
                 }
                 else if (word == "+" || word == "++")
                 {
