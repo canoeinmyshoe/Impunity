@@ -47,14 +47,16 @@ quit - quit the editor
 select - select an object by index and type
  r axis degree - rotate an object x degrees around axis axis
  g axis dist - grab and object dist units of dist along axis axis
+ tile x y - tile the textures on the material
+ offset x y - offset the textures on the material
 
 
 
-TODO:select an object
-TODO:manipulate a selected object
 TODO: setScale
 TODO: setRotation - sets the rotation of a sceneObject or Light by name/ID
-TODO:Set each and every variable of every type of light!
+TODO: set each and every variable of the materials
+
+
 TODO:And perhaps uniforms, too
 TODO: Buttons, text, textfields, general GUI-ndc stuff
 

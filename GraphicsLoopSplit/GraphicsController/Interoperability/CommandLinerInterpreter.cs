@@ -172,9 +172,13 @@ namespace ImpunityEngine
                     //SwapDiffuseMap
                     SwapDiffuseMap(i, args);
                 }
-                else if (word == "tiling" || word == "tile") {
+                else if (word == "tiling" || word == "tile")
+                {
                     //SetDiffuseTiling(i, args);
                     SetMaterialTiling(i, args);
+                }
+                else if (word == "offset") {
+                    //SetOffset(i, args);
                 }
                 else if (word == "+" || word == "++")
                 {
@@ -191,6 +195,23 @@ namespace ImpunityEngine
             }
         }
 
+        void SetMaterialOffset(int index, string[] args)
+        {
+            //we're expecting
+            //args[index + 1] ---- x offset
+            //args[index + 2] ----- y offset
+            if (index + 2 > args.Length + 1)
+                return;
+
+            float x = 0; float y = 0;
+            try
+            {
+                x = Convert.ToSingle(args[index + 1]);
+                y = Convert.ToSingle(args[index + 2]);
+            }
+            catch { return; }
+            SceneMaster.SetMaterialOffset(x, y);
+        }
         void SetMaterialTiling(int index, string[] args) {
             //we're expecting
             //args[index + 1] ---- x tiling

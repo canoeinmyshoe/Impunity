@@ -133,11 +133,19 @@ public:
 		LoadedShaders[ShaderNumber]->Use();
 		LoadedShaders[ShaderNumber]->setMat4("view", ViewMatrix);
 		LoadedShaders[ShaderNumber]->setMat4("projection", ProjectionMatrix);
+
+		//It may be best to simply store the resulting matrix and only change it when necessary,
+		//instead of setting it each frame
 		glm::mat4 model;
 		model = glm::translate(model, transform.position);
-		model = glm::rotate(model, transform.rotation.x, glm::vec3(1.0f, 0, 0));
+		model = glm::scale(model, transform.scale);
+		glm::quat orientation = toQuaternion(transform.rotation);
+		glm::mat4 rotationMatrix = glm::mat4_cast(orientation);
+		model *= rotationMatrix;
+
+	/*	model = glm::rotate(model, transform.rotation.x, glm::vec3(1.0f, 0, 0));
 		model = glm::rotate(model, transform.rotation.y, glm::vec3(0, 1.0f, 0));
-		model = glm::rotate(model, transform.rotation.z, glm::vec3(0, 0, 1.0f));
+		model = glm::rotate(model, transform.rotation.z, glm::vec3(0, 0, 1.0f));*/
 		 
 		LoadedShaders[ShaderNumber]->setMat4("model", model);
 

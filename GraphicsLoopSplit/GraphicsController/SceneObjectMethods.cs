@@ -10,6 +10,12 @@ namespace ImpunityEngine
     public partial class SceneObject
     {
 
+        public void SetMaterialOffset(float x, float y) {
+            material.xOffset = x;
+            material.yOffset = y;
+            Bridge.SetMaterialOffset(ID, x, y);
+        }
+
         public void SetMaterialTiling(float x, float y) {
             material.xTiling = x;
             material.yTiling = y;

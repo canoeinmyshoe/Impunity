@@ -226,6 +226,15 @@ namespace ImpunityEngine.SceneManipulation
             //This is a crutch. Call it from the sceneObject itself
             SelectedSceneObject.SetMaterialTiling(x, y);
         }
+        public static void SetMaterialOffset(float x, float y)
+        {
+            if (SelectedSceneObject == null)
+                return;
+
+            //   Bridge.SetMaterialTiling(SelectedSceneObject, x, y);
+            //This is a crutch. Call it from the sceneObject itself
+            SelectedSceneObject.SetMaterialOffset(x, y);
+        }
 
 
         public static void LoadFromDirectory(string path,Guid guid, List<Guid> kidguids)
@@ -368,6 +377,7 @@ namespace ImpunityEngine.SceneManipulation
             //}
             
             so.SetMaterialTiling(ser.material.xTiling, ser.material.yTiling);
+            so.SetMaterialOffset(ser.material.xOffset, ser.material.yOffset);
             //so.setMaterialOffset(ser.material.xOffSet, ser.material.yOffSet);
             //so.setMaterialAmbient(ser.material....
         }
