@@ -136,14 +136,17 @@ public:
 
 		//It may be best to simply store the resulting matrix and only change it when necessary,
 		//instead of setting it each frame
-		glm::mat4 model;
+
+		/*glm::mat4 model;
 		model = glm::translate(model, transform.position);
-		glm::mat4 scale;
-		scale = glm::scale(scale, transform.scale);
 		model = glm::scale(model, transform.scale);
 		glm::quat orientation = toQuaternion(transform.rotation);
 		glm::mat4 rotationMatrix = glm::mat4_cast(orientation);
-		model *= rotationMatrix;
+		model *= rotationMatrix;*/
+
+		glm::mat4 model = transform.matrix;
+	
+		
 
 	/*	model = glm::rotate(model, transform.rotation.x, glm::vec3(1.0f, 0, 0));
 		model = glm::rotate(model, transform.rotation.y, glm::vec3(0, 1.0f, 0));

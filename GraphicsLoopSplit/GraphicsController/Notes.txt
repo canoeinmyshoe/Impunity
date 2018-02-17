@@ -52,7 +52,7 @@ select - select an object by index and type
 
 
 
-TODO: setScale
+
 TODO: setRotation - sets the rotation of a sceneObject or Light by name/ID
 TODO: set each and every variable of the materials
 

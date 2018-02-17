@@ -251,10 +251,34 @@ namespace ImpunityEngine
         }
 
         //TODO: ScaleObject
+        //we might not want to scale on a single axis...
         void ScaleObject(int index, string[] args)
         {
+            //it could be
+            //args[index + 1] -- scale factor
+            //or it could be
+            //args[index + 1] -- axis, and then scale
+
+
+            if (index + 1 > args.Length)
+                return;
+
+            if (args.Length == 2)
+            {
+                float scaleFactor = 0;
+                try
+                {
+                    scaleFactor = Convert.ToSingle(args[index + 1]);
+                }
+                catch { return; }
+                SceneMaster.ScaleEntireObject(scaleFactor);
+                return;
+            }
+
+
             if (index + 2 > args.Length)
                 return;
+             
 
             float factor = 0;
             try

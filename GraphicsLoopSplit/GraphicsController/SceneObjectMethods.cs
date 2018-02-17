@@ -10,6 +10,18 @@ namespace ImpunityEngine
     public partial class SceneObject
     {
 
+        public void SetTransform()
+        {
+            //call the c++ dll
+            //Bridge.SetTransform(
+            //    ID,
+            //    position.x, position.y, position.z,
+            //    rotation.x, rotation.y, rotation.z,
+            //    scale.x, scale.y, scale.z
+            //    );
+            Bridge.SetTransformMatrix(ID, transform);
+        }
+
         public void SetMaterialOffset(float x, float y) {
             material.xOffset = x;
             material.yOffset = y;

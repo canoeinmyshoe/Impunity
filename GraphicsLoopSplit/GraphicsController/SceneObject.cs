@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ImpunityEngine.Interoperability;
+
 namespace ImpunityEngine
 {
     public partial class SceneObject
@@ -24,6 +26,7 @@ namespace ImpunityEngine
         public bool enabled { get; set; }
         public string modelPath { get; set; }
         public Guid guid { get; set; }
+        private bool updated = false;
         public SceneObject()
         {
             Name = "SceneObject";
@@ -37,6 +40,9 @@ namespace ImpunityEngine
             enabled = true;
             modelPath = "NA";
             guid = Guid.NewGuid();
+
+            //this is a doozy if left unchecked
+           // isStatic = true;
         }
 
         public virtual void Start()
@@ -58,17 +64,34 @@ namespace ImpunityEngine
             if (isStatic == true)
                 return;
 
-
-            foreach (var child in Children)
+            if (updated == true)
             {
-                child.transform.position = transform.position;
-                child.transform.rotation = transform.rotation;
-                child.transform.SetTransform(child.ID);
+                updated = false;
+                return;
             }
+
+
+
+            UpdateChildren();
+
+
 
             if (ID < 0)
                 return;
-            transform.SetTransform(ID);
+            //  transform.SetTransform(ID);
+            SetTransform();
+        }
+
+        public void UpdateChildren() {
+            foreach (var child in Children)
+            {
+                child.UpdateChildren();
+                child.SetTransform();
+                child.updated = true; // don't let it set the
+                //transform again after we multiply matrices
+
+            Bridge.SetChildMatrix(ID, child.ID);
+            }
         }
     }
 }

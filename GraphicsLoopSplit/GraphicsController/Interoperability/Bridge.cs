@@ -246,7 +246,26 @@ namespace ImpunityEngine.Interoperability
         public static extern int SelectSceneObject(int index, int type);
         #endregion
 
+
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetTransformMatrix(
+         int ID,
+         float px, float py, float pz,
+         float rx, float ry, float rz,
+         float sx, float sy, float sz);
+
+        public static int SetTransformMatrix( int ID, Transform transform )
+        {
+            return SetTransformMatrix(ID, transform.position.x, transform.position.y, transform.position.z,
+                transform.rotation.x, transform.rotation.y, transform.rotation.z,
+                transform.scale.x, transform.scale.y, transform.scale.z);
+        }
+
+
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetChildMatrix(int parentID, int childID);
     }
+
 
 }
 

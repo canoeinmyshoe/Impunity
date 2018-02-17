@@ -14,7 +14,7 @@ namespace ImpunityEngine
         {
             position = new Vector3(0);
             rotation = new Vector3(0);
-            scale = new Vector3(1.0f, 1.0f, 1.0f);
+            scale = new Vector3(1.0f);
         }
 
         public void Translate()//?
@@ -43,5 +43,7 @@ namespace ImpunityEngine
                 scale.x, scale.y, scale.z
                 );
         }
+
+     
     }
 }
