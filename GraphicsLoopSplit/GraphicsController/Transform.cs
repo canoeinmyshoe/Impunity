@@ -17,7 +17,7 @@ namespace ImpunityEngine
             scale = new Vector3(1.0f, 1.0f, 1.0f);
         }
 
-        public void Translate()
+        public void Translate()//?
         {
 
         }
@@ -27,9 +27,11 @@ namespace ImpunityEngine
             rotation.y += y;
             rotation.z += z;
         }
-        public void Stretch()
+        public void Stretch(float factor)
         {
-
+            scale.x *= factor;
+            scale.y *= factor;
+            scale.z *= factor;
         }
         public void SetTransform(int ID)
         {

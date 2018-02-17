@@ -903,6 +903,39 @@ namespace ImpunityEngine.SceneManipulation
             }
         }
 
+        public static void ScaleObject(float factor, string axis)
+        {
+            if (SelectedSceneObject == null)
+                return;
+
+            if (SelectedSceneObject is PointLight)
+            {
+                return;
+            }
+            else if (SelectedSceneObject is SpotLight)
+            {
+                return;
+            }
+            else if (SelectedSceneObject is DirectionalLight)
+            {
+                return;
+            }
+            else
+            {
+                //Regular SceneObject
+                //if (axis == "x")
+                //    SelectedSceneObject.transform.scale.x *= factor;
+                //else if (axis == "y")
+                //    SelectedSceneObject.transform.scale.y *= factor;
+                //else if (axis == "z")
+                //    SelectedSceneObject.transform.scale.z  *= factor;
+
+                SelectedSceneObject.transform.Stretch(factor);
+
+                SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
+            }
+
+        }
 
     }
 

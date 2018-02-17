@@ -138,6 +138,8 @@ public:
 		//instead of setting it each frame
 		glm::mat4 model;
 		model = glm::translate(model, transform.position);
+		glm::mat4 scale;
+		scale = glm::scale(scale, transform.scale);
 		model = glm::scale(model, transform.scale);
 		glm::quat orientation = toQuaternion(transform.rotation);
 		glm::mat4 rotationMatrix = glm::mat4_cast(orientation);

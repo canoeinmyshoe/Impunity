@@ -166,9 +166,13 @@ namespace ImpunityEngine
                 {
                     GrabObject(i, args);
                 }
+                else if (word == "scale" || word == "s") {
+                    Console.WriteLine("Scaling...");
+                    ScaleObject(i, args);
+                }
                 else if (word == "swapdiffusemap" || word == "swapdiff")
                 {
-
+                   
                     //SwapDiffuseMap
                     SwapDiffuseMap(i, args);
                 }
@@ -177,7 +181,8 @@ namespace ImpunityEngine
                     //SetDiffuseTiling(i, args);
                     SetMaterialTiling(i, args);
                 }
-                else if (word == "offset") {
+                else if (word == "offset")
+                {
                     SetMaterialOffset(i, args);
                 }
                 else if (word == "+" || word == "++")
@@ -246,6 +251,22 @@ namespace ImpunityEngine
         }
 
         //TODO: ScaleObject
+        void ScaleObject(int index, string[] args)
+        {
+            if (index + 2 > args.Length)
+                return;
+
+            float factor = 0;
+            try
+            {
+                factor = Convert.ToSingle(args[index + 2]);
+            }
+            catch { return; }
+
+            string key = args[index + 1].ToLower(); // the axis
+
+            SceneMaster.ScaleObject(factor, key);
+        }
         void GrabObject(int index, string[] args)
         {
             if (index + 2 > args.Length)

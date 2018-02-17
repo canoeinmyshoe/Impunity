@@ -3,7 +3,7 @@
 c:\program files (x86)\windows kits\10\include\10.0.16299.0\shared\minwindef.h(130): warning C4005: 'APIENTRY': macro redefinition
   c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\dependancies\glfw\glfw3.h(98): note: see previous definition of 'APIENTRY'
 c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\sceneobject.h(130): warning C4805: '!=': unsafe mix of type 'GLboolean' and type 'bool' in operation
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\sceneobject.h(253): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\sceneobject.h(256): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(177): warning C4018: '>=': signed/unsigned mismatch
 c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(193): warning C4018: '>=': signed/unsigned mismatch
 c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(204): warning C4018: '>=': signed/unsigned mismatch
