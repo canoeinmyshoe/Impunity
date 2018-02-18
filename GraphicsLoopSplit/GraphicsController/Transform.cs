@@ -43,7 +43,6 @@ namespace ImpunityEngine
                 scale.x, scale.y, scale.z
                 );
         }
-
-     
+        
     }
 }

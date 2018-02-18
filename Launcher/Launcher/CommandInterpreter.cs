@@ -223,6 +223,11 @@ namespace SceneEditLauncher
             Console.WriteLine("Adding imp 2.0");
             if (index + 1 > args.Length - 1)
                 return;
+
+            if (SceneMaster.SelectedSceneObject == null)
+                return;
+
+
             string className = args[index + 1];
 
             //we need to do this from UserClasses!
@@ -301,7 +306,7 @@ namespace SceneEditLauncher
                         Console.WriteLine("EUREKA!"); //Excellent!
                         var inst = (ImpunityClass)Activator.CreateInstance(t);
                         SceneMaster.SelectedSceneObject.Imps.Add(inst);
-                        inst.Start();
+                       // inst.Start();
                         return;
                     }
                     

@@ -17,16 +17,16 @@ namespace UserClasses
         }
 
         //use start as the ctor
-        public override void Start()
+        public override void Start(SceneObject sceneObject)
         {
             // base.Start();
             Console.WriteLine("The test class has started!");
             sceneObject.transform.position.y += 0.1f;
         }
 
-        public override void Update()
+        public override void Update(SceneObject sceneObject)
         {
-            sceneObject.transform.rotation.y += 0.01f;
+            sceneObject.transform.rotation.y += 0.1f;
         }
 
     }

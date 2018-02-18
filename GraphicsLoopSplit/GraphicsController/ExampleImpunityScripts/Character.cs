@@ -15,11 +15,11 @@ namespace ImpunityEngine.ExampleImpunityScripts
   //      public SceneObject sceneObject { get; set; }
         public Character(SceneObject so)
         {
-            sceneObject = so;
-            sceneObject.Imps.Add(this);
-            Start();
+            //sceneObject = so;
+            //sceneObject.Imps.Add(this);
+            //Start();
         }
-        public override void Start()
+        public override void Start(SceneObject sceneObject)
         {
             //Do a bunch of stuff at startup
             Random random = new Random();
@@ -30,7 +30,7 @@ namespace ImpunityEngine.ExampleImpunityScripts
             sceneObject.transform.position = new Vector3(-2.0f, -2.0f, 0.0f);
         //    sceneObject.transform.position = new Vector3(-randx, 1.0f, 8.0f);
         }
-        public override void Update()
+        public override void Update(SceneObject sceneObject)
         {
             //base.Update();
             sceneObject.transform.position.x += 0.001f;

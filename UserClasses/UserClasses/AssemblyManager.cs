@@ -31,8 +31,8 @@ namespace UserClasses
                     {
                         Console.WriteLine("EUREKA!"); //Excellent!
                         var inst = (ImpunityClass)Activator.CreateInstance(t);
-                        inst.sceneObject = SceneMaster.SelectedSceneObject;
-                        inst.Start();
+                     //   inst.sceneObject = SceneMaster.SelectedSceneObject;
+                        inst.Start(SceneMaster.SelectedSceneObject);
                         SceneMaster.SelectedSceneObject.Imps.Add(inst);
                         
                         return;

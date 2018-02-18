@@ -27,9 +27,10 @@ namespace ImpunityEngine.Persistence
             }
 
             SceneFile scene;
+            Type[] userTypes = AssemblyManager.UserTypes();
             using (var sr = new StreamReader(filename))
             {
-                XmlSerializer xs = new XmlSerializer(typeof(SceneFile));
+                XmlSerializer xs = new XmlSerializer(typeof(SceneFile), userTypes);
                 scene = (SceneFile)xs.Deserialize(sr);
                 sr.Close();
             }

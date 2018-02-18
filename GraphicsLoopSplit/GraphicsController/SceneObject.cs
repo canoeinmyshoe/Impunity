@@ -50,7 +50,7 @@ namespace ImpunityEngine
             //Start everything up
             foreach (var imp in Imps)
             {
-                imp.Start();
+                imp.Start(this);
             }
         }
         public virtual void Update()
@@ -58,7 +58,7 @@ namespace ImpunityEngine
 
             foreach (var imp in Imps)
             {
-                imp.Update();
+                imp.Update(this);
             }
 
             if (isStatic == true)

@@ -331,7 +331,23 @@ extern "C"
 
 		return 0;
 	}
+	__declspec(dllexport) int GetRight(char * resultString, int ID) {
+		if (ID > AllSceneObjects.size() - 1)
+			return 1;
+		
 
+		//perform matrix manipulations
+		glm::mat4 matrix = AllSceneObjects[ID].transform.matrix;
+		//right = matrix[0].xyz;
+		float x = matrix[0][0];
+		float y = matrix[0][1];
+		float z = matrix[0][2];
+
+		string result = std::to_string(x) + "," + std::to_string(y) + "," + std::to_string(z);
+		strcpy(resultString, result.c_str());
+		
+		return 0;
+	}
 
 	__declspec(dllexport) int CreateSpotLight(float x, float y, float z, float dx, float dy, float dz) 
 	{

@@ -16,7 +16,7 @@ namespace SceneEditLauncher
         }
 
         //use start as the ctor
-        public override void Start()
+        public override void Start(SceneObject sceneObject)
         {
             // base.Start();
             Console.WriteLine("The test class has started!");
