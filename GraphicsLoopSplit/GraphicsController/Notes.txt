@@ -50,11 +50,12 @@ select - select an object by index and type
  tile x y - tile the textures on the material
  offset x y - offset the textures on the material
  swapdiffuse x- swap diffuse map with a texture of id x
+ mat amb/diff/spec value - set the color of a particular channel
+ mat shine - set shininess of material
 
 
 
 TODO: setRotation - sets the rotation of a sceneObject or Light by name/ID
-TODO: set each and every variable of the materials
 TODO: put on, start, pause, and take off impunityClasses
 
 

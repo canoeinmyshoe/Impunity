@@ -471,9 +471,9 @@ extern "C"
 			//we also need material data from this string! 
 
 			returnData += "n:"+ std::string(soo.Name) + "*i:" + std::to_string(soo.ID) + "*p:" + std::to_string(so.ID) + 
-				"*maX" + std::to_string(soo.material.ambient.x) + "*maY" + std::to_string(soo.material.ambient.y) + "*maZ" + std::to_string(soo.material.ambient.z) +
-				"*mdX" + std::to_string(soo.material.diffuse.x) + "*mdY" + std::to_string(soo.material.diffuse.y) + "*mdZ" + std::to_string(soo.material.diffuse.z) + 
-				"*msX" + std::to_string(soo.material.specular.x) + "*msY" + std::to_string(soo.material.specular.y) + "*msZ" + std::to_string(soo.material.specular.z) + ",*";
+				"*maX:" + std::to_string(soo.material.ambient.x) + "*maY:" + std::to_string(soo.material.ambient.y) + "*maZ:" + std::to_string(soo.material.ambient.z) +
+				"*mdX:" + std::to_string(soo.material.diffuse.x) + "*mdY:" + std::to_string(soo.material.diffuse.y) + "*mdZ:" + std::to_string(soo.material.diffuse.z) + 
+				"*msX:" + std::to_string(soo.material.specular.x) + "*msY:" + std::to_string(soo.material.specular.y) + "*msZ:" + std::to_string(soo.material.specular.z) + "*,*";
 			//	And now for data from the texture.
 			//new, experimental method of texture information
 

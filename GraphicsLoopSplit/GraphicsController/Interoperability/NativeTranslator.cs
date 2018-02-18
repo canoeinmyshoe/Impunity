@@ -240,6 +240,169 @@ namespace ImpunityEngine.Interoperability
                 Console.WriteLine("Parsed Parent ID: " + so.ParentID);
             }
 
+            if (chunk.Contains("maX:"))
+            {
+                //material.ambient.x
+                string key = "maX:";
+                int keyLen = key.Length;
+                int subStart = chunk.IndexOf(key) + keyLen;
+                string subStr = chunk.Substring(subStart);
+
+                //now, get another substring ending at first occurance of *
+                string value = subStr.Substring(0, subStr.IndexOf("*"));
+
+                try
+                {
+                    float ambx = Convert.ToSingle(value);
+                    so.material.ambient.x = ambx;
+                }
+                catch { }
+            }
+            if (chunk.Contains("maY:"))
+            {
+                //material.ambient.x
+                string key = "maY:";
+                int keyLen = key.Length;
+                int subStart = chunk.IndexOf(key) + keyLen;
+                string subStr = chunk.Substring(subStart);
+
+                //now, get another substring ending at first occurance of *
+                string value = subStr.Substring(0, subStr.IndexOf("*"));
+
+                try
+                {
+                    float val = Convert.ToSingle(value);
+                    so.material.ambient.y = val;
+                }
+                catch { }
+            }
+            if (chunk.Contains("maZ:"))
+            {
+                //material.ambient.x
+                string key = "maZ:";
+                int keyLen = key.Length;
+                int subStart = chunk.IndexOf(key) + keyLen;
+                string subStr = chunk.Substring(subStart);
+
+                //now, get another substring ending at first occurance of *
+                string value = subStr.Substring(0, subStr.IndexOf("*"));
+
+                try
+                {
+                    float val = Convert.ToSingle(value);
+                    so.material.ambient.z = val;
+                }
+                catch { }
+            }
+            if (chunk.Contains("mdX:"))
+            {
+                //material.ambient.x
+                string key = "mdX:";
+                int keyLen = key.Length;
+                int subStart = chunk.IndexOf(key) + keyLen;
+                string subStr = chunk.Substring(subStart);
+
+                //now, get another substring ending at first occurance of *
+                string value = subStr.Substring(0, subStr.IndexOf("*"));
+
+                try
+                {
+                    float val = Convert.ToSingle(value);
+                    so.material.diffuse.x = val;
+                }
+                catch { }
+            }
+            if (chunk.Contains("mdY:"))
+            {
+                //material.ambient.x
+                string key = "mdY:";
+                int keyLen = key.Length;
+                int subStart = chunk.IndexOf(key) + keyLen;
+                string subStr = chunk.Substring(subStart);
+
+                //now, get another substring ending at first occurance of *
+                string value = subStr.Substring(0, subStr.IndexOf("*"));
+
+                try
+                {
+                    float val = Convert.ToSingle(value);
+                    so.material.diffuse.y = val;
+                }
+                catch { }
+            }
+            if (chunk.Contains("mdZ:"))
+            {
+                //material.ambient.x
+                string key = "mdZ:";
+                int keyLen = key.Length;
+                int subStart = chunk.IndexOf(key) + keyLen;
+                string subStr = chunk.Substring(subStart);
+
+                //now, get another substring ending at first occurance of *
+                string value = subStr.Substring(0, subStr.IndexOf("*"));
+
+                try
+                {
+                    float val = Convert.ToSingle(value);
+                    so.material.diffuse.z = val;
+                }
+                catch { }
+            }
+            if (chunk.Contains("msX:"))
+            {
+                //material.ambient.x
+                string key = "msX:";
+                int keyLen = key.Length;
+                int subStart = chunk.IndexOf(key) + keyLen;
+                string subStr = chunk.Substring(subStart);
+
+                //now, get another substring ending at first occurance of *
+                string value = subStr.Substring(0, subStr.IndexOf("*"));
+
+                try
+                {
+                    float val = Convert.ToSingle(value);
+                    so.material.specular.x = val;
+                }
+                catch { }
+            }
+            if (chunk.Contains("msY:"))
+            {
+                //material.ambient.x
+                string key = "msY:";
+                int keyLen = key.Length;
+                int subStart = chunk.IndexOf(key) + keyLen;
+                string subStr = chunk.Substring(subStart);
+
+                //now, get another substring ending at first occurance of *
+                string value = subStr.Substring(0, subStr.IndexOf("*"));
+
+                try
+                {
+                    float val = Convert.ToSingle(value);
+                    so.material.specular.y = val;
+                }
+                catch { }
+            }
+            if (chunk.Contains("msZ:"))
+            {
+                //material.ambient.x
+                string key = "msZ:";
+                int keyLen = key.Length;
+                int subStart = chunk.IndexOf(key) + keyLen;
+                string subStr = chunk.Substring(subStart);
+
+                //now, get another substring ending at first occurance of *
+                string value = subStr.Substring(0, subStr.IndexOf("*"));
+
+                try
+                {
+                    float val = Convert.ToSingle(value);
+                    so.material.specular.z = val;
+                }
+                catch { }
+            }
+
             return so;
         }
 
