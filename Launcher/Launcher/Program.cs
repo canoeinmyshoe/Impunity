@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 using System.Diagnostics;
 
+using ImpunityEngine;
+using UserClasses;
+using System.Reflection;
+
+
 namespace SceneEditLauncher
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             //From here, we'll access the graphics controller in a particular way
@@ -18,30 +24,30 @@ namespace SceneEditLauncher
             //at this point, I've totally forgotten how to open another prog!!!
             //We'll simply navigate by ../'s
 
-            string[] farts = new string[1];
-            farts[0] = "sup";
-            //GraphicsProgram.Start(farts);
+            //CLE cle = new CLE();
+            //cle.Run();
 
-           // string dir = DirectoryManager.PathToGCBin();
-            //GraphicsController.exe
-           // dir += "\\GraphicsController.exe";
+            //foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+            //{
+            //    if (asm.FullName.ToString().ToLower().Contains("mscorlib") || asm.FullName.ToString().ToLower().Contains("system") ||
+            //      asm.FullName.ToString().ToLower().Contains("microsoft"))
+            //        continue;
 
-            //    Process secondProc = new Process();
-            //secondProc.StartInfo.FileName = dir;
-            // secondProc.Start("Fart");
 
-           // Console.WriteLine("Process Directory: " + dir);
+            //    Console.WriteLine(asm.FullName.ToString());
+            //}
 
-            //I guess it turns out we don't need the directory..
-            Process.Start("ImpunityEngine.exe", "editor secondArg ThirdArg");
+            CommandLineEditor editor = new CommandLineEditor();
+            editor.Run();
 
-            //ProcessStartInfo processInfo = new ProcessStartInfo("GraphicsController.exe", "Hey hey!");
-            //processInfo.CreateNoWindow = true;
-            //processInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            
-        //    Process.Start()
+            //The SceneEditLauncher class will need its own version of the CLE
+            //So that it can add user created classes to a sceneObject
 
-           // Console.ReadKey();
+            //So this can work!! Exellent.
+            //However, it MUST be this project which acts as middle man between the user project
+            //and the impunity engine
+            //TestClass tc = new TestClass();
+            //Control.AllSceneObjects[0].Imps.Add(tc);
         }
     }
 }

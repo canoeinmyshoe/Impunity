@@ -9,7 +9,9 @@ namespace ImpunityEngine
     public abstract class ImpunityClass
     {
         public SceneObject sceneObject { get; set; }
-        public ImpunityClass() { }
+        public ImpunityClass() {
+            sceneObject = null;
+        }
         public ImpunityClass(SceneObject so)
         {
             sceneObject = so;

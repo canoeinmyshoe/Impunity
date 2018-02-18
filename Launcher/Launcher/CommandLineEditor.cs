@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
-
+using ImpunityEngine;
 using ImpunityEngine.Interoperability;
 
-namespace ImpunityEngine
+namespace SceneEditLauncher
 {
-    public class CLE//The Command Line Editor
+    public class CommandLineEditor
     {
         //In one thread, the command line.
         public static bool blockInput = false;
         public static bool shouldRun = false;
         private List<string> Commands = new List<string>();
-        
+
         //In another, the c# logic for rendering the scene, putting things in the scene,
         //configuring the sceneObjects, and saving their configuration so it can be loaded
         public bool Run()
@@ -25,7 +25,7 @@ namespace ImpunityEngine
                 return false;
 
             shouldRun = true;
-            
+
             Thread CommandListenerT = new Thread(() =>
             {
                 ListenForCommands();
@@ -33,13 +33,13 @@ namespace ImpunityEngine
             CommandListenerT.Start();
 
             RunImpunity();
-            
+
             return shouldRun;
         }
 
         private void ListenForCommands()
         {
-         //   Console.WriteLine("Impunity Command Line Editor 1.0");
+            //   Console.WriteLine("Impunity Command Line Editor 1.0");
             while (shouldRun == true)
             {
                 if (blockInput == true)
@@ -59,13 +59,13 @@ namespace ImpunityEngine
             Console.WriteLine("Entered run loop.");
             //ONLY initiate and loop the engine. Other than that, the Interpreter and the Listener share a list of commands (to be created)
             int success = Bridge.InitiateEngine();
-            CommandLinerInterpreter listener = new CommandLinerInterpreter();
+            CommandInterpreter listener = new CommandInterpreter();
 
             while (shouldRun == true)
             {
                 for (int i = 0; i < Commands.Count; i++)
                 {
-                    listener.ProcessInput(Commands[i]); 
+                    listener.ProcessInput(Commands[i]);
                     Commands.Remove(Commands[i]);
                 }
                 blockInput = false;

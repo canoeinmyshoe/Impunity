@@ -31,14 +31,7 @@ namespace ImpunityEngine
             cle.Run();
 
 
-
-            ////if(runDebugMode == true)
-            //Console.WriteLine("Any key to quit.");
-            //Console.ReadKey();
-
-            //Control c = new Control();
-            //OpenGLExampleController ogl = new OpenGLExampleController();
-            //ogl.DrawObjects();
+            
         }
         
     }

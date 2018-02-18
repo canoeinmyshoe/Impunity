@@ -1,0 +1,11 @@
+C:\Data\Projects\Impunity\impunity\UserClasses\UserClasses\bin\Debug\UserClasses.dll
+C:\Data\Projects\Impunity\impunity\UserClasses\UserClasses\bin\Debug\UserClasses.pdb
+C:\Data\Projects\Impunity\impunity\UserClasses\UserClasses\bin\Debug\ImpunityEngine.dll
+C:\Data\Projects\Impunity\impunity\UserClasses\UserClasses\bin\Debug\ImpunityEngine.pdb
+C:\Data\Projects\Impunity\impunity\UserClasses\UserClasses\bin\Debug\ImpunityEngine.dll.config
+C:\Data\Projects\Impunity\impunity\UserClasses\UserClasses\obj\Debug\UserClasses.csprojResolveAssemblyReference.cache
+C:\Data\Projects\Impunity\impunity\UserClasses\UserClasses\obj\Debug\UserClasses.csproj.CoreCompileInputs.cache
+C:\Data\Projects\Impunity\impunity\UserClasses\UserClasses\obj\Debug\UserClasses.dll
+C:\Data\Projects\Impunity\impunity\UserClasses\UserClasses\obj\Debug\UserClasses.pdb
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\bin\Debug\UserClasses.dll
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\bin\Debug\UserClasses.pdb
