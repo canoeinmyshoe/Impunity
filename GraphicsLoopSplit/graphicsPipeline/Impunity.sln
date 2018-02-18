@@ -11,8 +11,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImpunityEngine", "..\Graphi
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SceneEditLauncher", "..\..\Launcher\Launcher\SceneEditLauncher.csproj", "{8DACE0EA-9830-43CB-8832-D589C9CD0469}"
+	ProjectSection(ProjectDependencies) = postProject
+		{61554F69-416B-470E-A9A8-ECB69EBB2A54} = {61554F69-416B-470E-A9A8-ECB69EBB2A54}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserClasses", "..\..\UserClasses\UserClasses\UserClasses.csproj", "{05FF4343-5876-4514-B6B0-DAAF508DCDE5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{61554F69-416B-470E-A9A8-ECB69EBB2A54} = {61554F69-416B-470E-A9A8-ECB69EBB2A54}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

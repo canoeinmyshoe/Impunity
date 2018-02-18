@@ -8,11 +8,14 @@ using System.Diagnostics;
 
 using ImpunityEngine;
 using UserClasses;
+using System.Reflection;
+
 
 namespace SceneEditLauncher
 {
     class Program
     {
+
         static void Main(string[] args)
         {
             //From here, we'll access the graphics controller in a particular way
@@ -23,6 +26,16 @@ namespace SceneEditLauncher
 
             //CLE cle = new CLE();
             //cle.Run();
+
+            //foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+            //{
+            //    if (asm.FullName.ToString().ToLower().Contains("mscorlib") || asm.FullName.ToString().ToLower().Contains("system") ||
+            //      asm.FullName.ToString().ToLower().Contains("microsoft"))
+            //        continue;
+
+
+            //    Console.WriteLine(asm.FullName.ToString());
+            //}
 
             CommandLineEditor editor = new CommandLineEditor();
             editor.Run();

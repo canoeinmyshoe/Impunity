@@ -223,27 +223,33 @@ namespace SceneEditLauncher
                 return;
             string className = args[index + 1];
 
-            foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                Console.WriteLine("=========***" + asm.FullName.ToString() + "***==========");
-                if (asm.FullName.ToString().ToLower().Contains("mscorlib") || asm.FullName.ToString().ToLower().Contains("system") ||
-                    asm.FullName.ToString().ToLower().Contains("microsoft"))
-                    continue;
-                foreach (Type t in asm.GetTypes())
-                {
-                 //   Console.WriteLine(t.FullName.ToString());
-                    if (t.Name.ToString() == className)
-                    {
-                        Console.WriteLine("EUREKA!"); //Excellent!
-                        var inst = (ImpunityClass)Activator.CreateInstance(t);
-                        SceneMaster.SelectedSceneObject.Imps.Add(inst);
-                        inst.Start();
-                    //    return;
-                    }
+            //we need to do this from UserClasses!
+            AssemblyManager.ListAssemblies(className);
 
-                }
-            }
+            #region deprecated assembly search
+            //foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+            //{
 
+            //    if (asm.FullName.ToString().ToLower().Contains("mscorlib") || asm.FullName.ToString().ToLower().Contains("system") ||
+            //        asm.FullName.ToString().ToLower().Contains("microsoft"))
+            //        continue;
+
+            //    Console.WriteLine("=========***" + asm.FullName.ToString() + "***==========");
+            //    foreach (Type t in asm.GetTypes())
+            //    {
+            //     //   Console.WriteLine(t.FullName.ToString());
+            //        if (t.Name.ToString() == className)
+            //        {
+            //            Console.WriteLine("EUREKA!"); //Excellent!
+            //            var inst = (ImpunityClass)Activator.CreateInstance(t);
+            //            SceneMaster.SelectedSceneObject.Imps.Add(inst);
+            //            inst.Start();
+            //        //    return;
+            //        }
+
+            //    }
+            //}
+            #endregion
         }
         void AddImp(int index, string[] args)
         {
