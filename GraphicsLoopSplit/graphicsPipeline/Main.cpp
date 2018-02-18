@@ -173,32 +173,6 @@ extern "C"
 		return 0;
 	}
 	//and NOW we will change the OFFSET of the texture!
-	__declspec(dllexport) int SetMaterialOffset(int sceneObjectID, float xOffset, float yOffset) 
-	{
-		if (sceneObjectID >= AllSceneObjects.size())
-			return 1;
-
-	//	cout << "C++: setting material offset of sceneObject " << AllSceneObjects[sceneObjectID].ID << endl;
-
-		AllSceneObjects[sceneObjectID].material.xOffset = xOffset;
-		AllSceneObjects[sceneObjectID].material.yOffset = yOffset;
-
-		//Does it actually look any different? You will need to move it continually for a good test!
-
-		return 0;
-	}
-
-	//We need a method to change the tiling in a SceneObject's material
-	__declspec(dllexport) int SetMaterialTiling(int sceneObjectID, float xtiling, float ytiling) 
-	{
-		if (sceneObjectID >= AllSceneObjects.size())
-			return 1;
-
-		//cout << "C++: Setting tile of a sceneObject" << endl;
-		AllSceneObjects[sceneObjectID].material.xTiling = xtiling;
-		AllSceneObjects[sceneObjectID].material.yTiling = ytiling;
-		return 0;
-	}
 	__declspec(dllexport) int SwapDiffuseMap(int sceneObjectID, int textureIndex) 
 	{
 		//first , check if the index is out of range
@@ -493,7 +467,13 @@ extern "C"
 			string nam = so.Name + "-" + std::to_string(i);
 			soo.Name = nam.c_str();
 			//soo.Name = so.Name + "-" + std::to_string(i);
-			returnData += "n:"+ std::string(soo.Name) + "*i:" + std::to_string(soo.ID) + "*p:" + std::to_string(so.ID) + ",*";
+
+			//we also need material data from this string! 
+
+			returnData += "n:"+ std::string(soo.Name) + "*i:" + std::to_string(soo.ID) + "*p:" + std::to_string(so.ID) + 
+				"*maX" + std::to_string(soo.material.ambient.x) + "*maY" + std::to_string(soo.material.ambient.y) + "*maZ" + std::to_string(soo.material.ambient.z) +
+				"*mdX" + std::to_string(soo.material.diffuse.x) + "*mdY" + std::to_string(soo.material.diffuse.y) + "*mdZ" + std::to_string(soo.material.diffuse.z) + 
+				"*msX" + std::to_string(soo.material.specular.x) + "*msY" + std::to_string(soo.material.specular.y) + "*msZ" + std::to_string(soo.material.specular.z) + ",*";
 			//	And now for data from the texture.
 			//new, experimental method of texture information
 
@@ -864,6 +844,71 @@ extern "C"
 		return 0;
 	}
 
+
+#pragma region Material Mutability
+
+	__declspec(dllexport) int SetMaterialOffset(int sceneObjectID, float xOffset, float yOffset)
+	{
+		if (sceneObjectID >= AllSceneObjects.size())
+			return 1;
+
+		//	cout << "C++: setting material offset of sceneObject " << AllSceneObjects[sceneObjectID].ID << endl;
+
+		AllSceneObjects[sceneObjectID].material.xOffset = xOffset;
+		AllSceneObjects[sceneObjectID].material.yOffset = yOffset;
+
+		//Does it actually look any different? You will need to move it continually for a good test!
+
+		return 0;
+	}
+	__declspec(dllexport) int SetMaterialTiling(int sceneObjectID, float xtiling, float ytiling)
+	{
+		if (sceneObjectID >= AllSceneObjects.size())
+			return 1;
+
+		//cout << "C++: Setting tile of a sceneObject" << endl;
+		AllSceneObjects[sceneObjectID].material.xTiling = xtiling;
+		AllSceneObjects[sceneObjectID].material.yTiling = ytiling;
+		return 0;
+	}
+	__declspec(dllexport) int SetShininess(int sceneObjectID, float shininess) {
+		if (sceneObjectID > AllSceneObjects.size() - 1)
+			return 1;
+
+		AllSceneObjects[sceneObjectID].material.shininess = shininess;
+	
+		return 0;
+	}
+	__declspec(dllexport) int SetMaterialAmbient(int sceneObjectID, float x, float y, float z) {
+		if (sceneObjectID > AllSceneObjects.size() - 1)
+			return 1;
+
+		AllSceneObjects[sceneObjectID].material.ambient = glm::vec3(x, y, z);
+
+	
+		return 0;
+	}
+	__declspec(dllexport) int SetMaterialDiffuse(int sceneObjectID, float x, float y, float z) {
+		if (sceneObjectID > AllSceneObjects.size() - 1)
+			return 1;
+
+		AllSceneObjects[sceneObjectID].material.diffuse = glm::vec3(x, y, z);
+
+
+		return 0;
+	}
+
+	__declspec(dllexport) int SetMaterialSpecular(int sceneObjectID, float x, float y, float z) {
+		if (sceneObjectID > AllSceneObjects.size() - 1)
+			return 1;
+
+		AllSceneObjects[sceneObjectID].material.specular = glm::vec3(x, y, z);
+
+
+		return 0;
+	}
+
+#pragma endregion
 
 #pragma region Light Mutability
 #pragma region Point Light Methods

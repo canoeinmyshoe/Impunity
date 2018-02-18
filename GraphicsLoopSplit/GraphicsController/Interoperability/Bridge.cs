@@ -264,7 +264,39 @@ namespace ImpunityEngine.Interoperability
 
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetChildMatrix(int parentID, int childID);
+
+
+
+
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetShininess(int ID, float shininess);
+
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetMaterialAmbient(int ID, float x, float y, float z);
+        public static int SetMaterialAmbient(int ID, Vector3 color) {
+
+            return SetMaterialAmbient(ID, color.x, color.y, color.z);
+        }
+
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetMaterialDiffuse(int ID, float x, float y, float z);
+        public static int SetMaterialDiffuse(int ID, Vector3 color)
+        {
+
+            return SetMaterialDiffuse(ID, color.x, color.y, color.z);
+        }
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetMaterialSpecular(int ID, float x, float y, float z);
+        public static int SetMaterialSpecular(int ID, Vector3 color)
+        {
+
+            return SetMaterialSpecular(ID, color.x, color.y, color.z);
+        }
     }
+
+
+  
+
 
 
 }

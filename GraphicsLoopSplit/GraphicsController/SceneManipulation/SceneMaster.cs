@@ -235,7 +235,35 @@ namespace ImpunityEngine.SceneManipulation
             //This is a crutch. Call it from the sceneObject itself
             SelectedSceneObject.SetMaterialOffset(x, y);
         }
+        public static void SetShininess(float shininess) {
+            if (SelectedSceneObject == null)
+                return;
 
+            SelectedSceneObject.SetShininess(shininess);
+        }
+        public static void SetMaterialAmbient(float x, float y, float z) {
+            if (SelectedSceneObject == null)
+                return;
+
+            SelectedSceneObject.SetMaterialAmbient(new Vector3(x, y, z));
+
+        }
+        public static void SetMaterialDiffuse(float x, float y, float z)
+        {
+            if (SelectedSceneObject == null)
+                return;
+
+            SelectedSceneObject.SetMaterialDiffuse(new Vector3(x, y, z));
+
+        }
+        public static void SetMaterialSpecular(float x, float y, float z)
+        {
+            if (SelectedSceneObject == null)
+                return;
+
+            SelectedSceneObject.SetMaterialSpecular(new Vector3(x, y, z));
+
+        }
 
         public static void LoadFromDirectory(string path,Guid guid, List<Guid> kidguids)
         {
@@ -378,8 +406,10 @@ namespace ImpunityEngine.SceneManipulation
             
             so.SetMaterialTiling(ser.material.xTiling, ser.material.yTiling);
             so.SetMaterialOffset(ser.material.xOffset, ser.material.yOffset);
-            //so.setMaterialOffset(ser.material.xOffSet, ser.material.yOffSet);
-            //so.setMaterialAmbient(ser.material....
+            so.SetMaterialAmbient(ser.material.ambient);
+            so.SetMaterialDiffuse(ser.material.diffuse);
+            so.SetMaterialSpecular(ser.material.specular);
+            so.SetShininess(ser.material.shininess);
         }
 
         private static void DetailPointLight(SerializablePointLight ser, List<SerializablePointLight> allSer)

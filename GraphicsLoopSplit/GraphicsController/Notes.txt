@@ -49,11 +49,13 @@ select - select an object by index and type
  g axis dist - grab and object dist units of dist along axis axis
  tile x y - tile the textures on the material
  offset x y - offset the textures on the material
+ swapdiffuse x- swap diffuse map with a texture of id x
 
 
 
 TODO: setRotation - sets the rotation of a sceneObject or Light by name/ID
 TODO: set each and every variable of the materials
+TODO: put on, start, pause, and take off impunityClasses
 
 
 TODO:And perhaps uniforms, too

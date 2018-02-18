@@ -216,6 +216,7 @@ private:
 		std::string nem = m.Name;
 		
 		//get the color of the material
+
 		aiColor4D dcolor(0.0f, 0.0f, 0.0f, 0.0f);
 		aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &dcolor);
 		aiColor4D scolor(0.0f, 0.0f, 0.0f, 0.0f);

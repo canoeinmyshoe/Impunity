@@ -12,16 +12,38 @@ namespace ImpunityEngine
 
         public void SetTransform()
         {
-            //call the c++ dll
-            //Bridge.SetTransform(
-            //    ID,
-            //    position.x, position.y, position.z,
-            //    rotation.x, rotation.y, rotation.z,
-            //    scale.x, scale.y, scale.z
-            //    );
             Bridge.SetTransformMatrix(ID, transform);
         }
 
+
+        public void SetMaterialAmbient(Vector3 ambientColor) {
+
+            if (Bridge.SetMaterialAmbient(ID, ambientColor) != 1)
+                material.ambient = ambientColor;
+
+        }
+        public void SetMaterialDiffuse(Vector3 diffuseColor)
+        {
+
+            if (Bridge.SetMaterialDiffuse(ID, diffuseColor) != 1)
+                material.diffuse = diffuseColor;
+
+        }
+        public void SetMaterialSpecular(Vector3 specularColor)
+        {
+
+            if (Bridge.SetMaterialSpecular(ID, specularColor) != 1)
+                material.specular = specularColor;
+
+        }
+        public void SetShininess(float shininess) {
+        //    material.shininess = shininess;
+            //Bridge.SetShininess(ID, shininess);
+            //only set material if the result is not 1
+            if (Bridge.SetShininess(ID, shininess) != 1) {
+                material.shininess = shininess;
+            }
+        }
         public void SetMaterialOffset(float x, float y) {
             material.xOffset = x;
             material.yOffset = y;

@@ -15,12 +15,12 @@ namespace ImpunityEngine
     public class CommandLinerInterpreter
     {
         private Stack RecentCommands = new Stack();
-        public  void InterpretOpeningArgs(string[] args) // broken up by spaces, basically
+        public void InterpretOpeningArgs(string[] args) // broken up by spaces, basically
         {
             if (args.Length == 0)
                 return;
             //First, add this to our list of recent commands
-          
+
 
             foreach (var item in args)
             {
@@ -66,7 +66,7 @@ namespace ImpunityEngine
             string[] args = input.Split(' ');
             foreach (var item in args)
             {
-              //  Console.WriteLine(item);
+                //  Console.WriteLine(item);
                 item.Replace(" ", string.Empty);
             }
 
@@ -166,13 +166,14 @@ namespace ImpunityEngine
                 {
                     GrabObject(i, args);
                 }
-                else if (word == "scale" || word == "s") {
+                else if (word == "scale" || word == "s")
+                {
                     Console.WriteLine("Scaling...");
                     ScaleObject(i, args);
                 }
                 else if (word == "swapdiffusemap" || word == "swapdiff")
                 {
-                   
+
                     //SwapDiffuseMap
                     SwapDiffuseMap(i, args);
                 }
@@ -184,6 +185,9 @@ namespace ImpunityEngine
                 else if (word == "offset")
                 {
                     SetMaterialOffset(i, args);
+                }
+                else if (word == "mat" || word == "material") {
+                    ConfigureMaterial(i, args);
                 }
                 else if (word == "+" || word == "++")
                 {
@@ -199,6 +203,59 @@ namespace ImpunityEngine
                 }
             }
         }
+
+        void ConfigureMaterial(int index, string[] args) {
+
+            //We're expecting
+            //args[index + 1] ---- the quality of the material to change
+            //args[index + >=2] ----- the value[s] by which to change the quality
+            if (index + 2 > args.Length - 1)
+                return;
+
+            string quality = args[index + 1].ToLower();
+            
+             if (quality == "shine" || quality == "shiny" || quality == "shininess")
+            {
+                //the next arg will be a float
+                float shininess = 0;
+                try
+                {
+                    shininess = Convert.ToSingle(args[index + 2]);
+                }
+                catch { return; }
+                SceneMaster.SetShininess(shininess);
+                return;
+            }
+
+            //the next 3 args will constitute a vector3
+            if (index + 4 > args.Length - 1)
+                return;
+
+            float x = 0; float y = 0; float z = 0;
+            try
+            {
+                x = Convert.ToSingle(args[index + 2]);
+                y = Convert.ToSingle(args[index + 3]);
+                z = Convert.ToSingle(args[index + 4]);
+            }
+            catch { return; }
+
+            if (quality == "amb" || quality == "ambient")
+            {
+                SceneMaster.SetMaterialAmbient(x,y,z);
+            }
+            else if (quality == "diff" || quality == "diffuse")
+            {
+                SceneMaster.SetMaterialDiffuse(x,y,z);
+            }
+            else if (quality == "spec" || quality == "specular")
+            {
+                SceneMaster.SetMaterialSpecular(x, y, z);
+            }
+
+        }
+
+
 
         void SetMaterialOffset(int index, string[] args)
         {

@@ -31,7 +31,7 @@ namespace ImpunityEngine
             yOffset = 0;
             diffuseMap = new Texture(TextureType.None);
             specularMap = new Texture(TextureType.None);
-        }
+        } 
     }
 
     public enum MaterialType
