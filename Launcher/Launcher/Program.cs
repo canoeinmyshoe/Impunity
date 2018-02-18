@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 using System.Diagnostics;
 
+using ImpunityEngine;
+using UserClasses;
+
 namespace SceneEditLauncher
 {
     class Program
@@ -18,30 +21,20 @@ namespace SceneEditLauncher
             //at this point, I've totally forgotten how to open another prog!!!
             //We'll simply navigate by ../'s
 
-            string[] farts = new string[1];
-            farts[0] = "sup";
-            //GraphicsProgram.Start(farts);
+            //CLE cle = new CLE();
+            //cle.Run();
 
-           // string dir = DirectoryManager.PathToGCBin();
-            //GraphicsController.exe
-           // dir += "\\GraphicsController.exe";
+            CommandLineEditor editor = new CommandLineEditor();
+            editor.Run();
 
-            //    Process secondProc = new Process();
-            //secondProc.StartInfo.FileName = dir;
-            // secondProc.Start("Fart");
+            //The SceneEditLauncher class will need its own version of the CLE
+            //So that it can add user created classes to a sceneObject
 
-           // Console.WriteLine("Process Directory: " + dir);
-
-            //I guess it turns out we don't need the directory..
-            Process.Start("ImpunityEngine.exe", "editor secondArg ThirdArg");
-
-            //ProcessStartInfo processInfo = new ProcessStartInfo("GraphicsController.exe", "Hey hey!");
-            //processInfo.CreateNoWindow = true;
-            //processInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            
-        //    Process.Start()
-
-           // Console.ReadKey();
+            //So this can work!! Exellent.
+            //However, it MUST be this project which acts as middle man between the user project
+            //and the impunity engine
+            //TestClass tc = new TestClass();
+            //Control.AllSceneObjects[0].Imps.Add(tc);
         }
     }
 }

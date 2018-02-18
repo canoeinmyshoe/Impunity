@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ImpunityEngine.CoreMechanics")]
+[assembly: AssemblyTitle("UserClasses")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ImpunityEngine.CoreMechanics")]
+[assembly: AssemblyProduct("UserClasses")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("ac712d7a-69db-4cb3-8d32-39a71f4fc94e")]
+[assembly: Guid("05ff4343-5876-4514-b6b0-daaf508dcde5")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImpunityEngine.CoreMechanics
+using ImpunityEngine;
+
+namespace UserClasses
 {
-    public class Class1
+    public class TestClass : ImpunityClass
     {
+
+
     }
 }
