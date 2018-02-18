@@ -297,9 +297,12 @@ namespace ImpunityEngine.Interoperability
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int GetRight(StringBuilder resultString, int ID);
 
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetUp(StringBuilder resultString, int ID);
 
 
-
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetForward(StringBuilder resultString, int ID);
 
     }
 
