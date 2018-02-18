@@ -13,7 +13,8 @@ using ImpunityEngine.OpenGLExamples;
 using ImpunityEngine.SceneManipulation;
 using System.Collections;
 using UserClasses;
-using System.Runtime.Remoting;
+using ImpunityEngine.Persistence;
+
 
 namespace SceneEditLauncher
 {
@@ -555,7 +556,8 @@ namespace SceneEditLauncher
             if (index + 1 > args.Length - 1)
                 return;
 
-            SceneMaster.LoadSceneFile(args[index + 1]);
+            // SceneMaster.LoadSceneFile(args[index + 1]);
+            DIskManager.LoadSceneFile(args[index + 1]); 
         }
         void SaveScene(int index, string[] args)
         {
@@ -564,7 +566,8 @@ namespace SceneEditLauncher
             if (index + 1 > args.Length - 1)
                 return;
 
-            SceneMaster.SaveSceneAs(args[index + 1]);
+            // SceneMaster.SaveSceneAs(args[index + 1]);
+            DIskManager.SaveSceneAs(args[index + 1]);
 
         }
         void SetCutOff(int index, string[] args)

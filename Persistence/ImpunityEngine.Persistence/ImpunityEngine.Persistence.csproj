@@ -4,27 +4,24 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8DACE0EA-9830-43CB-8832-D589C9CD0469}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>SceneEditLauncher</RootNamespace>
-    <AssemblyName>SceneEditLauncher</AssemblyName>
+    <ProjectGuid>{A112961A-AAFC-4FDB-B5D1-9E632F92D739}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ImpunityEngine.Persistence</RootNamespace>
+    <AssemblyName>ImpunityEngine.Persistence</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\GraphicsLoopSplit\GraphicsController\bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,24 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandInterpreter.cs" />
-    <Compile Include="CommandLineEditor.cs" />
-    <Compile Include="DirectoryManager.cs" />
-    <Compile Include="myImp.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="DIskManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\GraphicsLoopSplit\GraphicsController\ImpunityEngine.csproj">
       <Project>{3e3a24aa-392d-4b53-99a7-1efd118f6fda}</Project>
       <Name>ImpunityEngine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Persistence\ImpunityEngine.Persistence\ImpunityEngine.Persistence.csproj">
-      <Project>{a112961a-aafc-4fdb-b5d1-9e632f92d739}</Project>
-      <Name>ImpunityEngine.Persistence</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\UserClasses\UserClasses\UserClasses.csproj">
       <Project>{05ff4343-5876-4514-b6b0-daaf508dcde5}</Project>

@@ -7,7 +7,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 
-using ImpunityEngine.Persistence;
+//using ImpunityEngine.Persistence;
 using ImpunityEngine.Interoperability;
 using ImpunityEngine;
 namespace ImpunityEngine.SceneManipulation
@@ -375,12 +375,12 @@ namespace ImpunityEngine.SceneManipulation
             //{
             //    so.Imps.Add(imp);
             //}
-            foreach (var type in ser.impTypes)
-            {
-                ///shit....who ever loads a scene will need userClasses as a reference!!!!
-                ///Therefore, the SceneEditLauncher will need to be responsible for loading a scene.
-                ///The topmost layer
-            }
+            //foreach (var type in ser.impTypes)
+            //{
+            //    ///shit....who ever loads a scene will need userClasses as a reference!!!!
+            //    ///Therefore, the SceneEditLauncher will need to be responsible for loading a scene.
+            //    ///The topmost layer
+            //}
             
 
             if (ser.material.diffuseMap.FullPath.ToLower() != so.material.diffuseMap.FullPath.ToLower() && ser.material.diffuseMap.FullPath.ToLower() != "unknown") {
@@ -688,13 +688,13 @@ namespace ImpunityEngine.SceneManipulation
                 sp.ChildIDs[i] = so.Children[i].ID;
                 sp.ChildGuids.Add(so.Children[i].guid);
             }
-            foreach (var imp in so.Imps)
-            {
-                string type = imp.GetType().ToString();
-                int start = type.IndexOf(".") + 1;
-                string className = type.Substring(start);
-                sp.impTypes.Add(className);
-            }
+            //foreach (var imp in so.Imps)
+            //{
+            //    string type = imp.GetType().ToString();
+            //    int start = type.IndexOf(".") + 1;
+            //    string className = type.Substring(start);
+            //    sp.impTypes.Add(className);
+            //}
 
             sp.material = pl.material;
 
@@ -736,13 +736,13 @@ namespace ImpunityEngine.SceneManipulation
                 sp.ChildIDs[i] = so.Children[i].ID;
                 sp.ChildGuids.Add(so.Children[i].guid);
             }
-            foreach (var imp in so.Imps)
-            {
-                string type = imp.GetType().ToString();
-                int start = type.IndexOf(".") + 1;
-                string className = type.Substring(start);
-                sp.impTypes.Add(className);
-            }
+            //foreach (var imp in so.Imps)
+            //{
+            //    string type = imp.GetType().ToString();
+            //    int start = type.IndexOf(".") + 1;
+            //    string className = type.Substring(start);
+            //    sp.impTypes.Add(className);
+            //}
 
             sp.material = pl.material;
 
@@ -788,13 +788,13 @@ namespace ImpunityEngine.SceneManipulation
                 sp.ChildIDs[i] = so.Children[i].ID;
                 sp.ChildGuids.Add(so.Children[i].guid);
             }
-            foreach (var imp in so.Imps)
-            {
-                string type = imp.GetType().ToString();
-                int start = type.IndexOf(".") + 1;
-                string className = type.Substring(start);
-                sp.impTypes.Add(className);
-            }
+            //foreach (var imp in so.Imps)
+            //{
+            //    string type = imp.GetType().ToString();
+            //    int start = type.IndexOf(".") + 1;
+            //    string className = type.Substring(start);
+            //    sp.impTypes.Add(className);
+            //}
 
             sp.material = pl.material;
 
@@ -831,13 +831,13 @@ namespace ImpunityEngine.SceneManipulation
 
             //don't do this. Ask some DTO for the string of the XML
             //actually, just have the topmost layer do the saving/loading
-            foreach (var imp in so.Imps)
-            {
-                string type = imp.GetType().ToString();
-                int start = type.IndexOf(".") + 1;
-                string className = type.Substring(start);
-                sp.impTypes.Add(className);
-            }
+            //foreach (var imp in so.Imps)
+            //{
+            //    string type = imp.GetType().ToString();
+            //    int start = type.IndexOf(".") + 1;
+            //    string className = type.Substring(start);
+            //    sp.impTypes.Add(className);
+            //}
 
 
 
