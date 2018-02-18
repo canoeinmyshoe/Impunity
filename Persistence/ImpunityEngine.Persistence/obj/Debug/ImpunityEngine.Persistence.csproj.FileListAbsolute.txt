@@ -1,0 +1,11 @@
+C:\Data\Projects\Impunity\impunity\Persistence\ImpunityEngine.Persistence\obj\Debug\ImpunityEngine.Persistence.csprojResolveAssemblyReference.cache
+C:\Data\Projects\Impunity\impunity\Persistence\ImpunityEngine.Persistence\obj\Debug\ImpunityEngine.Persistence.csproj.CoreCompileInputs.cache
+C:\Data\Projects\Impunity\impunity\Persistence\ImpunityEngine.Persistence\bin\Debug\ImpunityEngine.Persistence.dll
+C:\Data\Projects\Impunity\impunity\Persistence\ImpunityEngine.Persistence\bin\Debug\ImpunityEngine.Persistence.pdb
+C:\Data\Projects\Impunity\impunity\Persistence\ImpunityEngine.Persistence\bin\Debug\ImpunityEngine.dll
+C:\Data\Projects\Impunity\impunity\Persistence\ImpunityEngine.Persistence\bin\Debug\UserClasses.dll
+C:\Data\Projects\Impunity\impunity\Persistence\ImpunityEngine.Persistence\bin\Debug\ImpunityEngine.pdb
+C:\Data\Projects\Impunity\impunity\Persistence\ImpunityEngine.Persistence\bin\Debug\ImpunityEngine.dll.config
+C:\Data\Projects\Impunity\impunity\Persistence\ImpunityEngine.Persistence\bin\Debug\UserClasses.pdb
+C:\Data\Projects\Impunity\impunity\Persistence\ImpunityEngine.Persistence\obj\Debug\ImpunityEngine.Persistence.dll
+C:\Data\Projects\Impunity\impunity\Persistence\ImpunityEngine.Persistence\obj\Debug\ImpunityEngine.Persistence.pdb

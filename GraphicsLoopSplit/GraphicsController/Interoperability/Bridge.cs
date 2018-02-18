@@ -292,6 +292,15 @@ namespace ImpunityEngine.Interoperability
 
             return SetMaterialSpecular(ID, color.x, color.y, color.z);
         }
+
+
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetRight(StringBuilder resultString, int ID);
+
+
+
+
+
     }
 
 

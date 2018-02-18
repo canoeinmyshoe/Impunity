@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImpunityEngine.Persistence
+namespace ImpunityEngine
 {
     public class SerializableSceneObject
     {
@@ -18,8 +18,8 @@ namespace ImpunityEngine.Persistence
         public bool isStatic { get; set; }
         public Transform transform = new Transform(true);
         public int[] ChildIDs;
-        //  public List<ImpunityClass> Imps = new List<ImpunityClass>();
-        public List<string> impTypes = new List<string>();
+        public List<ImpunityClass> Imps = new List<ImpunityClass>();
+    //    public List<string> impTypes = new List<string>();
         public Material material = new Material(MaterialType.DefaultTextureless);
         public string modelPath { get; set; }
         public Guid guid { get; set; }

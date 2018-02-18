@@ -13,5 +13,24 @@ namespace ImpunityEngine
             //call the c++ dll - it's faster
             return 0;
         }
+
+        public static Vector3 MultiplyFloat(Vector3 vec, float flo)
+        {
+            vec.x *= flo;
+            vec.y *= flo;
+            vec.z *= flo;
+            return vec;
+        }
+
+        public void Multiply(float flo) {
+            x *= flo;
+            y *= flo;
+            z *= flo;
+        }
+        public void Add(Vector3 add) {
+            x += add.x;
+            y += add.y;
+            z += add.z;
+        }
     }
 }

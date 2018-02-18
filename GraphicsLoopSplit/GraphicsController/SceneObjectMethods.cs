@@ -14,7 +14,30 @@ namespace ImpunityEngine
         {
             Bridge.SetTransformMatrix(ID, transform);
         }
+        public Vector3 Right()
+        {
+            //get the right direction of the matrix
+            //Bridge.GetRight(ID);
+            StringBuilder cmessage = new StringBuilder(256);//256 chars at most
+          //  int i = Bridge.LoadModelFromDir(path, path.Length, cmessage, 256);
+            int i = Bridge.GetRight(cmessage, ID);
 
+            if (i == 1)
+                return new Vector3(0);
+          //  Console.WriteLine("GetRight() Result: " + message);
+            string[] dimensions = cmessage.ToString().Split(',');
+            float x = 0; float y = 0; float z = 0;
+            try
+            {
+                x = Convert.ToSingle(dimensions[0]);
+                y = Convert.ToSingle(dimensions[1]);
+                z = Convert.ToSingle(dimensions[2]);
+            }
+            catch { return new Vector3(0); }
+            
+
+            return new Vector3(x,y,z);
+        }
 
         public void SetMaterialAmbient(Vector3 ambientColor) {
 

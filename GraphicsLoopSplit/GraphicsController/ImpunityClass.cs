@@ -8,21 +8,21 @@ namespace ImpunityEngine
 {
     public abstract class ImpunityClass
     {
-        public SceneObject sceneObject { get; set; }
+      //  public SceneObject sceneObject { get; set; }
         public bool enabled = true;
         public ImpunityClass() {
-            sceneObject = null;
+          //  sceneObject = null;
         }
         public ImpunityClass(SceneObject so)
         {
-            sceneObject = so;
+           // sceneObject = so;
         }
-        public virtual void Start()
+        public virtual void Start(SceneObject sceneObject)
         {
-            var s = Resource1.MyName;
+           // var s = Resource1.MyName;
             //Do a bunch of stuff at startup
         }
-        public virtual void Update()
+        public virtual void Update(SceneObject sceneObject)
         {
             //do a bunch of stuff every frame
         }

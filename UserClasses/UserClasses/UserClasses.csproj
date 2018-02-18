@@ -45,6 +45,7 @@
     <Compile Include="AssemblyManager.cs" />
     <Compile Include="TestClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransformTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\GraphicsLoopSplit\GraphicsController\ImpunityEngine.csproj">

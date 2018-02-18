@@ -58,6 +58,10 @@
       <Project>{3e3a24aa-392d-4b53-99a7-1efd118f6fda}</Project>
       <Name>ImpunityEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Persistence\ImpunityEngine.Persistence\ImpunityEngine.Persistence.csproj">
+      <Project>{a112961a-aafc-4fdb-b5d1-9e632f92d739}</Project>
+      <Name>ImpunityEngine.Persistence</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\UserClasses\UserClasses\UserClasses.csproj">
       <Project>{05ff4343-5876-4514-b6b0-daaf508dcde5}</Project>
       <Name>UserClasses</Name>

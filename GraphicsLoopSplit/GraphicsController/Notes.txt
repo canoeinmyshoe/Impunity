@@ -56,6 +56,9 @@ select - select an object by index and type
 
 
  TODO: Load scenes from the topmost layer.
+	-Impunity classes must be divested of their cyclical SceneObject property!
+
+
 TODO: setRotation - sets the rotation of a sceneObject or Light by name/ID
 TODO:  start, pause, and take off impunityClasses
 
