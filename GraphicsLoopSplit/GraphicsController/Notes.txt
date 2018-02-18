@@ -61,6 +61,7 @@ TODO: put on, start, pause, and take off impunityClasses
 
 TODO:And perhaps uniforms, too
 TODO: Buttons, text, textfields, general GUI-ndc stuff
+	-Button clicks can be detected by testing mouse coords against area of button
 
 
 example 1: create pointLight
