@@ -55,6 +55,7 @@ select - select an object by index and type
 
 
 
+ TODO: Load scenes from the topmost layer.
 TODO: setRotation - sets the rotation of a sceneObject or Light by name/ID
 TODO:  start, pause, and take off impunityClasses
 

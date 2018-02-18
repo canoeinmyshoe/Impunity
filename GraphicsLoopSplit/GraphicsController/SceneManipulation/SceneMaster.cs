@@ -378,6 +378,8 @@ namespace ImpunityEngine.SceneManipulation
             foreach (var type in ser.impTypes)
             {
                 ///shit....who ever loads a scene will need userClasses as a reference!!!!
+                ///Therefore, the SceneEditLauncher will need to be responsible for loading a scene.
+                ///The topmost layer
             }
             
 
@@ -826,6 +828,9 @@ namespace ImpunityEngine.SceneManipulation
             //It's not quite as simple as that. There's no way to know what the user will call the classes
             //Therefore, we save a list of strings which are the type!
             //And load from the strings afterwards.
+
+            //don't do this. Ask some DTO for the string of the XML
+            //actually, just have the topmost layer do the saving/loading
             foreach (var imp in so.Imps)
             {
                 string type = imp.GetType().ToString();
