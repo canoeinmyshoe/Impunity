@@ -56,7 +56,7 @@ select - select an object by index and type
 
 
 TODO: setRotation - sets the rotation of a sceneObject or Light by name/ID
-TODO: put on, start, pause, and take off impunityClasses
+TODO:  start, pause, and take off impunityClasses
 
 
 TODO:And perhaps uniforms, too

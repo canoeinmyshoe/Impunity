@@ -9,6 +9,7 @@ namespace ImpunityEngine
     public abstract class ImpunityClass
     {
         public SceneObject sceneObject { get; set; }
+        public bool enabled = true;
         public ImpunityClass() {
             sceneObject = null;
         }

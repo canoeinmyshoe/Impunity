@@ -370,14 +370,16 @@ namespace ImpunityEngine.SceneManipulation
             so.Tag = ser.Tag;
             so.isStatic = ser.isStatic;
             so.transform = ser.transform;
-            foreach (var imp in ser.Imps)//unknown if this works
+
+            //foreach (var imp in ser.Imps)//unknown if this works
+            //{
+            //    so.Imps.Add(imp);
+            //}
+            foreach (var type in ser.impTypes)
             {
-                so.Imps.Add(imp);
+                ///shit....who ever loads a scene will need userClasses as a reference!!!!
             }
-            //we will have to set custom material/texture/shader details 
-            //one property at a time
-            //so don't worry about that, as we don't even have methods
-            //to set material values yet
+            
 
             if (ser.material.diffuseMap.FullPath.ToLower() != so.material.diffuseMap.FullPath.ToLower() && ser.material.diffuseMap.FullPath.ToLower() != "unknown") {
                 Console.WriteLine("Texture discrepancy.");
@@ -423,10 +425,10 @@ namespace ImpunityEngine.SceneManipulation
             so.Tag = ser.Tag;
             so.isStatic = ser.isStatic;
             so.transform = ser.transform;
-            foreach (var imp in ser.Imps)//unknown if this works
-            {
-                so.Imps.Add(imp);
-            }
+            //foreach (var imp in ser.Imps)//unknown if this works
+            //{
+            //    so.Imps.Add(imp);
+            //}
             //we will have to set custom material/texture/shader details 
             //one property at a time
             //so don't worry about that, as we don't even have methods
@@ -459,10 +461,10 @@ namespace ImpunityEngine.SceneManipulation
             so.Tag = ser.Tag;
             so.isStatic = ser.isStatic;
             so.transform = ser.transform;
-            foreach (var imp in ser.Imps)//unknown if this works
-            {
-                so.Imps.Add(imp);
-            }
+            //foreach (var imp in ser.Imps)//unknown if this works
+            //{
+            //    so.Imps.Add(imp);
+            //}
             //we will have to set custom material/texture/shader details 
             //one property at a time
             //so don't worry about that, as we don't even have methods
@@ -497,10 +499,10 @@ namespace ImpunityEngine.SceneManipulation
             so.Tag = ser.Tag;
             so.isStatic = ser.isStatic;
             so.transform = ser.transform;
-            foreach (var imp in ser.Imps)//unknown if this works
-            {
-                so.Imps.Add(imp);
-            }
+            //foreach (var imp in ser.Imps)//unknown if this works
+            //{
+            //    so.Imps.Add(imp);
+            //}
             //we will have to set custom material/texture/shader details 
             //one property at a time
             //so don't worry about that, as we don't even have methods
@@ -684,7 +686,14 @@ namespace ImpunityEngine.SceneManipulation
                 sp.ChildIDs[i] = so.Children[i].ID;
                 sp.ChildGuids.Add(so.Children[i].guid);
             }
-            sp.Imps = pl.Imps;
+            foreach (var imp in so.Imps)
+            {
+                string type = imp.GetType().ToString();
+                int start = type.IndexOf(".") + 1;
+                string className = type.Substring(start);
+                sp.impTypes.Add(className);
+            }
+
             sp.material = pl.material;
 
             return sp;
@@ -725,7 +734,14 @@ namespace ImpunityEngine.SceneManipulation
                 sp.ChildIDs[i] = so.Children[i].ID;
                 sp.ChildGuids.Add(so.Children[i].guid);
             }
-            sp.Imps = pl.Imps;
+            foreach (var imp in so.Imps)
+            {
+                string type = imp.GetType().ToString();
+                int start = type.IndexOf(".") + 1;
+                string className = type.Substring(start);
+                sp.impTypes.Add(className);
+            }
+
             sp.material = pl.material;
 
             return sp;
@@ -770,7 +786,14 @@ namespace ImpunityEngine.SceneManipulation
                 sp.ChildIDs[i] = so.Children[i].ID;
                 sp.ChildGuids.Add(so.Children[i].guid);
             }
-            sp.Imps = pl.Imps;
+            foreach (var imp in so.Imps)
+            {
+                string type = imp.GetType().ToString();
+                int start = type.IndexOf(".") + 1;
+                string className = type.Substring(start);
+                sp.impTypes.Add(className);
+            }
+
             sp.material = pl.material;
 
             return sp;
@@ -799,7 +822,20 @@ namespace ImpunityEngine.SceneManipulation
                 sp.ChildIDs[i] = so.Children[i].ID;
                 sp.ChildGuids.Add(so.Children[i].guid);
             }
-            sp.Imps = so.Imps;
+            //   sp.Imps = so.Imps;
+            //It's not quite as simple as that. There's no way to know what the user will call the classes
+            //Therefore, we save a list of strings which are the type!
+            //And load from the strings afterwards.
+            foreach (var imp in so.Imps)
+            {
+                string type = imp.GetType().ToString();
+                int start = type.IndexOf(".") + 1;
+                string className = type.Substring(start);
+                sp.impTypes.Add(className);
+            }
+
+
+
             sp.material = so.material;
             sp.enabled = so.enabled;
 

@@ -26,14 +26,16 @@ namespace UserClasses
                 Console.WriteLine("=========***" + asm.FullName.ToString() + "***==========");
                 foreach (Type t in asm.GetTypes())
                 {
-                      Console.WriteLine(t.FullName.ToString() + "   vs.   " +className);
+                //      Console.WriteLine(t.FullName.ToString() + "   vs.   " +className);
                     if (t.Name.ToString() == className)
                     {
                         Console.WriteLine("EUREKA!"); //Excellent!
                         var inst = (ImpunityClass)Activator.CreateInstance(t);
-                        SceneMaster.SelectedSceneObject.Imps.Add(inst);
+                        inst.sceneObject = SceneMaster.SelectedSceneObject;
                         inst.Start();
-                        //    return;
+                        SceneMaster.SelectedSceneObject.Imps.Add(inst);
+                        
+                        return;
                     }
 
                 }

@@ -10,7 +10,7 @@ namespace UserClasses
 {
     public class TestClass : ImpunityClass
     {
-        private float testFloat;
+
         //These need an empty constructor to work
         public TestClass() {
             //do nothing
@@ -21,6 +21,12 @@ namespace UserClasses
         {
             // base.Start();
             Console.WriteLine("The test class has started!");
+            sceneObject.transform.position.y += 0.1f;
+        }
+
+        public override void Update()
+        {
+            sceneObject.transform.rotation.y += 0.01f;
         }
 
     }

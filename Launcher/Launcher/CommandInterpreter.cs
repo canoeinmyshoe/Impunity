@@ -156,7 +156,8 @@ namespace SceneEditLauncher
                 else if (word == "quit" || word == "quir" || word == "quiy" || word == "q")
                 {
                     Console.WriteLine("Have a nice life, bro.");
-                    CLE.shouldRun = false;
+                    CommandLineEditor.shouldRun = false;
+                    Console.WriteLine("Beans.");
                 }
                 else if (word == "select" || word == "sel")
                 {
