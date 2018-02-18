@@ -7,3 +7,5 @@ C:\Data\Projects\Impunity\impunity\UserClasses\UserClasses\obj\Debug\UserClasses
 C:\Data\Projects\Impunity\impunity\UserClasses\UserClasses\obj\Debug\UserClasses.csproj.CoreCompileInputs.cache
 C:\Data\Projects\Impunity\impunity\UserClasses\UserClasses\obj\Debug\UserClasses.dll
 C:\Data\Projects\Impunity\impunity\UserClasses\UserClasses\obj\Debug\UserClasses.pdb
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\bin\Debug\UserClasses.dll
+C:\Data\Projects\Impunity\impunity\GraphicsLoopSplit\GraphicsController\bin\Debug\UserClasses.pdb

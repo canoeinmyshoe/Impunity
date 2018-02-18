@@ -4,17 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Reflection;
+
 using System.IO;
 
 using ImpunityEngine;
 using ImpunityEngine.OpenGLExamples;
 using ImpunityEngine.SceneManipulation;
 using System.Collections;
+using UserClasses;
+using System.Runtime.Remoting;
 
 namespace SceneEditLauncher
 {
     class CommandInterpreter
     {
+        
         private Stack RecentCommands = new Stack();
         public void InterpretOpeningArgs(string[] args) // broken up by spaces, basically
         {
@@ -191,6 +196,10 @@ namespace SceneEditLauncher
                 {
                     ConfigureMaterial(i, args);
                 }
+                else if (word == "imp") {
+                    //add an impunityClass to the sceneObject
+                    AddImpX(i, args);
+                }
                 else if (word == "+" || word == "++")
                 {
                     //select the sceneObject above this one
@@ -204,6 +213,115 @@ namespace SceneEditLauncher
                     // Console.WriteLine("Teapots.");
                 }
             }
+        }
+
+        //case sensitive, of course
+        void AddImpX(int index, string[] args)
+        {
+            Console.WriteLine("Adding imp 2.0");
+            if (index + 1 > args.Length - 1)
+                return;
+            string className = args[index + 1];
+
+            foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                Console.WriteLine("=========***" + asm.FullName.ToString() + "***==========");
+                if (asm.FullName.ToString().ToLower().Contains("mscorlib") || asm.FullName.ToString().ToLower().Contains("system") ||
+                    asm.FullName.ToString().ToLower().Contains("microsoft"))
+                    continue;
+                foreach (Type t in asm.GetTypes())
+                {
+                 //   Console.WriteLine(t.FullName.ToString());
+                    if (t.Name.ToString() == className)
+                    {
+                        Console.WriteLine("EUREKA!"); //Excellent!
+                        var inst = (ImpunityClass)Activator.CreateInstance(t);
+                        SceneMaster.SelectedSceneObject.Imps.Add(inst);
+                        inst.Start();
+                    //    return;
+                    }
+
+                }
+            }
+
+        }
+        void AddImp(int index, string[] args)
+        {
+            Console.WriteLine("Adding imp.");
+            //we're expecting
+            //args[index + 1] ---- the name of the user-created imp to add
+            if (index + 1 > args.Length - 1)
+                return;
+
+           // string assembly = "UserClasses.dll";
+        //    assembly = DirectoryManager.PathToGCBin() + "\\" + assembly;
+       //     Console.WriteLine("Assembly dir: " + assembly);
+            string className = args[index + 1];
+           // Type userImp = Type.GetType(className);
+            try
+            {
+                if (SceneMaster.SelectedSceneObject == null)
+                    return;
+
+                // Object instance = new Activator.CreateInstanceFrom(userImp);
+                //ImpunityClass instance = (ImpunityClass)Activator.CreateInstance(userImp);
+                //instance.sceneObject = SceneMaster.SelectedSceneObject;
+                //SceneMaster.SelectedSceneObject.Imps.Add(instance);
+                //instance.Start();
+
+                // object objClassInstance = GetInstance(className);
+                // ImpunityClass ic = (ImpunityClass)objClassInstance;
+                //SceneMaster.SelectedSceneObject.Imps.Add(ic);
+
+                //ImpunityClass instance = (ImpunityClass)System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(className);
+                //SceneMaster.SelectedSceneObject.Imps.Add(instance);
+
+                //ObjectHandle handle = Activator.CreateInstance(null, className);
+                //ImpunityClass p = (ImpunityClass)handle.Unwrap();
+                ////p.Tag = "Samuel";
+                //p.sceneObject = SceneMaster.SelectedSceneObject;
+
+                //   Console.WriteLine(p);
+           //     var path = @"D:\Plugin.dll";
+                var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+
+                foreach (Type t in assembly.GetTypes())
+                {
+                    
+                    Console.WriteLine(t.FullName.ToString());
+                    if (t.Name.ToString() == className) {
+                        Console.WriteLine("EUREKA!"); //Excellent!
+                        var inst = (ImpunityClass)Activator.CreateInstance(t);
+                        SceneMaster.SelectedSceneObject.Imps.Add(inst);
+                        inst.Start();
+                        return;
+                    }
+                    
+                }
+                string prefix = "SceneEditLauncher.";
+                var type = assembly.GetType(prefix + className);
+              //  var method = type.GetMethod("Run");
+                var instance = Activator.CreateInstance(type);
+
+
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine("Failed to add imp: " + err.Message);
+            }
+        }
+        public object GetInstance(string strFullyQualifiedName)
+        {
+            Type type = Type.GetType(strFullyQualifiedName);
+            if (type != null)
+                return Activator.CreateInstance(type);
+            foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                type = asm.GetType(strFullyQualifiedName);
+                if (type != null)
+                    return Activator.CreateInstance(type);
+            }
+            return null;
         }
 
         void ConfigureMaterial(int index, string[] args)

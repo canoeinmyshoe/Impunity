@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using ImpunityEngine;
-
-namespace UserClasses
+namespace SceneEditLauncher
 {
-    public class TestClass : ImpunityClass
+    public class myImp : ImpunityClass
     {
         private float testFloat;
         //These need an empty constructor to work
-        public TestClass() {
+        public myImp()
+        {
             //do nothing
         }
 

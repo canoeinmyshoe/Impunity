@@ -46,6 +46,7 @@
     <Compile Include="CommandInterpreter.cs" />
     <Compile Include="CommandLineEditor.cs" />
     <Compile Include="DirectoryManager.cs" />
+    <Compile Include="myImp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

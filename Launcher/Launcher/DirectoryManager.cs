@@ -18,7 +18,7 @@ namespace SceneEditLauncher
 
             Console.WriteLine(path);
 
-            return "";
+            return path;
         }
     }
 }
