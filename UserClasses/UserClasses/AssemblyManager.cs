@@ -13,6 +13,7 @@ namespace UserClasses
         public static void ListAssemblies(string className)
         {
             string prefix = "UserClasses.";
+           // className = prefix + className;
             foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (asm.FullName.ToString().ToLower().Contains("mscorlib") || asm.FullName.ToString().ToLower().Contains("system") ||
@@ -25,8 +26,8 @@ namespace UserClasses
                 Console.WriteLine("=========***" + asm.FullName.ToString() + "***==========");
                 foreach (Type t in asm.GetTypes())
                 {
-                      Console.WriteLine(t.FullName.ToString());
-                    if (t.Name.ToString() == prefix + className)
+                      Console.WriteLine(t.FullName.ToString() + "   vs.   " +className);
+                    if (t.Name.ToString() == className)
                     {
                         Console.WriteLine("EUREKA!"); //Excellent!
                         var inst = (ImpunityClass)Activator.CreateInstance(t);
