@@ -137,6 +137,50 @@ namespace ImpunityEngine.SceneManipulation
             cmessage.Clear();
         }
 
+        
+        public static void CreateCubeMap()
+        {
+            // string[] imageDirectories = Directory.GetFiles(imgDirectory);
+
+            //we need to put these images in a particular order
+            //1. right
+            //2. left 
+            //3. top
+            //4. bottom
+            //5. front
+            //6. back
+            List<string> images = new List<string>();
+            Console.WriteLine("Enter directory for right face.");
+            string input = Console.ReadLine();
+            images.Add(input);
+            Console.WriteLine("Enter directory for left face.");
+            input = Console.ReadLine();
+            images.Add(input);
+            Console.WriteLine("Enter directory for top face.");
+            input = Console.ReadLine();
+            images.Add(input);
+            Console.WriteLine("Enter directory for bottom face.");
+            input = Console.ReadLine();
+            images.Add(input);
+            Console.WriteLine("Enter directory for front face.");
+            input = Console.ReadLine();
+            images.Add(input);
+            Console.WriteLine("Enter directory for back face.");
+            input = Console.ReadLine();
+            images.Add(input);
+
+            string output = string.Empty;
+            foreach (var item in images)
+            {
+                if (item.Length < 2)
+                    return;
+                output += item + ",";
+            }
+            // Bridge.CreateSkyBox(output);
+
+            Bridge.CreateSkyBox(images[0], images[1], images[2], images[3], images[4], images[5]);
+        }
+
         public static void LoadTextureFromDirectory(string path) {
             //get the name of the texture
             int nstart = path.LastIndexOf("\\") + 1;

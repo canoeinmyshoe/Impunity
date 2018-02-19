@@ -9,7 +9,6 @@ namespace ImpunityEngine
 {
     public partial class SceneObject
     {
-
         public void SetTransform()
         {
             Bridge.SetTransformMatrix(ID, transform);
@@ -26,15 +25,10 @@ namespace ImpunityEngine
                 return new Vector3(0);
           //  Console.WriteLine("GetRight() Result: " + message);
             string[] dimensions = cmessage.ToString().Split(',');
-            float x = 0; float y = 0; float z = 0;
-            try
-            {
-                x = Convert.ToSingle(dimensions[0]);
-                y = Convert.ToSingle(dimensions[1]);
-                z = Convert.ToSingle(dimensions[2]);
-            }
-            catch { return new Vector3(0); }
-            
+         
+           float  x = Convert.ToSingle(dimensions[0]);
+            float y = Convert.ToSingle(dimensions[1]);
+           float  z = Convert.ToSingle(dimensions[2]);
 
             return new Vector3(x,y,z);
         }
@@ -48,15 +42,9 @@ namespace ImpunityEngine
                 return new Vector3(0);
             //  Console.WriteLine("GetRight() Result: " + message);
             string[] dimensions = cmessage.ToString().Split(',');
-            float x = 0; float y = 0; float z = 0;
-            try
-            {
-                x = Convert.ToSingle(dimensions[0]);
-                y = Convert.ToSingle(dimensions[1]);
-                z = Convert.ToSingle(dimensions[2]);
-            }
-            catch { return new Vector3(0); }
-
+            float x = Convert.ToSingle(dimensions[0]);
+            float y = Convert.ToSingle(dimensions[1]);
+            float z = Convert.ToSingle(dimensions[2]);
 
             return new Vector3(x, y, z);
         }
@@ -71,14 +59,10 @@ namespace ImpunityEngine
                 return new Vector3(0);
             //  Console.WriteLine("GetRight() Result: " + message);
             string[] dimensions = cmessage.ToString().Split(',');
-            float x = 0; float y = 0; float z = 0;
-            try
-            {
-                x = Convert.ToSingle(dimensions[0]);
-                y = Convert.ToSingle(dimensions[1]);
-                z = Convert.ToSingle(dimensions[2]);
-            }
-            catch { return new Vector3(0); }
+          
+            float x = Convert.ToSingle(dimensions[0]);
+            float y = Convert.ToSingle(dimensions[1]);
+            float z = Convert.ToSingle(dimensions[2]);
 
 
             return new Vector3(x, y, z);
@@ -116,7 +100,6 @@ namespace ImpunityEngine
             material.yOffset = y;
             Bridge.SetMaterialOffset(ID, x, y);
         }
-
         public void SetMaterialTiling(float x, float y) {
             material.xTiling = x;
             material.yTiling = y;
@@ -143,7 +126,6 @@ namespace ImpunityEngine
 
             material.diffuseMap = texture;
         }
-
         //Case-insensitive look-up
         public static SceneObject Find(string sceneObjectName)
         {
@@ -156,7 +138,6 @@ namespace ImpunityEngine
             }
             throw new NullReferenceException($"SceneObject \"{sceneObjectName}\" not found.");
         }
-
         public static SceneObject FindByID(int id)
         {
             foreach (var so in Control.AllSceneObjects)
@@ -168,7 +149,6 @@ namespace ImpunityEngine
             }
             throw new NullReferenceException($"SceneObject of id \"{id}\" not found.");
         }
-
         public static SceneObject FindByGuid(Guid gid)
         {
             foreach (var so in Control.AllSceneObjects)

@@ -32,6 +32,7 @@ namespace UserClasses
             float factor = 0.0001f;
             Vector3 _right = sceneObject.Right();
             _right.Multiply(0.001f);
+            Vector3 _up = sceneObject.Up();
             Vector3 _forward = sceneObject.Forward();
             _forward.Multiply(factor);
             sceneObject.transform.position.Add(_forward);

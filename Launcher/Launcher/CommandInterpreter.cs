@@ -926,8 +926,17 @@ namespace SceneEditLauncher
                 Console.WriteLine("Loading texture...");
                 LoadTexture(index, args);
             }
+            else if (key == "cubemap") {
+                Console.WriteLine("Creating cube map...");
+                CreateCubeMap(index, args);
+            }
         }
+        void CreateCubeMap(int index, string[] args) {
+            //if (index + 1 > args.Length - 1)
+            //    return;
 
+            SceneMaster.CreateCubeMap();
+        }
         void LoadTexture(int index, string[] args)
         {
             //We're expecting
