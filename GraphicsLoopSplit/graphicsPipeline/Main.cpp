@@ -70,6 +70,7 @@ enum SelectedSceneObjectType {
 	spotlight = 2,
 	directionallight = 3
 };
+unsigned int loadCubemap(vector<std::string> faces);
 
 //SceneObject InstantiateSceneObject();
 #pragma endregion
@@ -125,6 +126,10 @@ SelectedSceneObjectType SelectedType;
 
 Shader * arrowShader;
 
+vector<unsigned int> LoadedCubemaps;
+int currentCubemap = -1;
+GLuint skyboxVBO, skyboxVAO;
+Shader* SkyBoxShader;
 #pragma endregion
 
 #pragma region Example Code Variables
@@ -173,10 +178,22 @@ extern "C"
 		//4. bottom
 		//5. front
 		//6. back
-	
-		
+		cout << "C++: It's GO TIME" << endl;
+		vector<std::string> texturePaths;
+		texturePaths.push_back(right);
+		texturePaths.push_back(left);
+		texturePaths.push_back(top);
+		texturePaths.push_back(bottom);
+		texturePaths.push_back(front);
+		texturePaths.push_back(back);
+		unsigned int cubemap = loadCubemap(texturePaths);
 
-		return 0;
+		int index = LoadedCubemaps.size();
+		LoadedCubemaps.push_back(cubemap);
+
+		currentCubemap = index;
+
+		return index;
 	}
 	__declspec(dllexport) int ReportTextures() 
 	{
@@ -699,6 +716,12 @@ extern "C"
 		vSource = vShaderDir.c_str();
 		arrowShader = new Shader(vSource, fragSource);
 
+		fragDir = d + "Shaders\\defaultShaders\\fragmentSkybox.txt";
+		fragSource = fragDir.c_str();
+		vShaderDir = d + "Shaders\\defaultShaders\\vertexSkybox.txt";
+		vSource = vShaderDir.c_str();
+		SkyBoxShader = new Shader(vSource, fragSource);
+
 
 		cout << "Finished making shaders." << endl;
 
@@ -716,6 +739,8 @@ extern "C"
 		treeModel = new Model(modelPath);*/
 
 
+
+#pragma region Example of Setting up buffers for vertex data/attributes
 		// Set up vertex data (and buffer(s)) and attribute pointers
 		GLfloat vertices[] = {
 			-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -787,6 +812,66 @@ extern "C"
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0); // Note that we skip over the normal vectors
 		glEnableVertexAttribArray(0);
 		glBindVertexArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+#pragma endregion
+
+
+
+		float skyboxVertices[] = {
+			// positions          
+			-1.0f,  1.0f, -1.0f,
+			-1.0f, -1.0f, -1.0f,
+			1.0f, -1.0f, -1.0f,
+			1.0f, -1.0f, -1.0f,
+			1.0f,  1.0f, -1.0f,
+			-1.0f,  1.0f, -1.0f,
+
+			-1.0f, -1.0f,  1.0f,
+			-1.0f, -1.0f, -1.0f,
+			-1.0f,  1.0f, -1.0f,
+			-1.0f,  1.0f, -1.0f,
+			-1.0f,  1.0f,  1.0f,
+			-1.0f, -1.0f,  1.0f,
+
+			1.0f, -1.0f, -1.0f,
+			1.0f, -1.0f,  1.0f,
+			1.0f,  1.0f,  1.0f,
+			1.0f,  1.0f,  1.0f,
+			1.0f,  1.0f, -1.0f,
+			1.0f, -1.0f, -1.0f,
+
+			-1.0f, -1.0f,  1.0f,
+			-1.0f,  1.0f,  1.0f,
+			1.0f,  1.0f,  1.0f,
+			1.0f,  1.0f,  1.0f,
+			1.0f, -1.0f,  1.0f,
+			-1.0f, -1.0f,  1.0f,
+
+			-1.0f,  1.0f, -1.0f,
+			1.0f,  1.0f, -1.0f,
+			1.0f,  1.0f,  1.0f,
+			1.0f,  1.0f,  1.0f,
+			-1.0f,  1.0f,  1.0f,
+			-1.0f,  1.0f, -1.0f,
+
+			-1.0f, -1.0f, -1.0f,
+			-1.0f, -1.0f,  1.0f,
+			1.0f, -1.0f, -1.0f,
+			1.0f, -1.0f, -1.0f,
+			-1.0f, -1.0f,  1.0f,
+			1.0f, -1.0f,  1.0f
+		};
+
+
+		//	unsigned int skyboxVAO, skyboxVBO;
+		glGenVertexArrays(1, &skyboxVAO);
+		glGenBuffers(1, &skyboxVBO);
+		glBindVertexArray(skyboxVAO);
+		glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
 
 		//enable blending for text display
 		glEnable(GL_BLEND);
@@ -901,8 +986,33 @@ extern "C"
 		
 		DrawDebuggingLights();
 	//	DrawDebuggingLightArrows();
-		DrawArrowsOnSelectedSceneObjectX(SelectedType);
+		
+
+
+		//draw the cubemap
+		if (currentCubemap > -1) {
+		//Draw cube map
+			glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+			SkyBoxShader->Use();
+			
+			SkyBoxShader->setMat4("projection", ProjectionMatrix);
+			glm::mat4 skymatrix = glm::mat4(glm::mat3(ViewMatrix));
+			SkyBoxShader->setMat4("view", skymatrix);
+
+			unsigned int num = LoadedCubemaps[currentCubemap];
+			SkyBoxShader->SetInt("skybox", 0);
+
+			glBindVertexArray(skyboxVAO);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_CUBE_MAP, num);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+			glBindVertexArray(0);
+
+			glDepthFunc(GL_LESS);
+		}
 	
+		//This function will clear the depth buffer
+		//DrawArrowsOnSelectedSceneObjectX(SelectedType);
 
 		// Swap the screen buffers
 		glfwSwapBuffers(sceneWindow);
@@ -4626,7 +4736,7 @@ unsigned int loadCubemap(vector<std::string> faces)
 	for (unsigned int i = 0; i < faces.size(); i++)
 	{
 		// SOIL_load_image(dir, &w, &h, 0, SOIL_LOAD_RGBA);
-		unsigned char *data = SOIL_load_image(faces[i].c_str(), &width, &height, &nrChannels, 0);
+		unsigned char *data = SOIL_load_image(faces[i].c_str(), &width, &height, 0, SOIL_LOAD_RGB);
 		if (data)
 		{
 			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,

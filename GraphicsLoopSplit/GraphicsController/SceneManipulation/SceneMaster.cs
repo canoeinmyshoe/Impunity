@@ -137,7 +137,28 @@ namespace ImpunityEngine.SceneManipulation
             cmessage.Clear();
         }
 
-        
+        public static void CreateCubeMap(string imgDirectory)
+        {
+            string[] imageDirectories = Directory.GetFiles(imgDirectory);
+
+
+            List<string> images = new List<string>();
+
+            foreach (var item in imageDirectories)
+            {
+                images.Add(item);
+            }
+
+            
+            int result = Bridge.CreateSkyBox(images[0], images[1], images[2], images[3], images[4], images[5]);
+
+            if (result == -1)
+                return;
+
+            Skybox box = new Skybox(result, images);
+            Control.Skyboxes.Add(box);
+        }
+
         public static void CreateCubeMap()
         {
             // string[] imageDirectories = Directory.GetFiles(imgDirectory);
@@ -178,9 +199,25 @@ namespace ImpunityEngine.SceneManipulation
             }
             // Bridge.CreateSkyBox(output);
 
-            Bridge.CreateSkyBox(images[0], images[1], images[2], images[3], images[4], images[5]);
-        }
+          int result =  Bridge.CreateSkyBox(images[0], images[1], images[2], images[3], images[4], images[5]);
 
+            if (result == -1)
+                return;
+
+            Skybox box = new Skybox(result, images);
+            Control.Skyboxes.Add(box);
+        }
+        public static void CreateCubeMap(List<string> images)
+        {
+
+            int result = Bridge.CreateSkyBox(images[0], images[1], images[2], images[3], images[4], images[5]);
+
+            if (result == -1)
+                return;
+
+            Skybox box = new Skybox(result, images);
+            Control.Skyboxes.Add(box);
+        }
         public static void LoadTextureFromDirectory(string path) {
             //get the name of the texture
             int nstart = path.LastIndexOf("\\") + 1;

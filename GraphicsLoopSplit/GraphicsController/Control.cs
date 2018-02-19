@@ -13,6 +13,7 @@ namespace ImpunityEngine
     {
         public static List<SceneObject> AllSceneObjects = new List<SceneObject>();
         public static List<Texture> AllTextures = new List<Texture>();
+        public static List<Skybox> Skyboxes = new List<Skybox>();
 
         public static bool HasTexture(string fullPath) {
 

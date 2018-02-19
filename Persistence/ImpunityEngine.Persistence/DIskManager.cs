@@ -75,6 +75,11 @@ namespace ImpunityEngine.Persistence
             {
                 DetailDirLight(item, scene.AllDirectionalLights);
             }
+
+            foreach (var item in scene.AllSkyboxes)
+            {
+                SceneMaster.CreateCubeMap(item.images);
+            }
         }
 
         private static void DetailSceneObject(SerializableSceneObject ser, List<SerializableSceneObject> allSer)
@@ -300,6 +305,10 @@ namespace ImpunityEngine.Persistence
             foreach (var texture in Control.AllTextures)
             {
                 //ProcessSceneTextures(texture, sceneFile);
+            }
+            foreach (var box in Control.Skyboxes)
+            {
+                sceneFile.AllSkyboxes.Add(box);
             }
             string savePath = @"c:\data\" + filename + ".imp";
 
@@ -586,5 +595,6 @@ namespace ImpunityEngine.Persistence
         public List<SerializableDirectionalLight> AllDirectionalLights = new List<SerializableDirectionalLight>();
         public List<SerializableSpotLight> AllSpotLights = new List<SerializableSpotLight>();
         public List<Texture> AllTextures = new List<Texture>();
+        public List<Skybox> AllSkyboxes = new List<Skybox>();
     }
 }

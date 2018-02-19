@@ -926,7 +926,8 @@ namespace SceneEditLauncher
                 Console.WriteLine("Loading texture...");
                 LoadTexture(index, args);
             }
-            else if (key == "cubemap") {
+            else if (key == "cubemap" || key == "skybox")
+            {
                 Console.WriteLine("Creating cube map...");
                 CreateCubeMap(index, args);
             }
