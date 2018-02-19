@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyManager.cs" />
+    <Compile Include="MatOffset.cs" />
     <Compile Include="TestClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransformTester.cs" />
