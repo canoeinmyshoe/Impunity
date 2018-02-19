@@ -950,6 +950,28 @@ extern "C"
 
 		//Start off by moving ViewMatrix-setting to its new home in SceneObject
 
+		//draw the cubemap
+		if (currentCubemap > -1) {
+			//Draw cube map
+			glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+			SkyBoxShader->Use();
+
+			SkyBoxShader->setMat4("projection", ProjectionMatrix);
+			glm::mat4 skymatrix = glm::mat4(glm::mat3(ViewMatrix));
+			SkyBoxShader->setMat4("view", skymatrix);
+
+			unsigned int num = LoadedCubemaps[currentCubemap];
+			SkyBoxShader->SetInt("skybox", 0);
+
+			glBindVertexArray(skyboxVAO);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_CUBE_MAP, num);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+			glBindVertexArray(0);
+
+			glDepthFunc(GL_LESS);
+		}
+
 		//temporary flashlight, to be reconfigured in c# at a later time
 		if (SceneSpotLights.size() > 0) 
 		{
@@ -989,30 +1011,10 @@ extern "C"
 		
 
 
-		//draw the cubemap
-		if (currentCubemap > -1) {
-		//Draw cube map
-			glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
-			SkyBoxShader->Use();
-			
-			SkyBoxShader->setMat4("projection", ProjectionMatrix);
-			glm::mat4 skymatrix = glm::mat4(glm::mat3(ViewMatrix));
-			SkyBoxShader->setMat4("view", skymatrix);
 
-			unsigned int num = LoadedCubemaps[currentCubemap];
-			SkyBoxShader->SetInt("skybox", 0);
-
-			glBindVertexArray(skyboxVAO);
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_CUBE_MAP, num);
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-			glBindVertexArray(0);
-
-			glDepthFunc(GL_LESS);
-		}
 	
 		//This function will clear the depth buffer
-		//DrawArrowsOnSelectedSceneObjectX(SelectedType);
+		DrawArrowsOnSelectedSceneObjectX(SelectedType);
 
 		// Swap the screen buffers
 		glfwSwapBuffers(sceneWindow);

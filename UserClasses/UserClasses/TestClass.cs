@@ -27,6 +27,8 @@ namespace UserClasses
         public override void Update(SceneObject sceneObject)
         {
             sceneObject.transform.rotation.y += 0.1f;
+
+
         }
 
     }

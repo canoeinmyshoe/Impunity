@@ -29,7 +29,7 @@ namespace UserClasses
         public override void Update(SceneObject sceneObject)
         {
             // base.Update(sceneObject);
-            float factor = 0.0001f;
+            float factor = 0.001f;
             Vector3 _right = sceneObject.Right();
             _right.Multiply(0.001f);
             Vector3 _up = sceneObject.Up();
