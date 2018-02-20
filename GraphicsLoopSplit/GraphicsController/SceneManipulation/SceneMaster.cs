@@ -379,8 +379,6 @@ namespace ImpunityEngine.SceneManipulation
             cmessage.Clear();
         }
 
-
-
         public static void LoadSceneFile(string filename)
         {
 
