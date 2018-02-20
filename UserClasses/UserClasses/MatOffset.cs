@@ -23,7 +23,7 @@ namespace UserClasses
             int mlen = message.Length;
             float factor = 20.0f;
             float xposition = halfScreen - (mlen * factor) / 2.0f;
-            SceneMaster.DrawLabel("Hello from c#", xposition, 65.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+            SceneMaster.DrawLabel("Hello from c#", xposition, 400, 1.0f, 1.0f, 1.0f, 1.0f);
 
             IncrementIndefinitely();
         }
