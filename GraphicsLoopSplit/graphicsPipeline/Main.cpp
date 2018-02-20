@@ -42,6 +42,7 @@
 #include "Mesh.h"
 #include "Model.h"
 #include "Lighting.h"
+#include "GUIElements.h"
 
 using namespace std;
 #pragma endregion
@@ -146,7 +147,7 @@ int currentCubemap = -1;
 GLuint skyboxVBO, skyboxVAO;
 Shader* SkyBoxShader;
 
-
+vector<Label> Labels;
 Shader * textShader;
 #pragma endregion
 
@@ -653,6 +654,24 @@ extern "C"
 		return 0;
 	}
 
+	//GUI
+	__declspec(dllexport) int DrawLabel(char * labelText, float xposition, float yposition, float scale, float r, float g, float b) {
+	
+		Label label = {
+			std::string(labelText),
+			xposition,
+			yposition,
+			scale,
+			glm::vec3(r,g,b)
+		};
+	
+		//cout << "C++: Drawing label." << endl;
+
+		Labels.push_back(label);
+
+		return 0;
+	}
+
 	__declspec(dllexport) int InitiateEngine() 
 	{
 
@@ -1116,12 +1135,18 @@ extern "C"
 		DrawDebuggingLights();
 	//	DrawDebuggingLightArrows();
 		
+		float testDimension = glm::sin(glfwGetTime()) * 180/3.14f;
 
+		float tfactor = 20.0f;
+		float stringWidth = 22.0f * tfactor;
+		float halfScreen = screenWidth/2.0f - stringWidth/2.0f;
+		RenderText("This is some test text", halfScreen, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));//22 characters
 
-		RenderText("This is some test text", 25.0f, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));
-
-
-
+		for (size_t i = 0; i < Labels.size(); i++)
+		{
+			RenderText(Labels[i].text, Labels[i].xposition, Labels[i].yposition, Labels[i].scale, Labels[i].color);
+		}
+		Labels.clear();
 	
 		//This function will clear the depth buffer
 		DrawArrowsOnSelectedSceneObjectX(SelectedType);

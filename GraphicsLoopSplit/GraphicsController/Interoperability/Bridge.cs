@@ -314,6 +314,11 @@ namespace ImpunityEngine.Interoperability
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int CreateSkyBox(string right, string left, string top, string bottom, string front, string back);
 
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int DrawLabel(string labelText, float xposition, float yposition, float scale,
+            float r, float g, float b);
+
+
     }
 
 

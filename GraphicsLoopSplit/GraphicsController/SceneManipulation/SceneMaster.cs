@@ -29,9 +29,9 @@ namespace ImpunityEngine.SceneManipulation
         public static void CreatePointLight(Guid guid)
         {
             int i = Bridge.CreatePointLight(0, 0, 0);
-        //    Console.WriteLine("C#: Point light ID: " + i);
+            //    Console.WriteLine("C#: Point light ID: " + i);
             PointLight plight = new PointLight(i, new Vector3(0));
-          //  Console.WriteLine("Wow!");
+            //  Console.WriteLine("Wow!");
             SelectedSceneObject = plight;
             plight.guid = guid;
             Control.AllSceneObjects.Add(plight);
@@ -66,7 +66,7 @@ namespace ImpunityEngine.SceneManipulation
         public static void CreateSpotLight()
         {
             float x, y, z, dx, dy, dz;
-            x = 0; y = 0; z = 0;dx = 0;dy = 0;dz = 0;
+            x = 0; y = 0; z = 0; dx = 0; dy = 0; dz = 0;
             int id = Bridge.CreateSpotLight(x, y, z, dx, dy, dz);
             Console.WriteLine("C#: Spot Light ID: " + id);
             SpotLight spot = new SpotLight(id, new Vector3(x, y, z), new Vector3(dx, dy, dz));
@@ -89,7 +89,7 @@ namespace ImpunityEngine.SceneManipulation
             int id = Bridge.CreateSpotLight(x, y, z, dx, dy, dz);
             Console.WriteLine("C#: Spot Light ID: " + id);
             SpotLight spot = new SpotLight(id, new Vector3(x, y, z), new Vector3(dx, dy, dz));
-       //     Console.WriteLine("Added new spotlight!");
+            //     Console.WriteLine("Added new spotlight!");
             spot.guid = guid;
             Control.AllSceneObjects.Add(spot);
 
@@ -113,7 +113,7 @@ namespace ImpunityEngine.SceneManipulation
             //path += "\\Models\\tree02\\tree.obj";
 
             //   Console.WriteLine("Path: " + path);
-            
+
 
             StringBuilder cmessage = new StringBuilder(10000);//256 chars at most
 
@@ -133,7 +133,7 @@ namespace ImpunityEngine.SceneManipulation
             {
                 Console.WriteLine("ERROR: " + err.ToString());
             }
-            
+
             cmessage.Clear();
         }
 
@@ -149,7 +149,7 @@ namespace ImpunityEngine.SceneManipulation
                 images.Add(item);
             }
 
-            
+
             int result = Bridge.CreateSkyBox(images[0], images[1], images[2], images[3], images[4], images[5]);
 
             if (result == -1)
@@ -158,6 +158,11 @@ namespace ImpunityEngine.SceneManipulation
             Skybox box = new Skybox(result, images);
             Control.Skyboxes.Add(box);
         }
+
+       public static void DrawLabel(string labelText, float xposition, float yposition, float scale, float r, float g, float b) 
+      {
+            Bridge.DrawLabel(labelText, xposition, yposition, scale, r, g, b);
+      }
 
         public static void CreateCubeMap()
         {

@@ -68,6 +68,7 @@
     <Compile Include="SceneManipulation\SceneMaster.cs" />
     <Compile Include="SceneObject.cs" />
     <Compile Include="SceneObjectMethods.cs" />
+    <Compile Include="Screen.cs" />
     <Compile Include="Skybox.cs" />
     <Compile Include="SpotLight.cs" />
     <Compile Include="Texture.cs" />

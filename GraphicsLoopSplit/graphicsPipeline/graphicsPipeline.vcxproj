@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="GUIElements.h" />
     <ClInclude Include="Lighting.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Mesh.h" />
