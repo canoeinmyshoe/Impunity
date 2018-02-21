@@ -55,7 +55,7 @@ select - select an object by index and type
 
 
 
- TODO: give key input to c# in the form of an array of ints, each of which corresponds to a value in an enum
+ DONE: give key input to c# in the form of an array of ints, each of which corresponds to a value in an enum
 
  TODO: End dependance on the built-in camera script by giving control to c# class
 

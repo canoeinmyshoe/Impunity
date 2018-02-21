@@ -1332,6 +1332,14 @@ extern "C"
 		return 0;
 	}
 
+	__declspec(dllexport) int GetKey(char * inputMessage) {
+	
+		string returnData = std::to_string(currentKey) + "," + std::to_string(currentKeyAction);
+		strcpy(inputMessage, returnData.c_str());
+	
+		return 0;
+	}
+
 
 #pragma region Material Mutability
 

@@ -75,8 +75,8 @@ namespace SceneEditLauncher
                 //add forces to rigidbodies, create, etc
 
 
-                // int r = Bridge.RenderAll();
-                int input = Bridge.RenderWithInput(messenger);
+                 int r = Bridge.RenderAll();
+              //  int input = Bridge.RenderWithInput(messenger);
                // Console.WriteLine(messenger.ToString());
 
                 if (paused == true)

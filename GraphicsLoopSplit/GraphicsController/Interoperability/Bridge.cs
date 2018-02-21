@@ -305,12 +305,8 @@ namespace ImpunityEngine.Interoperability
         public static extern int GetForward(StringBuilder resultString, int ID);
 
 
-        //1. right
-        //2. left 
-        //3. top
-        //4. bottom
-        //5. front
-        //6. back
+     
+
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int CreateSkyBox(string right, string left, string top, string bottom, string front, string back);
 
@@ -321,10 +317,14 @@ namespace ImpunityEngine.Interoperability
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int RenderWithInput(StringBuilder sb);
 
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int GetKey(StringBuilder sb);
+
+
     }
 
 
-  
+
 
 
 
