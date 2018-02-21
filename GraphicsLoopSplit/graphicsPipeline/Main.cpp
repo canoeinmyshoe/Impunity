@@ -1340,6 +1340,36 @@ extern "C"
 		return 0;
 	}
 
+	__declspec(dllexport) int SetCameraTransformMatrix(int ID, float px, float py, float pz, float rx, float ry, float rz, float sx, float sy, float sz)
+	{
+
+		if (AllSceneObjects.size() - 1 < ID)
+		{
+			return 1;
+		}
+
+		glm::vec3 position = glm::vec3(px, py, pz);
+		glm::vec3 rotation = glm::vec3(rx, ry, rz);
+		//glm::vec3 scale = glm::vec3(sx, sy, sz);
+
+		/*AllSceneObjects[ID].transform.position = position;
+		AllSceneObjects[ID].transform.rotation = rotation;
+		AllSceneObjects[ID].transform.scale = scale;*/
+
+		glm::mat4 camMatrix;
+		camMatrix = glm::translate(camMatrix, position);
+	//	camMatrix = glm::scale(model, scale);
+		glm::quat orientation = toQuaternion(rotation);
+		camMatrix *= glm::mat4_cast(orientation);
+
+		//cout << "C++: yaya" << endl;
+
+		//AllSceneObjects[ID].transform.matrix = model;
+
+
+		return 0;
+	}
+
 
 #pragma region Material Mutability
 

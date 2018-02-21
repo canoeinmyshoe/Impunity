@@ -8,26 +8,27 @@ using System.Threading.Tasks;
 using ImpunityEngine.Interoperability;
 namespace ImpunityEngine
 {
-    public static class Camera 
+    public  class Camera 
     {
 
-        public static Transform transform = new Transform(true);
-        public static float Zoom;
-        public static float NearClippingPlane = 0.1f;
-        public static float FarClippingPlane = 1000.0f;
-        private static int ID = -66;
+        public Transform transform = new Transform(true);
+        public float Zoom;
+        public float NearClippingPlane = 0.1f;
+        public float FarClippingPlane = 1000.0f;
+        private int ID = -66666;
 
-        public static void Update()
+        public void Update()
         {
             //tell bridge the transform
-
+            SetTransform();
         }
 
-        public static void SetTransform()
+        public void SetTransform()
         {
-            Bridge.SetTransformMatrix(ID, transform);
+            //   Bridge.SetCameraTransformMatrix(ID, transform);
+            Bridge.SetCameraTransformMatrix(ID, transform);
         }
-        public static Vector3 Right()
+        public Vector3 Right()
         {
             //get the right direction of the matrix
             //Bridge.GetRight(ID);
@@ -46,7 +47,7 @@ namespace ImpunityEngine
 
             return new Vector3(x, y, z);
         }
-        public static Vector3 Up()
+        public Vector3 Up()
         {
 
             StringBuilder cmessage = new StringBuilder(256);//256 chars at most
@@ -63,7 +64,7 @@ namespace ImpunityEngine
 
             return new Vector3(x, y, z);
         }
-        public static Vector3 Forward()
+        public Vector3 Forward()
         {
 
             StringBuilder cmessage = new StringBuilder(256);//256 chars at most

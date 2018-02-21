@@ -76,8 +76,10 @@ namespace SceneEditLauncher
 
 
                  int r = Bridge.RenderAll();
-              //  int input = Bridge.RenderWithInput(messenger);
-               // Console.WriteLine(messenger.ToString());
+                //  int input = Bridge.RenderWithInput(messenger);
+                // Console.WriteLine(messenger.ToString());
+
+                Control.SceneCamera.Update();
 
                 if (paused == true)
                     continue;
