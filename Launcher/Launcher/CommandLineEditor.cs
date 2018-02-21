@@ -14,6 +14,7 @@ namespace SceneEditLauncher
         //In one thread, the command line.
         public static bool blockInput = false;
         public static bool shouldRun = false;
+        public static bool paused = false;
         private List<string> Commands = new List<string>();
 
         //In another, the c# logic for rendering the scene, putting things in the scene,
@@ -61,6 +62,7 @@ namespace SceneEditLauncher
             int success = Bridge.InitiateEngine();
             CommandInterpreter listener = new CommandInterpreter();
 
+            StringBuilder messenger = new StringBuilder(256);
             while (shouldRun == true)
             {
                 for (int i = 0; i < Commands.Count; i++)
@@ -71,12 +73,19 @@ namespace SceneEditLauncher
                 blockInput = false;
                 //change any positions, variables, etc
                 //add forces to rigidbodies, create, etc
+
+
+                // int r = Bridge.RenderAll();
+                int input = Bridge.RenderWithInput(messenger);
+               // Console.WriteLine(messenger.ToString());
+
+                if (paused == true)
+                    continue;
+
                 foreach (var so in Control.AllSceneObjects)
                 {
                     so.Update();
                 }
-
-                int r = Bridge.RenderAll();
             }
         }
 

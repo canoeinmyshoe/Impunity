@@ -50,6 +50,7 @@
     <Compile Include="DirectionalLight.cs" />
     <Compile Include="ExampleImpunityScripts\Character.cs" />
     <Compile Include="CLE.cs" />
+    <Compile Include="Input.cs" />
     <Compile Include="Interoperability\Bridge.cs" />
     <Compile Include="Interoperability\CommandLinerInterpreter.cs" />
     <Compile Include="Interoperability\NativeTranslator.cs" />

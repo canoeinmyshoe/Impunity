@@ -83,6 +83,11 @@ struct Character {
 	glm::ivec2 Bearing;  // Offset from baseline to left/top of glyph
 	GLuint Advance;    // Horizontal offset to advance to next glyph
 };
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+
+int *  get_keys(GLFWwindow* window, int key, int scancode, int action, int mode);
+
 std::map<GLchar, Character> Characters;
 GLuint tVAO, tVBO;
 
@@ -178,7 +183,17 @@ Shader * treeShader;
 Model * treeModel;
 #pragma endregion
 
+#pragma region Input Management
 
+enum InputList {
+	unknown
+};
+
+int currentKey = -3000;
+int currentKeyAction = -3000;
+
+
+#pragma endregion
 
  int main() 
  {
@@ -187,7 +202,6 @@ Model * treeModel;
 
 extern "C"
 {
-
 
 	__declspec(dllexport) int CreateSkyBox(char* right, char * left, char * top, char* bottom, char* front, char* back ) {
 	
@@ -223,7 +237,6 @@ extern "C"
 		}
 		return 0;
 	}
-	//and NOW we will change the OFFSET of the texture!
 	__declspec(dllexport) int SwapDiffuseMap(int sceneObjectID, int textureIndex) 
 	{
 		//first , check if the index is out of range
@@ -692,6 +705,7 @@ extern "C"
 		glfwSetKeyCallback(sceneWindow, key_callback);
 		glfwSetCursorPosCallback(sceneWindow, mouse_callback);
 		glfwSetScrollCallback(sceneWindow, scroll_callback);
+		glfwSetMouseButtonCallback(sceneWindow, mouse_button_callback);
 
 		// GLFW Options
 		glfwSetInputMode(sceneWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -765,6 +779,9 @@ extern "C"
 		vShaderDir = d + "Shaders\\defaultShaders\\vertexText.txt";
 		vSource = vShaderDir.c_str();
 		textShader = new Shader(vSource, fragSource);
+
+
+		//TODO: Button shader
 
 
 		cout << "Finished making shaders." << endl;
@@ -1153,6 +1170,165 @@ extern "C"
 
 		// Swap the screen buffers
 		glfwSwapBuffers(sceneWindow);
+		return 0;
+	}
+
+	__declspec(dllexport) int RenderWithInput(char * inputMessage)
+	{
+		// Calculate deltatime of current frame
+		GLfloat currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
+		// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
+		glfwPollEvents();
+		processInput(sceneWindow);
+
+		// Clear the colorbuffer
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		//Set Global Matrices
+		//ProjectionMatrix = glm::mat4();
+		ProjectionMatrix = glm::perspective(camera->Zoom, (GLfloat)screenWidth / (GLfloat)screenHeight, 0.1f, 1000.0f);
+		ViewMatrix = camera->GetViewMatrix();
+
+
+
+		// Use cooresponding shader when setting uniforms/drawing objects
+		lightingShader->Use();
+
+		lightingShader->SetVec3(1.0f, 0.5f, 0.31f, "objectColor");
+		lightingShader->SetVec3(1.0f, 1.0f, 1.0f, "lightColor");
+		lightingShader->SetVec3(lightPos.x, lightPos.y, lightPos.z, "lightPosition");
+		lightingShader->SetVec3(camera->Position.x, camera->Position.y, camera->Position.z, "viewPosition");
+
+		//// Create camera transformations
+		//glm::mat4 view;
+		//view = camera->GetViewMatrix();
+		//	glm::mat4 projection = glm::perspective(camera->Zoom, (GLfloat)screenWidth / (GLfloat)screenHeight, 0.1f, 1000.0f);
+		// Get the uniform locations
+		lightingShader->setMat4("view", ViewMatrix);
+		lightingShader->setMat4("projection", ProjectionMatrix);
+
+		glm::mat4 model;
+		///*glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));*/
+		model = glm::translate(model, glm::vec3(8.0f, -10.0f, 1.0f));
+		lightingShader->setMat4("model", model);//This doesn't appear to actually translate it
+
+												// Draw the container (using container's vertex attributes)
+		glBindVertexArray(containerVAO);
+
+
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+
+
+		//ultimately, we want all these uniforms set by the sceneObject
+
+		/*	treeShader->Use();
+		treeShader->SetVec3(0.5f, 0.5f, 0.0, "objectColor");
+		treeShader->SetVec3(1.0f, 1.0f, 1.0f, "lightColor");
+		treeShader->SetVec3(lightPos.x, lightPos.y, lightPos.z, "lightPosition");*/
+		//	treeShader->SetVec3(camera->Position.x, camera->Position.y, camera->Position.z, "viewPosition");
+
+
+		//Start with transform
+		//for starters, everything uses the same projection. There's no need to recalculate each round
+		//	treeShader->setMat4("view", ViewMatrix);
+		//	treeShader->setMat4("projection", ProjectionMatrix);
+		//	glm::mat4 treeMat;
+		//model = glm::translate(model, glm::vec3(10.0f, 2.0f, 3.0f));//WHY WONT IT TAKE!!!!!
+		//	treeShader->setMat4("model", model);
+
+		//Start off by moving ViewMatrix-setting to its new home in SceneObject
+
+		//draw the cubemap
+		if (currentCubemap > -1) {
+			//Draw cube map
+			glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+			SkyBoxShader->Use();
+
+			SkyBoxShader->setMat4("projection", ProjectionMatrix);
+			glm::mat4 skymatrix = glm::mat4(glm::mat3(ViewMatrix));
+			SkyBoxShader->setMat4("view", skymatrix);
+
+			unsigned int num = LoadedCubemaps[currentCubemap];
+			SkyBoxShader->SetInt("skybox", 0);
+
+			glBindVertexArray(skyboxVAO);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_CUBE_MAP, num);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+			glBindVertexArray(0);
+
+			glDepthFunc(GL_LESS);
+		}
+
+		//temporary flashlight, to be reconfigured in c# at a later time
+		if (SceneSpotLights.size() > 0)
+		{
+			/*	SceneSpotLights[0].position = camera->Position;
+			SceneSpotLights[0].direction = camera->Front;*/
+		}
+
+		for (GLuint i = 0; i < AllSceneObjects.size(); i++)
+		{
+			//int total = AllSceneObjects.size();
+			//float ratio = (float)i / (float)total * (2.0f * 3.14f);
+			//float angle = glm::sin(ratio);//point on unit circle
+			//							  //get x positions
+			//float radius = 10.0f;
+			//float x = radius *  glm::cos(angle);
+			//float y = radius *  glm::sin(angle);
+			//AllSceneObjects[i].transform.position = glm::vec3(x, 0.0, y);
+
+			/*if (i % 3 == 0)
+			{
+			AllSceneObjects[i].transform.position = glm::vec3(5.0f * i, 0.0, 0.0);
+			}*/
+
+			//AllSceneObjects[i].transform.position = glm::vec3(2.0f * i, -1.0f, 0.0);
+
+			//AllSceneObjects[i].Draw(treeShader);
+			AllSceneObjects[i].Draw();
+		}
+		//and all the setting of shaders would be done inside the sceneObject class
+		//we'll use the SceneObject's draw method instead of the Model's
+		//Trust me, there's plenty more 
+
+
+
+		DrawDebuggingLights();
+		//	DrawDebuggingLightArrows();
+
+		float testDimension = glm::sin(glfwGetTime()) * 180 / 3.14f;
+
+		float tfactor = 20.0f;
+		float stringWidth = 22.0f * tfactor;
+		float halfScreen = screenWidth / 2.0f - stringWidth / 2.0f;
+		RenderText("This is some test text", halfScreen, 25.0f, 1.0f, glm::vec3(0.5, 0.8f, 0.2f));//22 characters
+
+		for (size_t i = 0; i < Labels.size(); i++)
+		{
+			RenderText(Labels[i].text, Labels[i].xposition, Labels[i].yposition, Labels[i].scale, Labels[i].color);
+		}
+		Labels.clear();
+
+		//This function will clear the depth buffer
+		DrawArrowsOnSelectedSceneObjectX(SelectedType);
+
+		// Swap the screen buffers
+		glfwSwapBuffers(sceneWindow);
+
+		//Finally, pack all input into an int[]
+		//int inputs[2];
+		//inputs[0] = currentKey;
+		//inputs[1] = currentKeyAction;
+		string returnData = std::to_string(currentKey) + ", " + std::to_string(currentKeyAction);
+		strcpy(inputMessage, returnData.c_str());
+
+
 		return 0;
 	}
 
@@ -4750,7 +4926,33 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
 
+	currentKey = key;
+	currentKeyAction = action;
 }
+
+//uselesss
+int *  get_keys(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, GL_TRUE);
+
+	int input[2];
+	input[0] = key;
+	input[1] = action;
+	//you also need mouse input....
+	double xpos, ypos;
+	glfwGetCursorPos(window, &xpos, &ypos);
+	//and whether or not the user is clicking
+
+	return input;
+}
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {}
+		//popup_menu();
+}
+
 
 //Windows dependant
 string exeDirectory() 

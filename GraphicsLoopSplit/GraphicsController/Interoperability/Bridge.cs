@@ -318,6 +318,8 @@ namespace ImpunityEngine.Interoperability
         public static extern int DrawLabel(string labelText, float xposition, float yposition, float scale,
             float r, float g, float b);
 
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int RenderWithInput(StringBuilder sb);
 
     }
 

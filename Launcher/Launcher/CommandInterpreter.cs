@@ -198,9 +198,13 @@ namespace SceneEditLauncher
                 {
                     ConfigureMaterial(i, args);
                 }
-                else if (word == "imp") {
+                else if (word == "imp")
+                {
                     //add an impunityClass to the sceneObject
                     AddImpX(i, args);
+                }
+                else if (word == "p" || word == "pause") {
+                    PauseEngine();
                 }
                 else if (word == "+" || word == "++")
                 {
@@ -216,7 +220,16 @@ namespace SceneEditLauncher
                 }
             }
         }
-
+        void PauseEngine() {
+            if (CommandLineEditor.paused == true)
+            {
+                CommandLineEditor.paused = false;
+            }
+            else
+            {
+                CommandLineEditor.paused = true;
+            }
+        }
         //case sensitive, of course
         void AddImpX(int index, string[] args)
         {

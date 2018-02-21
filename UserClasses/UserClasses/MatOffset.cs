@@ -24,7 +24,7 @@ namespace UserClasses
             float factor = 20.0f;
             float xposition = halfScreen - (mlen * factor) / 2.0f;
             SceneMaster.DrawLabel("Hello from c#", xposition, 400, 1.0f, 1.0f, 1.0f, 1.0f);
-
+            
             IncrementIndefinitely();
         }
 
