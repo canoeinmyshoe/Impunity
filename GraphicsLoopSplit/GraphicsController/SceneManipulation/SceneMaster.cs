@@ -936,8 +936,12 @@ namespace ImpunityEngine.SceneManipulation
 
         public static void SelectSceneObject(int index, int type) {
            int result = Bridge.SelectSceneObject(index, type);
-            if (result == 1)
+            if (result == 1) {
+                Console.WriteLine("Selecting empty sceneObject " + index);
+                SelectedSceneObject = SceneObject.FindByID(index);
                 return;
+            }
+                
 
             if (type == (int)SelectionTypes.regular)
             {

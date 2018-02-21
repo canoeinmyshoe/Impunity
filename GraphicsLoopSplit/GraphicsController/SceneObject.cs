@@ -44,6 +44,26 @@ namespace ImpunityEngine
             //this is a doozy if left unchecked
            // isStatic = true;
         }
+        public SceneObject(bool ISSTATIC)
+        {
+            Name = "SceneObject";
+            Tag = string.Empty;
+            var rand = new Random();
+            int rrr = rand.Next(6000);
+            ID = -rrr;
+            MeshID = 0;
+            ShaderID = 0;
+            isStatic = true;
+            ParentID = -25;
+            isChild = false;
+            enabled = true;
+            modelPath = "NA";
+            guid = Guid.NewGuid();
+
+            //this is a doozy if left unchecked
+            // isStatic = true;
+        }
+
 
         public virtual void Start()
         {
@@ -78,7 +98,7 @@ namespace ImpunityEngine
 
             if (ID < 0)
                 return;
-            //  transform.SetTransform(ID);
+
             SetTransform();
         }
 

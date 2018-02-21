@@ -863,7 +863,7 @@ namespace SceneEditLauncher
                 foreach (var so in Control.AllSceneObjects)
                 {
                     if (so.ID < 0)
-                        continue;
+                        //continue;
                     Console.WriteLine($"Name:{so.Name}--ID:{so.ID}--Guid:{so.guid}");
                 }
             }
@@ -944,12 +944,23 @@ namespace SceneEditLauncher
                 Console.WriteLine("Creating cube map...");
                 CreateCubeMap(index, args);
             }
+            else if (key == "sceneobject" || key == "so") {
+                CreateEmptySceneObject();
+            }
         }
         void CreateCubeMap(int index, string[] args) {
             //if (index + 1 > args.Length - 1)
             //    return;
 
             SceneMaster.CreateCubeMap();
+        }
+        void CreateEmptySceneObject()
+        {
+
+            SceneObject so = new SceneObject(true);
+            so.Name = "Empty SceneObject";
+            Control.AllSceneObjects.Add(so);
+            Console.WriteLine("New scene object created.");
         }
         void LoadTexture(int index, string[] args)
         {

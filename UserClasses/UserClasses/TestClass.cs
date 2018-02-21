@@ -27,9 +27,9 @@ namespace UserClasses
         public override void Update(SceneObject sceneObject)
         {
             sceneObject.transform.rotation.y += 0.1f;
-            if (Input.GetKey(GLFWKeys.SPACE) == true) {
-                Console.WriteLine("Space bar!");
-            }
+            //if (Input.GetKey(GLFWKeys.SPACE) == true) {
+            //    Console.WriteLine("Space bar!");
+            //}
 
         }
 
