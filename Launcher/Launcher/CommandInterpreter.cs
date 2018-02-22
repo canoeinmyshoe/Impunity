@@ -863,7 +863,13 @@ namespace SceneEditLauncher
                 foreach (var so in Control.AllSceneObjects)
                 {
                     if (so.ID < 0)
-                        //continue;
+                        continue;
+                    Console.WriteLine($"Name:{so.Name}--ID:{so.ID}--Guid:{so.guid}");
+                }
+                foreach (var so in Control.AllSceneObjects)
+                {
+                    if (so.ID >0)
+                        continue;
                     Console.WriteLine($"Name:{so.Name}--ID:{so.ID}--Guid:{so.guid}");
                 }
             }

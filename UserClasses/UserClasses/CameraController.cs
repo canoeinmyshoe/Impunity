@@ -15,6 +15,11 @@ namespace UserClasses
             base.Update(sceneObject);
 
             //Tell the camera what to do here
+            if (Input.GetKey(GLFWKeys.KEY_W)) {
+
+              //  Console.WriteLine("FUCK");
+                Control.SceneCamera.transform.position.Add(Control.SceneCamera.Forward());
+            }
         }
 
     }

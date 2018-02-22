@@ -84,8 +84,8 @@ namespace ImpunityEngine.Persistence
 
         private static void DetailSceneObject(SerializableSceneObject ser, List<SerializableSceneObject> allSer)
         {
-            if (ser.ID < 0)
-                return;
+            if (ser.ID < 0) { return; }
+              //  return;
             //Find the SceneObject by Guid
             SceneObject so;
             try { so = SceneObject.FindByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find SceneObject " + ser.guid.ToString()); return; }

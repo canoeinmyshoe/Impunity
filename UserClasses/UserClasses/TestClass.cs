@@ -30,6 +30,8 @@ namespace UserClasses
             //if (Input.GetKey(GLFWKeys.SPACE) == true) {
             //    Console.WriteLine("Space bar!");
             //}
+           // Control.SceneCamera.transform.rotation.y += 1.0f;
+           
 
         }
 

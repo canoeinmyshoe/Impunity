@@ -69,6 +69,16 @@ public:
 	{
 		return glm::lookAt(Position, Position + Front, Up);
 	}
+	//Overloaded GetViewMatrix algo uses an actual matrix
+	glm::mat4 GetViewMatrix(bool experimental) {
+	
+		//direction = matrix[2].xyz;
+		float x = matrix[2][0]; float y = matrix[2][1]; float z = matrix[2][2];
+		Front = glm::vec3(x, y, z);
+		//glm::mat4 lookDir = glm::lookAt(Position, )
+		return matrix;
+	}
+
 
 	// Processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
 	void ProcessKeyboard(Camera_Movement direction, float deltaTime)
