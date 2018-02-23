@@ -68,7 +68,6 @@ TODO:  start, pause, and take off impunityClasses
 TODO: Buttons, text, textfields, general GUI-ndc stuff
 	-Button clicks can be detected by testing mouse coords against area of button
 
-
 TODO:And perhaps uniforms, too
 
 
@@ -84,31 +83,48 @@ example 7: enable 2 true plight
 
 
 
-a     b     c     d   
-a     d     b    c  
-a     c     d     b
+*******Goals of branch Refactor02*******
+----------------------------------------------------
+----------------------------------------------------
+						---------------------
+									-------
 
-b    a     c     d  
-b    d     a     c 
-b     c    d      a 
+After giving it some thought, I've decided to change the three light types
+to inheriting from a component class, which ImpunityClass will also inherit from.
+This way, the scene object can have a list of components, Update()'ing each in its own
+particular way, a la
 
-c    a     b     d
-c    d     a     b
-c     b     d      a
+foreach item in Components
+	item.Update(this);
 
+Meanwhile, in the component
 
-a     b     d     c
-a     d     c      b
-a      c     b     d
+Update(sceneObject so)
+	pointLight.rotation = so.transform.rotation
+	...
 
-b     a     d      c 
-b     d      c      a
-b     c       a     a
+	or
 
-c      a      d     b
-c      d      b     a
-c       b      a     d
+	Update(sceneObject so)
+		directionalLight.rotation = so.transform.rotation
+		Bridge.SetDirectionLightTransform(...)
 
+However, we need to be able to accomodate the fact that there are going to be 
+empty sceneObjects - sceneObjects that don't correspond to any node, mesh, light, or
+anything in the world of c++ -  they only exist to serve as a transform basis for a component.
+In the c++ world, sceneObjects are really just a more organized version of the Model class.
+They include setting all the uniforms for drawing the child meshes with particular shaders.
+Therefore, it shouldn't be automatically assumed that a sceneObject should set its transform
+for an object in c++'s vector of sceneObject.... on the other hand, we could simply tell c++
+to create an empty sceneObject, which also allows c++ to do all the math involving the transform.
+
+To further complicate the matter, they must never have cyclical relationships with their components. The sceneObject
+can only exist in local scope for a component. ImpunityClasses will access other components via the sceneObject's
+list of components with a method like sceneObject.GetComponent<someComponentType>();
+
+Also, to add to my list of worries, the blue z arrow is pointing backward. Scaling should be done after rotation, or else
+bad things happen. Finally, grabbing should be done along a LOCAL axis, not world axis. Therefore, they should translate in a local 
+direction, rather than global direction.
 
 
 
