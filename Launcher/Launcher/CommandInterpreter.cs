@@ -308,7 +308,16 @@ namespace SceneEditLauncher
                 return;
 
             //We need to load the texture first!
-            SceneMaster.SwapDiffuseMap(result);
+            try
+            {
+                SceneMaster.SwapDiffuseMap(result);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+          
         }
 
         //TODO: ScaleObject
@@ -731,12 +740,6 @@ namespace SceneEditLauncher
                 foreach (var so in Control.AllSceneObjects)
                 {
                     if (so.ID < 0)
-                        continue;
-                    Console.WriteLine($"Name:{so.Name}--ID:{so.ID}--Guid:{so.guid}");
-                }
-                foreach (var so in Control.AllSceneObjects)
-                {
-                    if (so.ID >0)
                         continue;
                     Console.WriteLine($"Name:{so.Name}--ID:{so.ID}--Guid:{so.guid}");
                 }
