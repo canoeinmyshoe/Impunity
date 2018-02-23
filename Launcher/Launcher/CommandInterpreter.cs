@@ -21,18 +21,88 @@ namespace SceneEditLauncher
     class CommandInterpreter
     {
         Dictionary<string, Delegate> Methods;
-        delegate void addImp(int index, string[] args);
+        delegate void _addImp(string[] args);
+        delegate void _configureMaterial(string[] args) ;
+        delegate void _setMaterialOffset(string[] args);
+        delegate void _setMaterialTiling(string[] args);
+        delegate void _swapDiffuseMap(string[] args);
+        delegate void _scaleObject(string[] args);
+        delegate void _grabObject(string[] args);
+        delegate void _rotateObject(string[] args);
+        delegate void _selectSceneObject(string[] args);
+        delegate void _loadScene(string[] args);
+        delegate void _saveScene(string[] args);
+        delegate void _setCutOff( string[] args);
+        delegate void _setEnabled(string[] args);
+        delegate void _setMaxDist(string[] args);
+        delegate void _setAmbientLevel(string[] args);
+        delegate void _setDiffuseLevel(string[] args);
+        delegate void _setSpecularLevel(string[] args);
+        delegate void _showList(string[] args);
+        delegate void _create(string[] args);
+        delegate void _createCubeMap(string[] args);
+        delegate void _loadTexture(string[] args);
+        delegate void _loadModel(string[] args);
+        delegate void _setPosition(string[] args);
+        delegate void _pauseEngine(string[] args);
+        delegate void _quitEditor(string[] args);
+
         public CommandInterpreter() {
             CreateDelegates();
         }
         private void CreateDelegates() {
 
             Methods = new Dictionary<string, Delegate>();
-            addImp a = AddImp;
+            _addImp a = AddImp;
             Methods.Add("imp", a);
-
-            
-
+            _configureMaterial c = ConfigureMaterial;
+            Methods.Add("material", c); Methods.Add("mat", c);
+            _setMaterialOffset s = SetMaterialOffset;
+            Methods.Add("offset", s);
+            _setMaterialTiling ss = SetMaterialTiling;
+            Methods.Add("tile", ss); Methods.Add("tiling", ss);
+            _swapDiffuseMap sw = SwapDiffuseMap;
+            Methods.Add("swap", sw); Methods.Add("swapdiff", sw); Methods.Add("swapdiffuse", sw);
+            _scaleObject sc = ScaleObject;
+            Methods.Add("scale", sc); Methods.Add("s", sc);
+            _grabObject gr = GrabObject;
+            Methods.Add("grab", gr); Methods.Add("g", gr);
+            _rotateObject ro = RotateObject;
+            Methods.Add("rotate", ro); Methods.Add("r", ro);
+            _selectSceneObject sel = SelectSceneObject;
+            Methods.Add("select", sel); Methods.Add("sel", sel);
+            _loadScene lod = LoadScene;
+            Methods.Add("scene", lod); Methods.Add("load", lod);
+            _saveScene sav = SaveScene;
+            Methods.Add("save", sav);
+            _setCutOff cut = SetCutOff;
+            Methods.Add("cutoff", cut);
+            _setEnabled en = SetEnabled;
+            Methods.Add("enable", en); Methods.Add("setactive", en);
+            _setMaxDist dis = SetMaxDist;
+            Methods.Add("maxdist", dis); Methods.Add("maxdistance", dis);
+            _setAmbientLevel amb = SetAmbientLevel;
+            Methods.Add("amb", amb); Methods.Add("ambient", amb);
+            _setDiffuseLevel diff = SetDiffuseLevel;
+            Methods.Add("diff", diff); Methods.Add("diffuse", diff);
+            _setSpecularLevel spec = SetSpecularLevel;
+            Methods.Add("spec", spec); Methods.Add("specular", spec);
+            _showList lis = ShowList;
+            Methods.Add("list", lis);
+            _create crt = Create;
+            Methods.Add("crt", crt); Methods.Add("create", crt);
+            _createCubeMap cmp = CreateCubeMap;
+            Methods.Add("cubemape", cmp); Methods.Add("skybox", cmp);
+            _loadTexture tex = LoadTexture;
+            Methods.Add("tex", tex); Methods.Add("texture", tex);
+            _loadModel mod = LoadModel;
+            Methods.Add("model", mod);
+            _setPosition sp = SetPosition;
+            Methods.Add("setpos", sp); Methods.Add("setposition", sp);
+            _pauseEngine pe = PauseEngine;
+            Methods.Add("pause", pe); Methods.Add("p", pe);
+            _quitEditor qe = QuitEditor;
+            Methods.Add("quit", qe); Methods.Add("q", qe);
         }
    
 
@@ -48,165 +118,26 @@ namespace SceneEditLauncher
             string[] args = input.Split(' ');
 
 
-            foreach (var item in Methods)
-            {
-                Console.WriteLine(item.Key.ToString());
-            }
+
             if (Methods.ContainsKey(args[0]))
             {
                 var method = Methods[args[0]];
-                method.DynamicInvoke(new object[] { 0, args });
+                method.DynamicInvoke(new object[] { args });
+                Console.WriteLine("Completed use of delegate!");
                 return;
             }
-
-
-
-
-
-            bool creation = false;
-            bool setPosition = false;
-            bool listObjects = false;
-            for (int i = 0; i < args.Length; i++)
-            {
-                string word = args[i].ToLower();
-                if (creation == true)
-                {
-                    creation = false;
-                    Create(args[i], i, args);
-                }
-                else if (setPosition == true)
-                {
-                    setPosition = false;
-                    SetPosition(i, args);
-                }
-                else if (listObjects == true)
-                {
-                    listObjects = false;
-                    ShowList(i, args);
-                    Console.WriteLine("List time");
-                }
-                else if (word == "create" || word == "crt")
-                {
-                    //Create the next thing that comes up
-                    creation = true;
-                }
-                else if (word == "setposition" || word == "setpos")
-                {
-                    setPosition = true;
-
-                }
-                else if (word == "list")
-                {
-                    //Console.WriteLine("List?");
-                    listObjects = true;
-                }
-                else if (word == "setambient" || word == "setamb")
-                {
-                    Console.WriteLine("Setting ambient level.");
-                    SetAmbientLevel(i, args);
-                }
-                else if (word == "setdiffuse" || word == "setdiff")
-                {
-                    Console.WriteLine("Setting diffuse level.");
-                    SetDiffuseLevel(i, args);
-                }
-                else if (word == "setspecular" || word == "setspec")
-                {
-                    Console.WriteLine("Setting specular level.");
-                    SetSpecularLevel(i, args);
-                }
-                else if (word == "setmaxdist" || word == "setmaxdistance" || word == "smd")
-                {
-                    Console.WriteLine("Setting max distance");
-                    SetMaxDist(i, args);
-                }
-                else if (word == "enable" || word == "setactive")
-                {
-                    Console.WriteLine("Enabling");
-                    SetEnabled(i, args);
-                }
-                else if (word == "cutoff" || word == "spotlightangle" || word == "slightangle")
-                {
-                    Console.WriteLine("Setting cutoff");
-                    SetCutOff(i, args);
-                }
-                else if (word == "save")
-                {
-                    Console.WriteLine("Saving...");
-                    SaveScene(i, args);
-                }
-                else if (word == "scene" || word == "load")
-                {
-                    Console.WriteLine("Loading...");
-                    LoadScene(i, args);
-                }
-                else if (word == "quit" || word == "quir" || word == "quiy" || word == "q")
-                {
-                    Console.WriteLine("Have a nice life, bro.");
-                    CommandLineEditor.shouldRun = false;
-                    Console.WriteLine("Beans.");
-                }
-                else if (word == "select" || word == "sel")
-                {
-                    //select a particular sceneObject
-                    SelectSceneObject(i, args);
-                }
-                else if (word == "rotation" || word == "r")
-                {
-                    //rotate an object on an axis
-                    RotateObject(i, args);
-                }
-                else if (word == "grab" || word == "g")
-                {
-                    GrabObject(i, args);
-                }
-                else if (word == "scale" || word == "s")
-                {
-                    Console.WriteLine("Scaling...");
-                    ScaleObject(i, args);
-                }
-                else if (word == "swapdiffusemap" || word == "swapdiff")
-                {
-
-                    //SwapDiffuseMap
-                    SwapDiffuseMap(i, args);
-                }
-                else if (word == "tiling" || word == "tile")
-                {
-                    //SetDiffuseTiling(i, args);
-                    SetMaterialTiling(i, args);
-                }
-                else if (word == "offset")
-                {
-                    SetMaterialOffset(i, args);
-                }
-                else if (word == "mat" || word == "material")
-                {
-                    ConfigureMaterial(i, args);
-                }
-                else if (word == "imp")
-                {
-                    //add an impunityClass to the sceneObject
-                    AddImp(i, args);
-                }
-                else if (word == "p" || word == "pause") {
-                    PauseEngine();
-                }
-                else if (word == "+" || word == "++")
-                {
-                    //select the sceneObject above this one
-                }
-                else if (word == "-" || word == "--")
-                {
-                    //select the sceneObject below this one
-                }
-                else
-                {
-                    // Console.WriteLine("Teapots.");
-                }
+            else {
+                Console.WriteLine($"No such method \"{args[0]}\"");
             }
+
         }
-        void PauseEngine() {
+
+        #region Methods referred to by the delegates
+        void QuitEditor(string[] args) {
+            Console.WriteLine("Have a nice life, bro.");
+            CommandLineEditor.shouldRun = false;
+        }
+        void PauseEngine(string[] args) {
             if (CommandLineEditor.paused == true)
             {
                 CommandLineEditor.paused = false;
@@ -217,8 +148,9 @@ namespace SceneEditLauncher
             }
         }
         //case sensitive, of course
-        void AddImp(int index, string[] args)
+        void AddImp(string[] args)
         {
+            int index = 0;
             Console.WriteLine("Adding imp 2.0");
             if (index + 1 > args.Length - 1)
                 return;
@@ -271,8 +203,9 @@ namespace SceneEditLauncher
             return null;
         }
 
-        void ConfigureMaterial(int index, string[] args)
+        void ConfigureMaterial(string[] args)
         {
+            int index = 0;
 
             //We're expecting
             //args[index + 1] ---- the quality of the material to change
@@ -323,8 +256,9 @@ namespace SceneEditLauncher
 
         }
 
-        void SetMaterialOffset(int index, string[] args)
+        void SetMaterialOffset(string[] args)
         {
+            int index = 0;
             //we're expecting
             //args[index + 1] ---- x offset
             //args[index + 2] ----- y offset
@@ -340,8 +274,9 @@ namespace SceneEditLauncher
             catch { return; }
             SceneMaster.SetMaterialOffset(x, y);
         }
-        void SetMaterialTiling(int index, string[] args)
+        void SetMaterialTiling( string[] args)
         {
+            int index = 0;
             //we're expecting
             //args[index + 1] ---- x tiling
             //args[index + 2] ----- y tiling
@@ -358,8 +293,9 @@ namespace SceneEditLauncher
             SceneMaster.SetMaterialTiling(x, y);
         }
         //Swaps diffuse map of selected object, if possible
-        void SwapDiffuseMap(int index, string[] args)
+        void SwapDiffuseMap(string[] args)
         {
+            int index = 0;
             //we're expecting
             //args[index + 1]  texture ID
 
@@ -376,8 +312,9 @@ namespace SceneEditLauncher
 
         //TODO: ScaleObject
         //we might not want to scale on a single axis...
-        void ScaleObject(int index, string[] args)
+        void ScaleObject(string[] args)
         {
+            int index = 0;
             //it could be
             //args[index + 1] -- scale factor
             //or it could be
@@ -415,8 +352,9 @@ namespace SceneEditLauncher
 
             SceneMaster.ScaleObject(factor, key);
         }
-        void GrabObject(int index, string[] args)
+        void GrabObject(string[] args)
         {
+            int index = 0;
             if (index + 2 > args.Length)
                 return;
 
@@ -431,8 +369,9 @@ namespace SceneEditLauncher
 
             SceneMaster.GrabObject(distance, key);
         }
-        void RotateObject(int index, string[] args)
+        void RotateObject(string[] args)
         {
+            int index = 0;
             //we are expecting
             //args[index + 1]  ---- axis, eg "z"
             //args[index + 2] ---- degrees, eg "90"
@@ -455,8 +394,9 @@ namespace SceneEditLauncher
 
         }
 
-        void SelectSceneObject(int index, string[] args)
+        void SelectSceneObject( string[] args)
         {
+            int index = 0;
             //we are expecting 
             //args[index + 1] ---- ID of sceneObject to select
             //args[index + 2] ---- type of sceneObject to select
@@ -486,8 +426,9 @@ namespace SceneEditLauncher
             }
         }
 
-        void LoadScene(int index, string[] args)
+        void LoadScene(string[] args)
         {
+            int index = 0;
             //we are expecting 
             //args[index + 1] -- filepath of scene file
             if (index + 1 > args.Length - 1)
@@ -496,8 +437,9 @@ namespace SceneEditLauncher
             // SceneMaster.LoadSceneFile(args[index + 1]);
             DIskManager.LoadSceneFile(args[index + 1]); 
         }
-        void SaveScene(int index, string[] args)
+        void SaveScene(string[] args)
         {
+            int index = 0;
             //we are expecting
             //args[index + 1]  to be a file name
             if (index + 1 > args.Length - 1)
@@ -507,8 +449,9 @@ namespace SceneEditLauncher
             DIskManager.SaveSceneAs(args[index + 1]);
 
         }
-        void SetCutOff(int index, string[] args)
+        void SetCutOff(string[] args)
         {
+            int index = 0;
             //we are expecting 
             //args[index + 1] -- spotLight ID
             //args[index + 2] -- angle
@@ -531,8 +474,9 @@ namespace SceneEditLauncher
                 Console.WriteLine("Failed to set spot light cutOff");
             }
         }
-        void SetEnabled(int index, string[] args)
+        void SetEnabled(string[] args)
         {
+            int index = 0;
             //we're expecting either an ID or a name args[index + 1]
             //followed by a true or false args[index + 2]
             //followed by optional further clarification of light type args[index + 3]
@@ -616,8 +560,9 @@ namespace SceneEditLauncher
 
         }
 
-        void SetMaxDist(int index, string[] args)
+        void SetMaxDist(string[] args)
         {
+            int index = 0;
             //we are expecting (after index) 
             //args[index + 1]  - ID of light
             //args[index + 2] - new ambient value
@@ -653,8 +598,9 @@ namespace SceneEditLauncher
             }
         }
 
-        void SetAmbientLevel(int index, string[] args)
+        void SetAmbientLevel(string[] args)
         {
+            int index = 0;
             //we are expecting (after index) 
             //args[index + ]  - ID of light
             //args[index + 2-5] - new ambient value
@@ -690,8 +636,9 @@ namespace SceneEditLauncher
                 return;
             }
         }
-        void SetDiffuseLevel(int index, string[] args)
+        void SetDiffuseLevel(string[] args)
         {
+            int index = 0;
             //we are expecting (after index) 
             //args[index + ]  - ID of light
             //args[index + 2-5] - new ambient value
@@ -727,8 +674,9 @@ namespace SceneEditLauncher
                 return;
             }
         }
-        void SetSpecularLevel(int index, string[] args)
+        void SetSpecularLevel( string[] args)
         {
+            int index = 0;
             //we are expecting (after index) 
             //args[index + ]  - ID of light
             //args[index + 2-5] - new ambient value
@@ -766,9 +714,9 @@ namespace SceneEditLauncher
         }
 
 
-        void ShowList(int index, string[] args)
+        void ShowList( string[] args)
         {
-
+            int index = 0;
             Console.WriteLine("Key: " + args[index]);
 
             if (index > args.Length - 1)
@@ -776,7 +724,7 @@ namespace SceneEditLauncher
 
             Console.WriteLine("Index: " + index);
 
-            string key = args[index].ToLower();
+            string key = args[index + 1].ToLower();
             if (key == "sceneobjects" || key == "sos" || key == "sceneobjects")
             {
                 foreach (var so in Control.AllSceneObjects)
@@ -835,9 +783,9 @@ namespace SceneEditLauncher
             }
 
         }
-        void Create(string arg, int index, string[] args)
+        void Create(string[] args)
         {
-            string key = arg.ToLower();
+            string key = args[1].ToLower();
             if (key == "pointlight" || key == "plight" || key == "plght")
             {
                 Console.WriteLine("Creating point light.");
@@ -856,24 +804,25 @@ namespace SceneEditLauncher
             else if (key == "model" || key == "mdl")
             {
                 Console.WriteLine("Creating model");
-                LoadModel(index, args);
+                //LoadModel(index, args);
             }
             else if (key == "texture" || key == "image" || key == "img" || key == "tex")
             {
 
                 Console.WriteLine("Loading texture...");
-                LoadTexture(index, args);
+             //   LoadTexture(index, args);
             }
             else if (key == "cubemap" || key == "skybox")
             {
                 Console.WriteLine("Creating cube map...");
-                CreateCubeMap(index, args);
+                //CreateCubeMap(index, args);
             }
             else if (key == "sceneobject" || key == "so") {
                 CreateEmptySceneObject();
             }
         }
-        void CreateCubeMap(int index, string[] args) {
+
+        void CreateCubeMap(string[] args) {
             //if (index + 1 > args.Length - 1)
             //    return;
 
@@ -887,8 +836,9 @@ namespace SceneEditLauncher
             Control.AllSceneObjects.Add(so);
             Console.WriteLine("New scene object created.");
         }
-        void LoadTexture(int index, string[] args)
+        void LoadTexture(string[] args)
         {
+            int index = 0;
             //We're expecting
             //args[index + 1] --- directory of texture
             if (index + 1 > args.Length + 1)
@@ -896,8 +846,9 @@ namespace SceneEditLauncher
 
             SceneMaster.LoadTextureFromDirectory(args[index + 1]);
         }
-        void LoadModel(int index, string[] args)//index of the key
+        void LoadModel(string[] args)//index of the key
         {
+            int index = 0;
             //we're expecting the next argument to be a 3-D object file
             if (index + 1 > args.Length - 1)
                 return;
@@ -913,8 +864,10 @@ namespace SceneEditLauncher
 
         }
 
-        void SetPosition(int index, string[] args)
+
+        void SetPosition(string[] args)
         {
+            int index = 0;
             //we're expecting a vec3 after the first arg (a name or an ID). Is there actually a following vec3?
             if (index + 3 > args.Length - 1) { Console.WriteLine("ERROR: INVALID COMMAND"); return; }
             //what is the position?
@@ -1027,7 +980,7 @@ namespace SceneEditLauncher
             OpenGLExampleController ogl = new OpenGLExampleController();
             ogl.DrawObjects();
         }
-
+        #endregion
 
 
 
