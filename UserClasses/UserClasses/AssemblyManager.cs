@@ -12,7 +12,7 @@ namespace UserClasses
     {
         public static void ListAssemblies(string className)
         {
-            string prefix = "UserClasses.";
+            //string prefix = "UserClasses.";
            // className = prefix + className;
             foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
             {
