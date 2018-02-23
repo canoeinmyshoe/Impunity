@@ -136,7 +136,8 @@ Anyways, there's ultimately two paths we can go:
 
 Option 2 seems like the better way to go, especially considering child-parent matrix manipulations will be faster in c++
 If an empty so with a point light is parented to something else, it will use proper c/p mathematics and placement.
-The lights and userclasses should still both inherit from component, though
+The lights and userclasses should still both inherit from component, though, using the transform of the sceneObject in whose
+Components list it exists.
 
 
 
