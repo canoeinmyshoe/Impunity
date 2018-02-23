@@ -20,62 +20,48 @@ namespace SceneEditLauncher
 {
     class CommandInterpreter
     {
-        
-        private Stack RecentCommands = new Stack();
-        public void InterpretOpeningArgs(string[] args) // broken up by spaces, basically
-        {
-            if (args.Length == 0)
-                return;
-            //First, add this to our list of recent commands
-
-
-            foreach (var item in args)
-            {
-                Console.WriteLine(item);
-            }
-
-            if (args[0] == "openGLexamples")
-            {
-                SpaghettiScene();
-            }
-            else if (args[0] == "editor")
-            {
-                CLE cle = new CLE();
-                cle.Run();
-            }
-            else
-            {
-                Console.WriteLine("ERROR: COMMAND " + args[0] + " UNRECOGNIZED");
-            }
+        Dictionary<string, Delegate> Methods;
+        delegate void addImp(int index, string[] args);
+        public CommandInterpreter() {
+            CreateDelegates();
         }
+        private void CreateDelegates() {
+
+            Methods = new Dictionary<string, Delegate>();
+            addImp a = AddImp;
+            Methods.Add("imp", a);
+
+            
+
+        }
+   
 
         //Most actions taken will result in a save file string log.... thing
         public void ProcessInput(string input)
         {
 
-            if (input == "^")
-            {
-                //use the last command
-                if (RecentCommands.Count > 1)
-                {
-                    var thing = RecentCommands.Peek();
-                    input = (string)thing;
-                }
-            }
-            else
-            {
-                if (RecentCommands.Count > 3)
-                {
-                    RecentCommands.Pop();
-                }
-                RecentCommands.Push(input);
-            }
+            //First, we should split up the args by semi colon - no?
+            string[] clauses = input.Split(';');
+            //then foreach clause, the below, with clauses[i] instead of input in the latter
+            //that way, it can read scripts
+
             string[] args = input.Split(' ');
-            foreach (var item in args)
+
+
+            foreach (var item in Methods)
             {
-                //  Console.WriteLine(item);
-                item.Replace(" ", string.Empty);
+                Console.WriteLine(item.Key.ToString());
             }
+            if (Methods.ContainsKey(args[0]))
+            {
+                var method = Methods[args[0]];
+                method.DynamicInvoke(new object[] { 0, args });
+                return;
+            }
+
+
+
+
 
             bool creation = false;
             bool setPosition = false;
@@ -201,7 +187,7 @@ namespace SceneEditLauncher
                 else if (word == "imp")
                 {
                     //add an impunityClass to the sceneObject
-                    AddImpX(i, args);
+                    AddImp(i, args);
                 }
                 else if (word == "p" || word == "pause") {
                     PauseEngine();
@@ -231,7 +217,7 @@ namespace SceneEditLauncher
             }
         }
         //case sensitive, of course
-        void AddImpX(int index, string[] args)
+        void AddImp(int index, string[] args)
         {
             Console.WriteLine("Adding imp 2.0");
             if (index + 1 > args.Length - 1)
@@ -270,71 +256,6 @@ namespace SceneEditLauncher
             //    }
             //}
             #endregion
-        }
-        void AddImp(int index, string[] args)
-        {
-            Console.WriteLine("Adding imp.");
-            //we're expecting
-            //args[index + 1] ---- the name of the user-created imp to add
-            if (index + 1 > args.Length - 1)
-                return;
-
-           // string assembly = "UserClasses.dll";
-        //    assembly = DirectoryManager.PathToGCBin() + "\\" + assembly;
-       //     Console.WriteLine("Assembly dir: " + assembly);
-            string className = args[index + 1];
-           // Type userImp = Type.GetType(className);
-            try
-            {
-                if (SceneMaster.SelectedSceneObject == null)
-                    return;
-
-                // Object instance = new Activator.CreateInstanceFrom(userImp);
-                //ImpunityClass instance = (ImpunityClass)Activator.CreateInstance(userImp);
-                //instance.sceneObject = SceneMaster.SelectedSceneObject;
-                //SceneMaster.SelectedSceneObject.Imps.Add(instance);
-                //instance.Start();
-
-                // object objClassInstance = GetInstance(className);
-                // ImpunityClass ic = (ImpunityClass)objClassInstance;
-                //SceneMaster.SelectedSceneObject.Imps.Add(ic);
-
-                //ImpunityClass instance = (ImpunityClass)System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(className);
-                //SceneMaster.SelectedSceneObject.Imps.Add(instance);
-
-                //ObjectHandle handle = Activator.CreateInstance(null, className);
-                //ImpunityClass p = (ImpunityClass)handle.Unwrap();
-                ////p.Tag = "Samuel";
-                //p.sceneObject = SceneMaster.SelectedSceneObject;
-
-                //   Console.WriteLine(p);
-           //     var path = @"D:\Plugin.dll";
-                var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-
-                foreach (Type t in assembly.GetTypes())
-                {
-                    
-                    Console.WriteLine(t.FullName.ToString());
-                    if (t.Name.ToString() == className) {
-                        Console.WriteLine("EUREKA!"); //Excellent!
-                        var inst = (ImpunityClass)Activator.CreateInstance(t);
-                        SceneMaster.SelectedSceneObject.Imps.Add(inst);
-                       // inst.Start();
-                        return;
-                    }
-                    
-                }
-                string prefix = "SceneEditLauncher.";
-                var type = assembly.GetType(prefix + className);
-              //  var method = type.GetMethod("Run");
-                var instance = Activator.CreateInstance(type);
-
-
-            }
-            catch (Exception err)
-            {
-                Console.WriteLine("Failed to add imp: " + err.Message);
-            }
         }
         public object GetInstance(string strFullyQualifiedName)
         {
@@ -401,8 +322,6 @@ namespace SceneEditLauncher
             }
 
         }
-
-
 
         void SetMaterialOffset(int index, string[] args)
         {
