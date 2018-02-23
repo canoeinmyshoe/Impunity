@@ -20,6 +20,7 @@ namespace SceneEditLauncher
 {
     class CommandInterpreter
     {
+        #region Delegate Declarations
         Dictionary<string, Delegate> Methods;
         delegate void _addImp(string[] args);
         delegate void _configureMaterial(string[] args) ;
@@ -46,10 +47,12 @@ namespace SceneEditLauncher
         delegate void _setPosition(string[] args);
         delegate void _pauseEngine(string[] args);
         delegate void _quitEditor(string[] args);
+        #endregion
 
         public CommandInterpreter() {
             CreateDelegates();
         }
+
         private void CreateDelegates() {
 
             Methods = new Dictionary<string, Delegate>();
@@ -105,8 +108,6 @@ namespace SceneEditLauncher
             Methods.Add("quit", qe); Methods.Add("q", qe);
         }
    
-
-        //Most actions taken will result in a save file string log.... thing
         public void ProcessInput(string input)
         {
 
@@ -981,8 +982,6 @@ namespace SceneEditLauncher
             ogl.DrawObjects();
         }
         #endregion
-
-
 
     }
     enum SelectionTypes
