@@ -124,7 +124,20 @@ list of components with a method like sceneObject.GetComponent<someComponentType
 
 Also, to add to my list of worries, the blue z arrow is pointing backward. Scaling should be done after rotation, or else
 bad things happen. Finally, grabbing should be done along a LOCAL axis, not world axis. Therefore, they should translate in a local 
-direction, rather than global direction.
+direction, rather than global direction. This, however, should be done in a separate branch.
+
+There is a strong possibility that I will lose track of where I was and end up utterly wrecking this branch.
+
+Anyways, there's ultimately two paths we can go:
+
+1. sceneObject and emptySceneObject both inherit from an IExistable interface
+
+2. when an empty sceneObject is instantiated, create its c++ mirror image
+
+Option 2 seems like the better way to go, especially considering child-parent matrix manipulations will be faster in c++
+If an empty so with a point light is parented to something else, it will use proper c/p mathematics and placement.
+The lights and userclasses should still both inherit from component, though
+
 
 
 
