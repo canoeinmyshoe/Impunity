@@ -13,6 +13,11 @@ namespace ImpunityEngine
         {
             Bridge.SetTransformMatrix(ID, transform);
         }
+        public void SetTransformTwo()
+        {
+            // Bridge.SetTransformMatrix(ID, transform);
+            Bridge.SetTransformMatrixTwo(ID, transform);
+        }
         public Vector3 Right()
         {
             //get the right direction of the matrix

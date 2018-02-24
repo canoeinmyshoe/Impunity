@@ -386,6 +386,44 @@ extern "C"
 
 		return 0;
 	}
+	__declspec(dllexport) int SetTransformMatrixTwo(int ID, float px, float py, float pz, float rx, float ry, float rz, float sx, float sy, float sz,
+		float sxl, float syl, float szl, float rxl, float ryl, float rzl)
+	{
+
+		if (AllSceneObjects.size() - 1 < ID)
+		{
+			return 1;
+		}
+
+		glm::vec3 position = glm::vec3(px, py, pz);
+		glm::vec3 rotation = glm::vec3(rx, ry, rz);
+		glm::vec3 scale = glm::vec3(sx, sy, sz);
+		glm::vec3 localScale = glm::vec3(sxl, syl, szl);
+		glm::vec3 localRotation = glm::vec3(rxl, ryl, rzl);
+
+		AllSceneObjects[ID].transform.position = position;
+		AllSceneObjects[ID].transform.rotation = rotation;
+		AllSceneObjects[ID].transform.scale = scale;
+		AllSceneObjects[ID].transform.localScale = localScale;
+		AllSceneObjects[ID].transform.localRotation = localRotation;
+
+		glm::mat4 model;
+		model = glm::translate(model, position);
+		glm::quat orientation = toQuaternion(rotation);
+		model *= glm::mat4_cast(orientation);
+		model = glm::scale(model, scale);
+
+		
+		orientation = toQuaternion(localRotation);
+		model *= glm::mat4_cast(orientation);
+		model = glm::scale(model, localScale);
+	
+
+		AllSceneObjects[ID].transform.matrix = model;
+
+
+		return 0;
+	}
 	__declspec(dllexport) int SetChildMatrix(int parentID, int childID) {
 	
 		if (parentID > AllSceneObjects.size() - 1 || childID > AllSceneObjects.size() - 1)

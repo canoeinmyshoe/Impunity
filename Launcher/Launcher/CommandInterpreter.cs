@@ -349,6 +349,23 @@ namespace SceneEditLauncher
                 SceneMaster.ScaleEntireObject(scaleFactor);
                 return;
             }
+            else if (args.Length == 4) {
+                //we assume the user has specified with an 'L' that they want to scale on a local
+                //axis
+                string keyywird = args[args.Length - 1].ToLower();
+                if (keyywird == "l" || keyywird == "local")
+                {
+                    Console.WriteLine("Scaling on local axis");
+                    float scaleFactor = 0;
+                    try
+                    {
+                        scaleFactor = Convert.ToSingle(args[2]);
+                    }
+                    catch { return; }
+                    SceneMaster.ScaleObjectLocal(scaleFactor, args[1]);
+                }
+
+            }
 
 
             if (index + 2 > args.Length)
@@ -393,6 +410,9 @@ namespace SceneEditLauncher
             if (index + 2 > args.Length)
                 return;
 
+
+          
+
             float degree = 0;
             try
             {
@@ -402,11 +422,30 @@ namespace SceneEditLauncher
 
             string key = args[index + 1].ToLower(); // the axis
 
+
+
+            if (args.Length == 4)
+            {
+                //we assume the user has specified with an 'L' that they want to scale on a local
+                //axis
+                string keyywird = args[args.Length - 1].ToLower();
+                if (keyywird == "l" || keyywird == "local")
+                {
+                    Console.WriteLine("rotating on local axis");
+                
+                    SceneMaster.RotateObjectLocal(degree, key);
+                    return;
+                }
+
+            }
+
             //tell c++ to rotate the object by degree degrees around key axis
             //and set the c# value, too
             SceneMaster.RotateObject(degree, key);
 
         }
+
+
 
         void SelectSceneObject( string[] args)
         {
