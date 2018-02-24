@@ -117,14 +117,12 @@ namespace SceneEditLauncher
             //that way, it can read scripts
 
             string[] args = input.Split(' ');
-
-
-
+            
             if (Methods.ContainsKey(args[0]))
             {
                 var method = Methods[args[0]];
                 method.DynamicInvoke(new object[] { args });
-                Console.WriteLine("Completed use of delegate!");
+              //  Console.WriteLine("Completed use of delegate!");
                 return;
             }
             else {
