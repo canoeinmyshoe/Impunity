@@ -115,21 +115,25 @@ namespace SceneEditLauncher
             string[] clauses = input.Split(';');
             //then foreach clause, the below, with clauses[i] instead of input in the latter
             //that way, it can read scripts
-
-            string[] args = input.Split(' ');
-
-
-
-            if (Methods.ContainsKey(args[0]))
+            Console.WriteLine("Clauses: " + clauses.Length);
+            foreach (var clause in clauses)
             {
-                var method = Methods[args[0]];
-                method.DynamicInvoke(new object[] { args });
-                Console.WriteLine("Completed use of delegate!");
-                return;
+              //  Console.WriteLine("FUCK");
+                string[] args = clause.Split(' ');
+                if (Methods.ContainsKey(args[0]))
+                {
+                    var method = Methods[args[0]];
+                    method.DynamicInvoke(new object[] { args });
+                       Console.WriteLine("Completed command.");
+                  //  return;
+                }
+                else
+                {
+                    Console.WriteLine($"No such method \"{args[0]}\"");
+                }
             }
-            else {
-                Console.WriteLine($"No such method \"{args[0]}\"");
-            }
+
+          
 
         }
 
