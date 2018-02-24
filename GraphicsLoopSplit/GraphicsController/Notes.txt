@@ -139,6 +139,7 @@ If an empty so with a point light is parented to something else, it will use pro
 The lights and userclasses should still both inherit from component, though, using the transform of the sceneObject in whose
 Components list it exists.
 
+Finally, before going for the gold, merge back with master in order to save the good arrows.
 
 
 

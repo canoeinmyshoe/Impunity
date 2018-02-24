@@ -52,18 +52,18 @@ c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1
 c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1665): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1696): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1724): warning C4018: '<': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2096): warning C4018: '<': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2108): warning C4018: '<': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2119): warning C4018: '<': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2131): warning C4018: '<': signed/unsigned mismatch
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2151): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2152): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2153): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2154): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2168): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2169): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2170): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2171): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2103): warning C4018: '<': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2115): warning C4018: '<': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2126): warning C4018: '<': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2138): warning C4018: '<': signed/unsigned mismatch
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2158): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2159): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2160): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2161): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2175): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2176): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2177): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(2178): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
   GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
 c:\data\projects\impunity\impunity\graphicsloopsplit\graphicspipeline\main.cpp(1497): warning C4172: returning address of local variable or temporary: input

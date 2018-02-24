@@ -789,9 +789,9 @@ extern "C"
 		cout << "Loading the debuggin arrow" << endl;
 
 		DebuggingArrow.Load(d + "\\models\\misfits\\arrow.obj");
-		XArrow.Load(d + "\\models\\misfits\\xarrow.obj");
-		YArrow.Load(d + "\\models\\misfits\\yarrow.obj");
-		ZArrow.Load(d + "\\models\\misfits\\zarrow.obj");
+		XArrow.Load(d + "\\models\\misfits\\arrows\\xredarrow.obj");
+		YArrow.Load(d + "\\models\\misfits\\arrows\\ygreenarrow.obj");
+		ZArrow.Load(d + "\\models\\misfits\\arrows\\zbluearrow.obj");
 		Cube.Load(d + "\\models\\misfits\\cube.obj");
 		//This seems like a decent place to initiate the model loading process
 
@@ -1166,7 +1166,7 @@ extern "C"
 		Labels.clear();
 	
 		//This function will clear the depth buffer
-		DrawArrowsOnSelectedSceneObjectX(SelectedType);
+		DrawArrowsOnSelectedSceneObject(SelectedType);
 
 		// Swap the screen buffers
 		glfwSwapBuffers(sceneWindow);
@@ -1940,6 +1940,8 @@ int DrawArrowsOnSelectedSceneObject(int sType)
 	arrowShader->Use();
 	arrowShader->setMat4("view", ViewMatrix);
 	arrowShader->setMat4("projection", ProjectionMatrix);
+
+	glm::vec3 scl = glm::vec3(0.23f);
 	if (sType == regular && validSceneObjectIndex(SelectedSceneObjectIndex) == true) {
 
 		glm::vec3 position = AllSceneObjects[SelectedSceneObjectIndex].transform.position;
@@ -1949,6 +1951,7 @@ int DrawArrowsOnSelectedSceneObject(int sType)
 		glm::quat qu = toQuaternion(AllSceneObjects[SelectedSceneObjectIndex].transform.rotation);
 		glm::mat4 lightRotation = glm::toMat4(qu);
 		model *= lightRotation;
+		model = glm::scale(model, scl);
 		arrowShader->setMat4("model", model);
 		arrowShader->SetVec3(0.0f, 0.0, 1.0, "debugColor");
 		ZArrow.Draw(arrowShader);
@@ -1964,6 +1967,7 @@ int DrawArrowsOnSelectedSceneObject(int sType)
 
 		glm::mat4 model;
 		model = glm::translate(model, position);
+		model = glm::scale(model, scl);
 		/*glm::quat qu = toQuaternion(AllSceneObjects[SelectedSceneObjectIndex].transform.rotation);
 		glm::mat4 lightRotation = glm::toMat4(qu);
 		model *= lightRotation;*/
@@ -1984,6 +1988,7 @@ int DrawArrowsOnSelectedSceneObject(int sType)
 		glm::quat qu = toQuaternion(SceneSpotLights[SelectedSceneObjectIndex].direction);
 		glm::mat4 lightRotation = glm::toMat4(qu);
 		model *= lightRotation;
+		model = glm::scale(model, scl);
 		arrowShader->setMat4("model", model);
 		arrowShader->SetVec3(0.0f, 0.0, 1.0, "debugColor");
 		ZArrow.Draw(arrowShader);
@@ -1999,6 +2004,8 @@ int DrawArrowsOnSelectedSceneObject(int sType)
 		glm::quat qu = toQuaternion(SceneDirectionalLights[SelectedSceneObjectIndex].direction);
 		glm::mat4 lightRotation = glm::toMat4(qu);
 		model *= lightRotation;
+		model = glm::scale(model, scl);
+
 		arrowShader->setMat4("model", model);
 		arrowShader->SetVec3(0.0f, 0.0, 1.0, "debugColor");
 		ZArrow.Draw(arrowShader);
@@ -2022,7 +2029,7 @@ int DrawArrowsOnSelectedSceneObjectX(int sType)
 
 		//glm::vec3 position = AllSceneObjects[SelectedSceneObjectIndex].transform.position;
 
-		glm::mat4 model = AllSceneObjects[SelectedSceneObjectIndex].transform.matrix;
+		glm::mat4 model = AllSceneObjects[SelectedSceneObjectIndex].transform.matrix; // except for the scale....
 		/*model = glm::translate(model, position);
 		glm::quat qu = toQuaternion(AllSceneObjects[SelectedSceneObjectIndex].transform.rotation);
 		glm::mat4 lightRotation = glm::toMat4(qu);
