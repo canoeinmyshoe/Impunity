@@ -20,6 +20,8 @@ struct Transform {
 	glm::vec3 rotation;
 	glm::quat orientation;
 	glm::vec3 scale;
+	glm::vec3 localScale;
+	glm::vec3 localRotation;
 	glm::mat4 matrix;//for use with c# code that sets pos/rot/scale
 	//when you want a "LookAt" algo, just use camera->front
 };
@@ -84,6 +86,9 @@ public:
 
 		transform.position = glm::vec3(0.0);
 		transform.scale = glm::vec3(1.0f);
+		transform.localRotation = glm::vec3(0);
+		transform.localScale = glm::vec3(1.0f);
+
 		Name = "SceneObject";
 		Enabled = true;
 	};
@@ -91,6 +96,8 @@ public:
 	{
 		this->transform.position = glm::vec3(0.0);
 		this->transform.scale = glm::vec3(1.0f);
+		transform.localRotation = glm::vec3(0);
+		transform.localScale = glm::vec3(1.0f);
 		this->Name = "SceneObject";
 		this->Enabled = true;
 		this->ID = id;
@@ -105,6 +112,8 @@ public:
 	{
 		transform.position = glm::vec3(0.0);
 		transform.scale = glm::vec3(1.0f);
+		transform.localRotation = glm::vec3(0);
+		transform.localScale = glm::vec3(1.0f);
 		Name = name;
 		Enabled = true;
 		meshes.push_back(mesh);

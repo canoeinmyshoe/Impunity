@@ -141,7 +141,8 @@ Components list it exists.
 
 Finally, before going for the gold, merge back with master in order to save the good arrows.
 
-
+Also, fix the transform issues with local scale and rotation. - Done!
+Merge branch with master to get the new local transform variables. - 
 
 
 

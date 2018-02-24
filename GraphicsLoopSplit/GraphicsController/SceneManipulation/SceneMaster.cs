@@ -1005,7 +1005,7 @@ namespace ImpunityEngine.SceneManipulation
                 else if (axis == "z")
                     SelectedSceneObject.transform.position.z += dist;
 
-                SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
+           //     SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
             }
 
         }
@@ -1060,7 +1060,61 @@ namespace ImpunityEngine.SceneManipulation
                 else if (axis == "z")
                     SelectedSceneObject.transform.rotation.z += degree;
 
-                SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
+               // SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
+            }
+        }
+
+        public static void RotateObjectLocal(float degree, string axis)
+        {
+
+            //add degree to the axis of the selected SceneObject
+            //Just like blender!
+            if (SelectedSceneObject == null)
+                return;
+
+            Console.WriteLine("Rotating selected by " + degree + " degrees on " + axis + " axis");
+
+            if (SelectedSceneObject is PointLight)
+            {
+                Console.WriteLine("Point lights don't have a rotation...");
+            }
+            else if (SelectedSceneObject is SpotLight)
+            {
+                SpotLight dl = (SpotLight)SelectedSceneObject;
+                if (axis == "x")
+                    dl.SetDirection(new Vector3(dl.direction.x + degree,
+                        dl.direction.y, dl.direction.z));
+                else if (axis == "y")
+                    dl.SetDirection(new Vector3(dl.direction.x,
+                       dl.direction.y + degree, dl.direction.z));
+                else if (axis == "z")
+                    dl.SetDirection(new Vector3(dl.direction.x,
+                        dl.direction.y, dl.direction.z + degree));
+            }
+            else if (SelectedSceneObject is DirectionalLight)
+            {
+                DirectionalLight dl = (DirectionalLight)SelectedSceneObject;
+                if (axis == "x")
+                    dl.SetDirection(new Vector3(dl.direction.x + degree,
+                        dl.direction.y, dl.direction.z));
+                else if (axis == "y")
+                    dl.SetDirection(new Vector3(dl.direction.x,
+                       dl.direction.y + degree, dl.direction.z));
+                else if (axis == "z")
+                    dl.SetDirection(new Vector3(dl.direction.x,
+                        dl.direction.y, dl.direction.z + degree));
+            }
+            else
+            {
+                //Regular SceneObject
+                if (axis == "x")
+                    SelectedSceneObject.transform.localRotation.x += degree;
+                else if (axis == "y")
+                    SelectedSceneObject.transform.localRotation.y += degree;
+                else if (axis == "z")
+                    SelectedSceneObject.transform.localRotation.z += degree;
+
+                // SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
             }
         }
 
@@ -1093,7 +1147,40 @@ namespace ImpunityEngine.SceneManipulation
 
                 //   SelectedSceneObject.transform.Stretch(factor);
 
-                SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
+              //  SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
+            }
+
+        }
+        public static void ScaleObjectLocal(float factor, string axis)
+        {
+            if (SelectedSceneObject == null)
+                return;
+
+            if (SelectedSceneObject is PointLight)
+            {
+                return;
+            }
+            else if (SelectedSceneObject is SpotLight)
+            {
+                return;
+            }
+            else if (SelectedSceneObject is DirectionalLight)
+            {
+                return;
+            }
+            else
+            {
+                //Regular SceneObject
+                if (axis == "x")
+                    SelectedSceneObject.transform.localScale.x *= factor;
+                else if (axis == "y")
+                    SelectedSceneObject.transform.localScale.y *= factor;
+                else if (axis == "z")
+                    SelectedSceneObject.transform.localScale.z *= factor;
+
+               //SelectedSceneObject.transform.localScale.x *= factor;
+
+            //    SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
             }
 
         }
@@ -1119,7 +1206,7 @@ namespace ImpunityEngine.SceneManipulation
 
                 SelectedSceneObject.transform.Stretch(factor);
 
-                SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
+             //   SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
             }
 
         }

@@ -318,7 +318,7 @@ namespace ImpunityEngine.OpenGLExamples
                 //   "ID: " + Control.AllSceneObjects[o].ID + "\r\n" +
                 //   "");
                 Control.AllSceneObjects[o].transform.position = new Vector3(1.0f * o, 1.0f, 1.0f);
-                Control.AllSceneObjects[o].transform.SetTransform(Control.AllSceneObjects[o].ID);
+              //  Control.AllSceneObjects[o].transform.SetTransform(Control.AllSceneObjects[o].ID);
             }
 
             

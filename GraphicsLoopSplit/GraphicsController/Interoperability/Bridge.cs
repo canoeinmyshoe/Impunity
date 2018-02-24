@@ -262,6 +262,25 @@ namespace ImpunityEngine.Interoperability
         }
 
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int SetTransformMatrixTwo(
+ int ID,
+ float px, float py, float pz,
+ float rx, float ry, float rz,
+ float sx, float sy, float sz,
+ float sxl, float syl, float szl,
+ float rxl, float ryl, float rzl);
+
+        public static int SetTransformMatrixTwo(int ID, Transform transform)
+        {
+            return SetTransformMatrixTwo(ID, transform.position.x, transform.position.y, transform.position.z,
+                transform.rotation.x, transform.rotation.y, transform.rotation.z,
+                transform.scale.x, transform.scale.y, transform.scale.z,
+                transform.localScale.x, transform.localScale.y, transform.localScale.z,
+                transform.localRotation.x, transform.localRotation.y, transform.localRotation.z);
+        }
+
+
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int SetCameraTransformMatrix(
         int ID,
         float px, float py, float pz,

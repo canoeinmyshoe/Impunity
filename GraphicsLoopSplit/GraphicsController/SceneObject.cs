@@ -99,14 +99,14 @@ namespace ImpunityEngine
             if (ID < 0)
                 return;
 
-            SetTransform();
+            SetTransformTwo();
         }
 
         public void UpdateChildren() {
             foreach (var child in Children)
             {
                 child.UpdateChildren();
-                child.SetTransform();
+                child.SetTransformTwo();
                 child.updated = true; // don't let it set the
                 //transform again after we multiply matrices
 

@@ -9,12 +9,16 @@ namespace ImpunityEngine
         public Vector3 position;
         public Vector3 rotation;
         public Vector3 scale;
+        public Vector3 localScale;
+        public Vector3 localRotation;
 
         public Transform(bool hey)
         {
             position = new Vector3(0);
             rotation = new Vector3(0);
             scale = new Vector3(1.0f);
+            localScale = new Vector3(1.0f);
+            localRotation = new Vector3(0);
         }
 
         public void Translate()//?
@@ -33,16 +37,6 @@ namespace ImpunityEngine
             scale.y *= factor;
             scale.z *= factor;
         }
-        public void SetTransform(int ID)
-        {
-            //call the c++ dll
-            Bridge.SetTransform(
-                ID,
-                position.x, position.y, position.z,
-                rotation.x, rotation.y, rotation.z,
-                scale.x, scale.y, scale.z
-                );
-        }
-        
+
     }
 }

@@ -386,6 +386,44 @@ extern "C"
 
 		return 0;
 	}
+	__declspec(dllexport) int SetTransformMatrixTwo(int ID, float px, float py, float pz, float rx, float ry, float rz, float sx, float sy, float sz,
+		float sxl, float syl, float szl, float rxl, float ryl, float rzl)
+	{
+
+		if (AllSceneObjects.size() - 1 < ID)
+		{
+			return 1;
+		}
+
+		glm::vec3 position = glm::vec3(px, py, pz);
+		glm::vec3 rotation = glm::vec3(rx, ry, rz);
+		glm::vec3 scale = glm::vec3(sx, sy, sz);
+		glm::vec3 localScale = glm::vec3(sxl, syl, szl);
+		glm::vec3 localRotation = glm::vec3(rxl, ryl, rzl);
+
+		AllSceneObjects[ID].transform.position = position;
+		AllSceneObjects[ID].transform.rotation = rotation;
+		AllSceneObjects[ID].transform.scale = scale;
+		AllSceneObjects[ID].transform.localScale = localScale;
+		AllSceneObjects[ID].transform.localRotation = localRotation;
+
+		glm::mat4 model;
+		model = glm::translate(model, position);
+		glm::quat orientation = toQuaternion(rotation);
+		model *= glm::mat4_cast(orientation);
+		model = glm::scale(model, scale);
+
+		
+		orientation = toQuaternion(localRotation);
+		model *= glm::mat4_cast(orientation);
+		model = glm::scale(model, localScale);
+	
+
+		AllSceneObjects[ID].transform.matrix = model;
+
+
+		return 0;
+	}
 	__declspec(dllexport) int SetChildMatrix(int parentID, int childID) {
 	
 		if (parentID > AllSceneObjects.size() - 1 || childID > AllSceneObjects.size() - 1)
@@ -1944,13 +1982,16 @@ int DrawArrowsOnSelectedSceneObject(int sType)
 	glm::vec3 scl = glm::vec3(0.23f);
 	if (sType == regular && validSceneObjectIndex(SelectedSceneObjectIndex) == true) {
 
-		glm::vec3 position = AllSceneObjects[SelectedSceneObjectIndex].transform.position;
 
 		glm::mat4 model;
-		model = glm::translate(model, position);
-		glm::quat qu = toQuaternion(AllSceneObjects[SelectedSceneObjectIndex].transform.rotation);
-		glm::mat4 lightRotation = glm::toMat4(qu);
-		model *= lightRotation;
+
+		glm::mat4 modelMatrix = AllSceneObjects[SelectedSceneObjectIndex].transform.matrix;
+		glm::vec3 mposition = glm::vec3(modelMatrix[3][0], modelMatrix[3][1], modelMatrix[3][2]);//only take position
+		glm::mat4 mrotation = glm::mat4_cast(glm::quat_cast(modelMatrix));//only take rotation, not scale or position
+		model = glm::translate(model, mposition);
+		model *= mrotation;
+
+
 		model = glm::scale(model, scl);
 		arrowShader->setMat4("model", model);
 		arrowShader->SetVec3(0.0f, 0.0, 1.0, "debugColor");
