@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AssemblyManager.cs" />
     <Compile Include="CameraController.cs" />
+    <Compile Include="localTest.cs" />
     <Compile Include="MatOffset.cs" />
     <Compile Include="TestClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
