@@ -9,6 +9,20 @@ namespace ImpunityEngine
 {
     public partial class SceneObject
     {
+
+        public object GetComponent(Type type) {
+
+            Console.WriteLine("Looking for type: " + type);
+            foreach (var component in Components)
+            {
+                Console.WriteLine("Type: " + component.GetType());
+                if (component.GetType() == type)
+                    return component;
+            }
+
+            throw new NullReferenceException();
+        }
+
         public void SetTransform()
         {
             Bridge.SetTransformMatrix(ID, transform);
