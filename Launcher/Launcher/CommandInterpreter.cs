@@ -271,6 +271,7 @@ namespace SceneEditLauncher
             //we need to do this from UserClasses!
             AssemblyManager.ListAssemblies(className);
 
+
             #region deprecated assembly search
             //foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
             //{

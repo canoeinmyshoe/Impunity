@@ -52,7 +52,6 @@ namespace ImpunityEngine
     }
     public class SerializableSpotLight : Component
     {
-
         public Vector3 ambient { get; set; }
         public Vector3 diffuse { get; set; }
         public Vector3 specular { get; set; }

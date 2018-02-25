@@ -25,7 +25,7 @@ namespace ImpunityEngine
            // var s = Resource1.MyName;
             //Do a bunch of stuff at startup
         }
-        public new virtual void Update(SceneObject sceneObject)
+        public override void Update(SceneObject sceneObject)
         {
             //do a bunch of stuff every frame
         }

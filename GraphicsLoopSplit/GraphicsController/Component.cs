@@ -14,7 +14,7 @@ namespace ImpunityEngine
 
         public virtual void Update(SceneObject sceneObject)
         {
-            throw new NotImplementedException();
+               throw new NotImplementedException();
         }
     }
 }

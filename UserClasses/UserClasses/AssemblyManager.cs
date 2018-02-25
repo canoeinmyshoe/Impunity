@@ -30,11 +30,16 @@ namespace UserClasses
                     if (t.Name.ToString() == className)
                     {
                         Console.WriteLine("EUREKA!"); //Excellent!
+
                         var inst = (ImpunityClass)Activator.CreateInstance(t);
+
+
                      //   inst.sceneObject = SceneMaster.SelectedSceneObject;
                         inst.Start(SceneMaster.SelectedSceneObject);
-                        SceneMaster.SelectedSceneObject.Imps.Add(inst);
-                        
+                        //   SceneMaster.SelectedSceneObject.Imps.Add(inst);
+
+
+                        SceneMaster.SelectedSceneObject.Components.Add(inst);
                         return;
                     }
 
