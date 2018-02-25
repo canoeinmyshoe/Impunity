@@ -18,7 +18,6 @@ namespace ImpunityEngine
         public float cutOff { get; set; }
         public float outerCutOff { get; set; }
         public float maxDistance { get; set; }
-     //   public bool enabled { get; set; }
         public float cutOffRatio = 0.8333f;
 
         public SpotLight(int id)
@@ -61,34 +60,7 @@ namespace ImpunityEngine
 
             SetPosition(sceneObject.transform.position);
         }
-
-
-        //public static SpotLight FindLightByID(int id)
-        //{
-        //    foreach (var light in Control.AllSceneObjects)
-        //    {
-        //        if (light is SpotLight)
-        //        {
-        //            SpotLight sl = (SpotLight)light;
-        //            if (sl.LightID == id)
-        //                return sl;
-        //        }
-        //    }
-        //    throw new NullReferenceException($"Spot light ID \"{id}\" not found");
-        //}
-        //public static SpotLight FindLightByGuid(Guid gid)
-        //{
-
-        //    foreach (var light in Control.AllSceneObjects)
-        //    {
-        //        if (light.guid == gid)
-        //        {
-        //            return (SpotLight)light;
-        //        }
-        //    }
-        //    throw new NullReferenceException();
-        //}
-
+        
         public void SetPosition(Vector3 pos)
         {
            // position = pos;

@@ -9,18 +9,14 @@ namespace ImpunityEngine
 {
     public partial class SceneObject
     {
-
-        public object GetComponent(Type type) {
-
-       //     Console.WriteLine("Looking for type: " + type);
+        public object GetComponent(Type type)
+        {
             foreach (var component in Components)
             {
-          //      Console.WriteLine("Type: " + component.GetType());
                 if (component.GetType() == type)
                     return component;
             }
-
-            throw new NullReferenceException();
+            throw new NullReferenceException($"Component {type.ToString()} not found.");
         }
 
         public void SetTransform()

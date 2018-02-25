@@ -31,14 +31,13 @@ namespace ImpunityEngine
 
     }
 
-    public class SerializableDirectionalLight : SerializableSceneObject
+    public class SerializableDirectionalLight : Component
     {
-        public int LightID { get; set; }
         public Vector3 direction { get; set; }
         public Vector3 ambient { get; set; }
         public Vector3 diffuse { get; set; }
         public Vector3 specular { get; set; }
- //       public bool enabled { get; set; }
+        public bool dynamic { get; set; }
     }
     public class SerializablePointLight : Component
     {
@@ -51,10 +50,9 @@ namespace ImpunityEngine
         public float maxDistance { get; set; }
         public bool dynamic { get; set; }
     }
-    public class SerializableSpotLight : SerializableSceneObject
+    public class SerializableSpotLight : Component
     {
-        public int LightID { get; set; }
-        public Vector3 position { get; set; }
+
         public Vector3 ambient { get; set; }
         public Vector3 diffuse { get; set; }
         public Vector3 specular { get; set; }
@@ -62,7 +60,6 @@ namespace ImpunityEngine
         public float cutOff { get; set; }
         public float outerCutOff { get; set; }
         public float maxDistance { get; set; }
-      //  public bool enabled { get; set; }
         public float cutOffRatio = 0.8333f;
     }
 }

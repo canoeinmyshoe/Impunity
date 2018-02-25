@@ -121,18 +121,19 @@ namespace ImpunityEngine.SceneManipulation
             so.Name = "Directional Light";
 
         }
-        public static void CreateDirectionalLight(Guid guid)
+        public static DirectionalLight CreateDirectionalLight(Guid guid)
         {
             float x = 0;
             float y = 0;
             float z = 0;
             int id = Bridge.CreateDirectionalLight(x, y, z);
-            Console.WriteLine("C#: Directional Light ID: " + id);
+   //         Console.WriteLine("C#: Directional Light ID: " + id);
             DirectionalLight dlight = new DirectionalLight(id, new Vector3(x, y, z));
-            Console.WriteLine("Added a new directional light.");
+         //   Console.WriteLine("Added a new directional light.");
             dlight.guid = guid;
             //SelectedSceneObject = dlight;
-         //   Control.AllSceneObjects.Add(dlight);
+            //   Control.AllSceneObjects.Add(dlight);
+            return dlight;
         }
 
         public static void CreateSpotLight()
@@ -140,35 +141,24 @@ namespace ImpunityEngine.SceneManipulation
             float x, y, z, dx, dy, dz;
             x = 0; y = 0; z = 0; dx = 0; dy = 0; dz = 0;
             int id = Bridge.CreateSpotLight(x, y, z, dx, dy, dz);
-            Console.WriteLine("C#: Spot Light ID: " + id);
+          
             SpotLight spot = new SpotLight(id, new Vector3(x, y, z), new Vector3(dx, dy, dz));
-            Console.WriteLine("Added new spotlight!");
-            //       Control.AllSceneObjects.Add(spot);
-
+            
             SceneObject so = CreateEmptySceneObject();
             so.Name = "SpotLight";
             so.Components.Add(spot);
-
         }
-        public static void CreateSpotLight(Guid guid)
+        public static SpotLight CreateSpotLight(Guid guid)
         {
             float x, y, z, dx, dy, dz;
             x = 0; y = 0; z = 0; dx = 0; dy = 0; dz = 0;
             int id = Bridge.CreateSpotLight(x, y, z, dx, dy, dz);
-            Console.WriteLine("C#: Spot Light ID: " + id);
+       //     Console.WriteLine("C#: Spot Light ID: " + id);
             SpotLight spot = new SpotLight(id, new Vector3(x, y, z), new Vector3(dx, dy, dz));
             //     Console.WriteLine("Added new spotlight!");
             spot.guid = guid;
-          //  Control.AllSceneObjects.Add(spot);
-
-            int count = 0;
-            foreach (var item in Control.AllSceneObjects)
-            {
-                if (item is SpotLight)
-                    count += 1;
-            }
-
-            Console.WriteLine("Spotlight count: " + count);
+            //  Control.AllSceneObjects.Add(spot);
+            return spot;
         }
 
         //Should be call loadModelFromDirectory
@@ -485,12 +475,12 @@ namespace ImpunityEngine.SceneManipulation
             }
             foreach (var item in scene.AllSpotLights)
             {
-                Console.WriteLine("Spot light: " + item.LightID);
+            //    Console.WriteLine("Spot light: " + item.LightID);
                 LoadSpotLight(item);
             }
             foreach (var item in scene.AllDirectionalLights)
             {
-                Console.WriteLine("Directional light: " + item.LightID);
+           //     Console.WriteLine("Directional light: " + item.LightID);
                 LoadDirectionalLight(item);
             }
             //2nd, we go through every item and set the data to their correct values
