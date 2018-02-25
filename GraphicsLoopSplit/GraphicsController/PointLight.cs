@@ -17,7 +17,6 @@ namespace ImpunityEngine
         public float linear { get; set; }
         public float quadratic { get; set; }
         public float maxDistance { get; set; }
-        //   public bool enabled { get; set; }
         public bool dynamic { get; set; }
 
         public PointLight(int id)

@@ -54,6 +54,7 @@ namespace ImpunityEngine.SceneManipulation
             }
             catch { return; }
         }
+
         public static void TestGetPointLightComponent(Type type)
         {
            // Type t = typeof(PointLight);
@@ -67,38 +68,31 @@ namespace ImpunityEngine.SceneManipulation
             Control.AllSceneObjects.Add(so);
             return so;
         }
+        public static SceneObject CreateEmptySceneObject(Guid guid)
+        {
+            Console.WriteLine("Creating empty SceneObject to which the point light shall be attached as component...");
+            int id = Bridge.CreateEmptySceneObject();
+            SceneObject so = new SceneObject(id);
+            so.guid = guid;
+            Control.AllSceneObjects.Add(so);
+            return so;
+        }
         public static void CreatePointLight()
         {
-            //What we will do now is 
-            //1. Create an empty SceneObject in the c++ world
-            //2. Get its ID, and give it to a new sceneObject in c# world
-            //3. Create a point light in c++ world, get its ID
-            //4. Create a point light in c# world, give it the ID
-            //5. Add this point light to the empty SceneObject's list of Components
-            
             int i = Bridge.CreatePointLight(0, 0, 0);
-            Console.WriteLine("C#: Point light ID: " + i);
             PointLight plight = new PointLight(i, new Vector3(0));
-            Console.WriteLine("Wow!");
-            //  SelectedSceneObject = plight;
-            //    Control.AllSceneObjects.Add(plight);
-
-            Console.WriteLine("Creating empty SceneObject to which the point light shall be attached as component...");
             int id = Bridge.CreateEmptySceneObject();
             SceneObject so = new SceneObject(id);
             so.Components.Add(plight);
             so.Name = "Point Light";
             Control.AllSceneObjects.Add(so);
         }
-        public static void CreatePointLight(Guid guid)
+        public static PointLight CreatePointLight(Guid guid)
         {
             int i = Bridge.CreatePointLight(0, 0, 0);
-            //    Console.WriteLine("C#: Point light ID: " + i);
             PointLight plight = new PointLight(i, new Vector3(0));
-            //  Console.WriteLine("Wow!");
-        //    SelectedSceneObject = plight;
             plight.guid = guid;
-       //     Control.AllSceneObjects.Add(plight);
+            return plight;
         }
 
         public static void CreateDirectionalLight()
@@ -486,7 +480,7 @@ namespace ImpunityEngine.SceneManipulation
             }
             foreach (var item in scene.AllPointLights)
             {
-                Console.WriteLine("Point Light: " + item.LightID);
+             //   Console.WriteLine("Point Light: " + item.LightID);
                 LoadPointLight(item);
             }
             foreach (var item in scene.AllSpotLights)

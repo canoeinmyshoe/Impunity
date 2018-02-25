@@ -37,44 +37,20 @@ namespace ImpunityEngine.Persistence
 
             //1st, we take a pass at loading everything from disk/blob
             Console.WriteLine("Scene Load Results: ");
-            foreach (var item in scene.AllSceneObjects)
+            foreach (var so in scene.AllSceneObjects)
             {
-                Console.WriteLine(item.Name);
-                LoadSceneObject(item);
+                Console.WriteLine(so.Name);
+                LoadSceneObject(so);
             }
-            foreach (var item in scene.AllPointLights)
-            {
-                Console.WriteLine("Point Light: " + item.LightID);
-                LoadPointLight(item);
-            }
-            foreach (var item in scene.AllSpotLights)
-            {
-                Console.WriteLine("Spot light: " + item.LightID);
-                LoadSpotLight(item);
-            }
-            foreach (var item in scene.AllDirectionalLights)
-            {
-                Console.WriteLine("Directional light: " + item.LightID);
-                LoadDirectionalLight(item);
-            }
+           
+         
+          
             //2nd, we go through every item and set the data to their correct values
             foreach (var item in scene.AllSceneObjects)
             {
                 DetailSceneObject(item, scene.AllSceneObjects);
             }
-            foreach (var item in scene.AllPointLights)
-            {
-             //   DetailPointLight(item, scene.AllPointLights);
-            }
-            foreach (var item in scene.AllSpotLights)
-            {
-                //DetailSpotLight(item, scene.AllSpotLights);
-            }
-
-            foreach (var item in scene.AllDirectionalLights)
-            {
-                //DetailDirLight(item, scene.AllDirectionalLights);
-            }
+          
 
             foreach (var item in scene.AllSkyboxes)
             {
@@ -105,6 +81,13 @@ namespace ImpunityEngine.Persistence
             //    ///Therefore, the SceneEditLauncher will need to be responsible for loading a scene.
             //    ///The topmost layer
             //}
+            foreach (var component in ser.Components)
+            {
+                if (component is SerializablePointLight)
+                {
+                    so.Components.Add(LoadPointLight(component as SerializablePointLight));
+                }
+            }
 
 
             if (ser.material.diffuseMap.FullPath.ToLower() != so.material.diffuseMap.FullPath.ToLower() && ser.material.diffuseMap.FullPath.ToLower() != "unknown")
@@ -259,7 +242,7 @@ namespace ImpunityEngine.Persistence
         {
 
             string pth = ser.modelPath;
-            if (pth.Length > 3)//It's a Model. Try to load it.
+            if (pth.Length > 16)//It's probably a Model. Try to load it.
             {
                 Console.WriteLine("Loading Model...");
                 try
@@ -268,16 +251,31 @@ namespace ImpunityEngine.Persistence
                     SceneMaster.LoadFromDirectory(ser.modelPath, ser.guid, ser.ChildGuids);
                     //   Console.WriteLine("Child Guid count: " + ser.ChildGuids.Count);
                 }
-                catch { }
+                catch
+                {
+                    //make an empty sceneObject with the model name
+                    SceneMaster.CreateEmptySceneObject(ser.guid);
+                }
             }
-            else //it's a child ignore it for now
+            else if(ser.ID > -1) //it's a child ignore it for now
             {
-                Console.WriteLine("Model child");
+                //this will not work for loading empty scene objects.
+                Console.WriteLine("M-T sceneObject");
+                SceneMaster.CreateEmptySceneObject(ser.guid);
             }
         }
-        private static void LoadPointLight(SerializablePointLight ser)
+        private static PointLight LoadPointLight(SerializablePointLight ser)
         {
-            SceneMaster.CreatePointLight(ser.guid);
+            PointLight pl = SceneMaster.CreatePointLight(ser.guid);
+            pl.SetAmbient(ser.ambient);
+            pl.SetDiffuse(ser.diffuse);
+            pl.SetSpecular(ser.specular);
+            pl.constant = ser.constant;
+            pl.linear = ser.linear;
+            pl.quadratic = ser.quadratic;
+            pl.SetMaxDistance(ser.maxDistance);
+            pl.dynamic = ser.dynamic;
+            return pl;
         }
         private static void LoadSpotLight(SerializableSpotLight ser)
         {
@@ -305,11 +303,7 @@ namespace ImpunityEngine.Persistence
             {
                 ProcessSceneObject(so, sceneFile);
             }
-            //also add all the textures and material details
-            foreach (var texture in Control.AllTextures)
-            {
-                //ProcessSceneTextures(texture, sceneFile);
-            }
+       
             foreach (var box in Control.Skyboxes)
             {
                 sceneFile.AllSkyboxes.Add(box);
@@ -375,22 +369,7 @@ namespace ImpunityEngine.Persistence
         }
         private static void ProcessSceneObject(SceneObject so, SceneFile scene)
         {
-            if (so is PointLight)
-            {
-             //   scene.AllPointLights.Add(SerializePointLight(so));
-            }
-            else if (so is DirectionalLight)
-            {
-               // scene.AllDirectionalLights.Add(SerializeDirectionalLight(so));
-            }
-            else if (so is SpotLight)
-            {
-            //    scene.AllSpotLights.Add(SerializeSpotLight(so));
-            }
-            else
-            {
-                scene.AllSceneObjects.Add(SerializeSceneObject(so));
-            }
+            scene.AllSceneObjects.Add(SerializeSceneObject(so));
         }
         //private static SerializablePointLight SerializePointLight(SceneObject so)
         //{
@@ -585,12 +564,43 @@ namespace ImpunityEngine.Persistence
             //}
             sp.Imps = so.Imps;
 
-
+            //sp.Components = so.Components;
+            foreach (var component in so.Components)
+            {
+                if (component is PointLight)
+                {
+                    sp.Components.Add(SerializePointLight(component as PointLight));
+                }
+            }
+            
             sp.material = so.material;
             sp.enabled = so.enabled;
 
             return sp;
         }
+
+        public static SerializablePointLight SerializePointLight(PointLight light)
+        {
+            SerializablePointLight sl = new SerializablePointLight();
+            sl.ID = light.ID;
+            sl.guid = light.guid;
+            sl.enabled = light.enabled;
+
+            sl.ambient = light.ambient;
+            sl.diffuse = light.diffuse;
+            sl.specular = light.specular;
+            sl.constant = light.constant;
+            sl.linear = light.linear;
+            sl.quadratic = light.quadratic;
+            sl.maxDistance = light.maxDistance;
+            sl.dynamic = light.dynamic;
+
+            return sl;
+
+        }
+
+
+
         #endregion
     }
 

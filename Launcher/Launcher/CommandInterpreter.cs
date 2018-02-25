@@ -158,14 +158,16 @@ namespace SceneEditLauncher
             string key = args[1].ToLower();
             string varType = args[2].ToLower();
             string firstValue = args[3].ToLower();
-
-            //if more than 4 vals, it's a vector3
-
+            
             if (key == "plight" || key == "pointlight")
             {
                 ConfigurePointLight(args);
             }
             else if (key == "slight" || key == "spotlight")
+            {
+
+            }
+            else if (key == "dlight" || key == "directionallight")
             {
 
             }

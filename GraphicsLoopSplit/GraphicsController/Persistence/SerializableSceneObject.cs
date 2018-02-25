@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace ImpunityEngine
 {
     public class SerializableSceneObject
@@ -25,6 +27,8 @@ namespace ImpunityEngine
         public Guid guid { get; set; }
         public List<Guid> ChildGuids { get; set; }
         public bool enabled { get; set; }
+        public List<Component> Components = new List<Component>();
+
     }
 
     public class SerializableDirectionalLight : SerializableSceneObject
@@ -36,10 +40,8 @@ namespace ImpunityEngine
         public Vector3 specular { get; set; }
  //       public bool enabled { get; set; }
     }
-    public class SerializablePointLight : SerializableSceneObject
+    public class SerializablePointLight : Component
     {
-        public int LightID { get; set; }
-        public Vector3 position { get; set; }
         public Vector3 ambient { get; set; }
         public Vector3 diffuse { get; set; }
         public Vector3 specular { get; set; }
@@ -47,7 +49,7 @@ namespace ImpunityEngine
         public float linear { get; set; }
         public float quadratic { get; set; }
         public float maxDistance { get; set; }
-      //  public bool enabled { get; set; }
+        public bool dynamic { get; set; }
     }
     public class SerializableSpotLight : SerializableSceneObject
     {
