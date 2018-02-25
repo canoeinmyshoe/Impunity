@@ -141,6 +141,133 @@ namespace SceneEditLauncher
 
         #region Methods referred to by the delegates
 
+
+        private void ConfigureDirectionalLight(string[] args)
+        {
+            string key = args[1].ToLower();//this would have been dlight or directionallight
+            string varType = args[2].ToLower();
+            string firstValue = args[3].ToLower();
+
+            if (SceneMaster.SelectedSceneObject == null)
+                return;
+            DirectionalLight sl;
+            try
+            {
+                sl = (DirectionalLight)SceneMaster.SelectedSceneObject.GetComponent(typeof(DirectionalLight));
+            }
+            catch { return; }
+
+            if (varType == "amb" || varType == "ambient")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                sl.SetAmbient(color);
+            }
+            else if (varType == "diff" || varType == "diffuse")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                sl.SetDiffuse(color);
+            }
+            else if (varType == "spec" || varType == "specular")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                sl.SetSpecular(color);
+            }
+            else if (varType == "enabled" || varType == "setactive")
+            {
+                try
+                {
+                    bool value = false;
+                    if (firstValue == "true")
+                    {
+                        value = true;
+                    }
+                    else
+                    {
+                        value = false;
+                    }
+                    sl.SetEnabled(value);
+                }
+                catch { return; }
+            }
+        }
+        private void ConfigureSpotLight(string[] args)
+        {
+            string key = args[1].ToLower();//this would have been slight or spotlight
+            string varType = args[2].ToLower();
+            string firstValue = args[3].ToLower();
+
+            if (SceneMaster.SelectedSceneObject == null)
+                return;
+            SpotLight sl;
+            try
+            {
+                sl = (SpotLight)SceneMaster.SelectedSceneObject.GetComponent(typeof(SpotLight));
+            }
+            catch { return; }
+
+            if (varType == "amb" || varType == "ambient")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                sl.SetAmbient(color);
+            }
+            else if (varType == "diff" || varType == "diffuse")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                sl.SetDiffuse(color);
+            }
+            else if (varType == "spec" || varType == "specular")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                sl.SetSpecular(color);
+            }
+            else if (varType == "distance" || varType == "dist" || varType == "maxdistance" || varType == "maxdist")
+            {
+                try
+                {
+                    float x = Convert.ToSingle(firstValue);
+                    sl.SetMaxDistance(x);
+                }
+                catch { return; }
+            }
+            else if (varType == "cutoff" || varType == "angle" || varType == "spread")
+            {
+                try
+                {
+                    float x = Convert.ToSingle(firstValue);
+                    sl.SetCutOff(x);
+                }
+                catch { return; }
+            }
+            else if (varType == "enabled" || varType == "setactive" || varType == "enable")
+            {
+                try
+                {
+                    bool value = false;
+                    if (firstValue == "true" ||firstValue == "t")
+                    {
+                        value = true;
+                    }
+                    else
+                    {
+                        value = false;
+                    }
+                    sl.SetEnabled(value);
+                }
+                catch { return; }
+            }
+        }
         void GetComponent(string[] args)
         {
             //args[0] getcomponent
@@ -165,11 +292,11 @@ namespace SceneEditLauncher
             }
             else if (key == "slight" || key == "spotlight")
             {
-
+                ConfigureSpotLight(args);
             }
             else if (key == "dlight" || key == "directionallight")
             {
-
+                ConfigureDirectionalLight(args);
             }
         }
         private void ConfigurePointLight(string[] args)
@@ -270,32 +397,7 @@ namespace SceneEditLauncher
 
             //we need to do this from UserClasses!
             AssemblyManager.ListAssemblies(className);
-
-
-            #region deprecated assembly search
-            //foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
-            //{
-
-            //    if (asm.FullName.ToString().ToLower().Contains("mscorlib") || asm.FullName.ToString().ToLower().Contains("system") ||
-            //        asm.FullName.ToString().ToLower().Contains("microsoft"))
-            //        continue;
-
-            //    Console.WriteLine("=========***" + asm.FullName.ToString() + "***==========");
-            //    foreach (Type t in asm.GetTypes())
-            //    {
-            //     //   Console.WriteLine(t.FullName.ToString());
-            //        if (t.Name.ToString() == className)
-            //        {
-            //            Console.WriteLine("EUREKA!"); //Excellent!
-            //            var inst = (ImpunityClass)Activator.CreateInstance(t);
-            //            SceneMaster.SelectedSceneObject.Imps.Add(inst);
-            //            inst.Start();
-            //        //    return;
-            //        }
-
-            //    }
-            //}
-            #endregion
+            
         }
         public object GetInstance(string strFullyQualifiedName)
         {

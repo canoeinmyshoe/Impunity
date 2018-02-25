@@ -51,10 +51,8 @@
     <Compile Include="Control.cs" />
     <Compile Include="DirectionalLight.cs" />
     <Compile Include="ExampleImpunityScripts\Character.cs" />
-    <Compile Include="CLE.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Interoperability\Bridge.cs" />
-    <Compile Include="Interoperability\CommandLinerInterpreter.cs" />
     <Compile Include="Interoperability\NativeTranslator.cs" />
     <Compile Include="ImpunityClass.cs" />
     <Compile Include="IUpdatable.cs" />
@@ -62,7 +60,6 @@
     <Compile Include="OpenGLExamples\OpenGLExampleController.cs" />
     <Compile Include="Persistence\SerializableSceneObject.cs" />
     <Compile Include="PointLight.cs" />
-    <Compile Include="GraphicsProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>

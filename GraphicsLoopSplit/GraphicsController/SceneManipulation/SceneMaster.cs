@@ -1006,23 +1006,7 @@ namespace ImpunityEngine.SceneManipulation
                 SelectedSceneObject = SceneObject.FindByID(index);
                 return;
             }
-                
-
-            if (type == (int)SelectionTypes.regular)
-            {
-                SelectedSceneObject = SceneObject.FindByID(index);
-            }
-            else if (type == (int)SelectionTypes.pointlight)
-            {
-           //     SelectedSceneObject = PointLight.FindLightByID(index);
-            }
-            else if (type == (int)SelectionTypes.spotlight)
-            {
-             //   SelectedSceneObject = SpotLight.FindLightByID(index);
-            }
-            else if (type == (int)SelectionTypes.directionallight) {
-            //    SelectedSceneObject = DirectionalLight.FindLightByID(index);
-            }
+            SelectedSceneObject = SceneObject.FindByID(index);
         }
 
         public static void GrabObject(float dist, string axis)
@@ -1030,48 +1014,13 @@ namespace ImpunityEngine.SceneManipulation
             if (SelectedSceneObject == null)
                 return;
 
-            //if (SelectedSceneObject is PointLight)
-            //{
-            //    PointLight dl = (PointLight)SelectedSceneObject;
-            //    if (axis == "x")
-            //        dl.SetPosition(new Vector3(dl.position.x + dist,
-            //            dl.position.y, dl.position.z));
-            //    else if (axis == "y")
-            //        dl.SetPosition(new Vector3(dl.position.x,
-            //           dl.position.y + dist, dl.position.z));
-            //    else if (axis == "z")
-            //        dl.SetPosition(new Vector3(dl.position.x,
-            //            dl.position.y, dl.position.z + dist));
-            //}
-             if (SelectedSceneObject is SpotLight)
-            {
-                //SpotLight dl = (SpotLight)SelectedSceneObject;
-                //if (axis == "x")
-                //    dl.SetPosition(new Vector3(dl.position.x + dist,
-                //        dl.position.y, dl.position.z));
-                //else if (axis == "y")
-                //    dl.SetPosition(new Vector3(dl.position.x,
-                //       dl.position.y + dist, dl.position.z));
-                //else if (axis == "z")
-                //    dl.SetPosition(new Vector3(dl.position.x,
-                //        dl.position.y, dl.position.z + dist));
-            }
-            else if (SelectedSceneObject is DirectionalLight)
-            {
-                Console.WriteLine("Directional lights don't have a position...");
-            }
-            else
-            {
-                //Regular SceneObject
-                if (axis == "x")
-                    SelectedSceneObject.transform.position.x += dist;
-                else if (axis == "y")
-                    SelectedSceneObject.transform.position.y += dist;
-                else if (axis == "z")
-                    SelectedSceneObject.transform.position.z += dist;
-
-           //     SelectedSceneObject.transform.SetTransform(SelectedSceneObject.ID);
-            }
+            //Regular SceneObject
+            if (axis == "x")
+                SelectedSceneObject.transform.position.x += dist;
+            else if (axis == "y")
+                SelectedSceneObject.transform.position.y += dist;
+            else if (axis == "z")
+                SelectedSceneObject.transform.position.z += dist;
 
         }
 
