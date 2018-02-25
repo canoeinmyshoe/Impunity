@@ -15,7 +15,6 @@ using System.Collections;
 using UserClasses;
 using ImpunityEngine.Persistence;
 
-
 namespace SceneEditLauncher
 {
     class CommandInterpreter
@@ -47,6 +46,7 @@ namespace SceneEditLauncher
         delegate void _setPosition(string[] args);
         delegate void _pauseEngine(string[] args);
         delegate void _quitEditor(string[] args);
+        delegate void _testGetComponent(string[] args);
         #endregion
 
         public CommandInterpreter() {
@@ -106,6 +106,8 @@ namespace SceneEditLauncher
             Methods.Add("pause", pe); Methods.Add("p", pe);
             _quitEditor qe = QuitEditor;
             Methods.Add("quit", qe); Methods.Add("q", qe);
+            _testGetComponent tgc = GetComponent;
+            Methods.Add("getcomponent", tgc); Methods.Add("getcomp", tgc);
         }
    
         public void ProcessInput(string input)
@@ -138,6 +140,104 @@ namespace SceneEditLauncher
         }
 
         #region Methods referred to by the delegates
+
+        void GetComponent(string[] args)
+        {
+            //args[0] getcomponent
+            //args[1] component type
+            //args[2] the variable to change
+            //args[3 - 6] the value to which the variable is to be changed
+
+            //eg.  "getcomp plight amb .1 .1 .1"
+            if (3 > args.Length - 1)
+                return;
+            if (SceneMaster.SelectedSceneObject == null)
+                return;
+            Console.WriteLine("Getting component of type " + args[1]);
+
+            string key = args[1].ToLower();
+            string varType = args[2].ToLower();
+            string firstValue = args[3].ToLower();
+
+            //if more than 4 vals, it's a vector3
+
+            if (key == "plight" || key == "pointlight")
+            {
+                ConfigurePointLight(args);
+            }
+            else if (key == "slight" || key == "spotlight")
+            {
+
+            }
+        }
+        private void ConfigurePointLight(string[] args)
+        {
+            string key = args[1].ToLower();
+            string varType = args[2].ToLower();
+            string firstValue = args[3].ToLower();
+
+            if (varType == "amb" || varType == "ambient")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                SceneMaster.SetPointLightAmbient(color);
+            }
+            else if (varType == "diff" || varType == "diffuse")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                SceneMaster.SetPointLightDiffuse(color);
+            }
+            else if (varType == "spec" || varType == "specular")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                SceneMaster.SetPointLightSpecular(color);
+            }
+            else if (varType == "distance" || varType == "dist" || varType == "maxdistance" || varType == "maxdist")
+            {
+                try
+                {
+                    float x = Convert.ToSingle(firstValue);
+                    PointLight p = (PointLight)SceneMaster.SelectedSceneObject.GetComponent(typeof(PointLight));
+                    p.SetMaxDistance(x);
+                }
+                catch { return; }
+            }
+            else if (varType == "enabled" || varType == "setactive")
+            {
+                try
+                {
+                    bool value = false;
+                    if (firstValue == "true")
+                    {
+                        value = true;
+                    }
+                    else {
+                        value = false;
+                    }
+                    PointLight p = (PointLight)SceneMaster.SelectedSceneObject.GetComponent(typeof(PointLight));
+                    p.SetEnabled(value);
+                }
+                catch { return; }
+            }
+        }
+        private Vector3 StringToVec3(string ex, string wy, string ze)
+        {
+            float x = 0; float y = 0; float z = 0;
+            try
+            {
+                x = Convert.ToSingle(ex); y = Convert.ToSingle(wy);z = Convert.ToSingle(ze);
+                return new Vector3(x, y, z);
+            }
+            catch (Exception)
+            {
+                throw new FormatException("Failed to convert string to vector3");
+            }
+        }
         void QuitEditor(string[] args) {
             Console.WriteLine("Have a nice life, bro.");
             CommandLineEditor.shouldRun = false;

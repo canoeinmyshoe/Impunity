@@ -66,34 +66,7 @@ namespace ImpunityEngine
 
             SetPosition(sceneObject.transform);
         }
-
-        //The methods for finding a pointlight
-        //public static PointLight FindLightByID(int id)
-        //{
-        //    foreach (var light in Control.AllSceneObjects)
-        //    {
-        //        if (light is PointLight)
-        //        {
-        //            PointLight p = (PointLight)light;
-        //            if (p.LightID == id) {
-        //                return p;
-        //            }
-        //        }
-        //    }
-        //    throw new NullReferenceException($"Point light ID \"{id}\" not found");
-        //}
-        //public static PointLight FindLightByGuid(Guid gid) {
-
-        //    foreach (var light in Control.AllSceneObjects)
-        //    {
-        //        if (light.guid == gid)
-        //        {
-        //            return (PointLight)light;
-        //        }
-        //    }
-        //    throw new NullReferenceException();
-        //}
-
+        
 
         public void SetPosition(Transform transfom)//the light would do this if it's dynamic
         {

@@ -17,6 +17,48 @@ namespace ImpunityEngine.SceneManipulation
     {
         public static SceneObject SelectedSceneObject;
 
+
+        public static void SetPointLightSpecular(Vector3 color)
+        {
+            if (SelectedSceneObject == null)
+                return;
+            try
+            {
+                Type type = typeof(PointLight);
+                PointLight p = (PointLight)SelectedSceneObject.GetComponent(type);
+                p.SetSpecular(color);
+            }
+            catch { return; }
+        }
+        public static void SetPointLightDiffuse(Vector3 color)
+        {
+            if (SelectedSceneObject == null)
+                return;
+            try
+            {
+                Type type = typeof(PointLight);
+                PointLight p = (PointLight)SelectedSceneObject.GetComponent(type);
+                p.SetDiffuse(color);
+            }
+            catch { return; }
+        }
+        public static void SetPointLightAmbient(Vector3 color)
+        {
+            if (SelectedSceneObject == null)
+                return;
+            try
+            {
+                Type type = typeof(PointLight);
+                PointLight p = (PointLight)SelectedSceneObject.GetComponent(type);
+                p.SetAmbient(color);
+            }
+            catch { return; }
+        }
+        public static void TestGetPointLightComponent(Type type)
+        {
+           // Type t = typeof(PointLight);
+            PointLight p = (PointLight)SceneMaster.SelectedSceneObject.GetComponent(type);
+        }
         public static SceneObject CreateEmptySceneObject()
         {
             Console.WriteLine("Creating empty SceneObject to which the point light shall be attached as component...");
