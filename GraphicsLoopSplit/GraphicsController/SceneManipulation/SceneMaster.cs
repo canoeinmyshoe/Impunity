@@ -999,13 +999,11 @@ namespace ImpunityEngine.SceneManipulation
         }
 
 
-        public static void SelectSceneObject(int index, int type) {
-           int result = Bridge.SelectSceneObject(index, type);
-            if (result == 1) {
-                Console.WriteLine("Selecting empty sceneObject " + index);
-                SelectedSceneObject = SceneObject.FindByID(index);
+        public static void SelectSceneObject(int index) {
+            int result = Bridge.SelectSceneObject(index);
+            if (result == 1)
                 return;
-            }
+
             SelectedSceneObject = SceneObject.FindByID(index);
         }
 

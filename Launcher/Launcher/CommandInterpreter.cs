@@ -82,14 +82,14 @@ namespace SceneEditLauncher
             Methods.Add("cutoff", cut);
             _setEnabled en = SetEnabled;
             Methods.Add("enable", en); Methods.Add("setactive", en);
-            _setMaxDist dis = SetMaxDist;
-            Methods.Add("maxdist", dis); Methods.Add("maxdistance", dis);
-            _setAmbientLevel amb = SetAmbientLevel;
-            Methods.Add("amb", amb); Methods.Add("ambient", amb);
-            _setDiffuseLevel diff = SetDiffuseLevel;
-            Methods.Add("diff", diff); Methods.Add("diffuse", diff);
-            _setSpecularLevel spec = SetSpecularLevel;
-            Methods.Add("spec", spec); Methods.Add("specular", spec);
+            //_setMaxDist dis = SetMaxDist;
+            //Methods.Add("maxdist", dis); Methods.Add("maxdistance", dis);
+            //_setAmbientLevel amb = SetAmbientLevel;
+            //Methods.Add("amb", amb); Methods.Add("ambient", amb);
+            //_setDiffuseLevel diff = SetDiffuseLevel;
+            //Methods.Add("diff", diff); Methods.Add("diffuse", diff);
+            //_setSpecularLevel spec = SetSpecularLevel;
+            //Methods.Add("spec", spec); Methods.Add("specular", spec);
             _showList lis = ShowList;
             Methods.Add("list", lis);
             _create crt = Create;
@@ -657,31 +657,15 @@ namespace SceneEditLauncher
             int index = 0;
             //we are expecting 
             //args[index + 1] ---- ID of sceneObject to select
-            //args[index + 2] ---- type of sceneObject to select
-            if (index + 2 > args.Length - 1)
+            //args[index + 2] ---- type of sceneObject to select - DEPRECATED
+            if (index + 1 > args.Length - 1)
                 return;
             Console.WriteLine("Selecting scene object: " + args[index + 1]);
             int result;
             if (!int.TryParse(args[index + 1], out result))
                 return;
-            string key = args[index + 2].ToLower();
-            if (key == "sceneobject" || key == "so")
-            {
-                //tell/get selection to c++
-                SceneMaster.SelectSceneObject(result, (int)SelectionTypes.regular);
-            }
-            else if (key == "pointlight" || key == "plight")
-            {
-                SceneMaster.SelectSceneObject(result, (int)SelectionTypes.pointlight);
-            }
-            else if (key == "spotlight" || key == "slight")
-            {
-                SceneMaster.SelectSceneObject(result, (int)SelectionTypes.spotlight);
-            }
-            else if (key == "directionallight" || key == "dlight")
-            {
-                SceneMaster.SelectSceneObject(result, (int)SelectionTypes.directionallight);
-            }
+
+            SceneMaster.SelectSceneObject(result);
         }
 
         void LoadScene(string[] args)
@@ -818,158 +802,7 @@ namespace SceneEditLauncher
 
         }
 
-        void SetMaxDist(string[] args)
-        {
-            int index = 0;
-            //we are expecting (after index) 
-            //args[index + 1]  - ID of light
-            //args[index + 2] - new ambient value
-            //args[index + 3} - light type to search for
-            if (index + 3 > args.Length - 1)
-                return;
-            int result;
-            if (!int.TryParse(args[index + 1], out result))
-                return;
-            float x = 0;
-            try
-            {
-                x = Convert.ToSingle(args[index + 2]);
-            }
-            catch { return; }
 
-            string key = args[3].ToLower();
-            if (key == "pointlight" || key == "plight")
-            {
-              //  try { PointLight.FindLightByID(result).SetMaxDistance(x); } catch { Console.WriteLine("Failed to set maxdist point light level."); }
-                return;
-            }
-            else if (key == "spotlight" || key == "slight")
-            {
-              //  try { SpotLight.FindLightByID(result).SetMaxDistance(x); } catch { }
-                return;
-            }
-            else if (key == "directionallight" || key == "dlight")
-            {
-                Console.WriteLine("Directional lights do not have a max distance property");
-                //    try { DirectionalLight.FindLightByID(result).SetAmbient(ambient); } catch { }
-                return;
-            }
-        }
-
-        void SetAmbientLevel(string[] args)
-        {
-            int index = 0;
-            //we are expecting (after index) 
-            //args[index + ]  - ID of light
-            //args[index + 2-5] - new ambient value
-            //args[index + 6] - type of light
-            if (index + 5 > args.Length - 1)
-                return;
-            int result;
-            if (!int.TryParse(args[index + 1], out result))
-                return;
-            float x = 0, y = 0, z = 0;
-            try
-            {
-                x = Convert.ToSingle(args[index + 2]);
-                y = Convert.ToSingle(args[index + 3]);
-                z = Convert.ToSingle(args[index + 4]);
-            }
-            catch { return; }
-            Vector3 ambient = new Vector3(x, y, z);
-            string key = args[5].ToLower();
-            if (key == "pointlight" || key == "plight")
-            {
-             //   try { PointLight.FindLightByID(result).SetAmbient(ambient); } catch { Console.WriteLine("Failed to set ambient point light level."); }
-                return;
-            }
-            else if (key == "spotlight" || key == "slight")
-            {
-             //   try { SpotLight.FindLightByID(result).SetAmbient(ambient); } catch { }
-                return;
-            }
-            else if (key == "directionallight" || key == "dlight")
-            {
-          //      try { DirectionalLight.FindLightByID(result).SetAmbient(ambient); } catch { }
-                return;
-            }
-        }
-        void SetDiffuseLevel(string[] args)
-        {
-            int index = 0;
-            //we are expecting (after index) 
-            //args[index + ]  - ID of light
-            //args[index + 2-5] - new ambient value
-            //args[index + 6] - type of light
-            if (index + 5 > args.Length - 1)
-                return;
-            int result;
-            if (!int.TryParse(args[index + 1], out result))
-                return;
-            float x = 0, y = 0, z = 0;
-            try
-            {
-                x = Convert.ToSingle(args[index + 2]);
-                y = Convert.ToSingle(args[index + 3]);
-                z = Convert.ToSingle(args[index + 4]);
-            }
-            catch { return; }
-            Vector3 color = new Vector3(x, y, z);
-            string key = args[5].ToLower();
-            if (key == "pointlight" || key == "plight")
-            {
-            //    try { PointLight.FindLightByID(result).SetDiffuse(color); } catch { Console.WriteLine("Failed to set diffuse point light level."); }
-                return;
-            }
-            else if (key == "spotlight" || key == "slight")
-            {
-          //      try { SpotLight.FindLightByID(result).SetDiffuse(color); } catch { }
-                return;
-            }
-            else if (key == "directionallight" || key == "dlight")
-            {
-           //     try { DirectionalLight.FindLightByID(result).SetDiffuse(color); } catch { }
-                return;
-            }
-        }
-        void SetSpecularLevel( string[] args)
-        {
-            int index = 0;
-            //we are expecting (after index) 
-            //args[index + ]  - ID of light
-            //args[index + 2-5] - new ambient value
-            //args[index + 6] - type of light
-            if (index + 5 > args.Length - 1)
-                return;
-            int result;
-            if (!int.TryParse(args[index + 1], out result))
-                return;
-            float x = 0, y = 0, z = 0;
-            try
-            {
-                x = Convert.ToSingle(args[index + 2]);
-                y = Convert.ToSingle(args[index + 3]);
-                z = Convert.ToSingle(args[index + 4]);
-            }
-            catch { return; }
-            Vector3 color = new Vector3(x, y, z);
-            string key = args[5].ToLower();
-            if (key == "pointlight" || key == "plight")
-            {
-           //     try { PointLight.FindLightByID(result).SetSpecular(color); } catch { Console.WriteLine("Failed to set specular point light level."); }
-                return;
-            }
-            else if (key == "spotlight" || key == "slight")
-            {
-             //   try { SpotLight.FindLightByID(result).SetSpecular(color); } catch { }
-                return;
-            }
-            else if (key == "directionallight" || key == "dlight")
-            {
-          //      try { DirectionalLight.FindLightByID(result).SetSpecular(color); } catch { }
-                return;
-            }
-        }
 
 
         void ShowList( string[] args)
@@ -1053,40 +886,15 @@ namespace SceneEditLauncher
                 Console.WriteLine("Creating spot light.");
                 SceneMaster.CreateSpotLight();
             }
-            else if (key == "model" || key == "mdl")
-            {
-                Console.WriteLine("Creating model");
-                //LoadModel(index, args);
-            }
-            else if (key == "texture" || key == "image" || key == "img" || key == "tex")
-            {
 
-                Console.WriteLine("Loading texture...");
-             //   LoadTexture(index, args);
-            }
-            else if (key == "cubemap" || key == "skybox")
-            {
-                Console.WriteLine("Creating cube map...");
-                //CreateCubeMap(index, args);
-            }
-            else if (key == "sceneobject" || key == "so") {
-                CreateEmptySceneObject();
-            }
         }
+
 
         void CreateCubeMap(string[] args) {
             //if (index + 1 > args.Length - 1)
             //    return;
 
             SceneMaster.CreateCubeMap();
-        }
-        void CreateEmptySceneObject()
-        {
-
-            SceneObject so = new SceneObject(true);
-            so.Name = "Empty SceneObject";
-            Control.AllSceneObjects.Add(so);
-            Console.WriteLine("New scene object created.");
         }
         void LoadTexture(string[] args)
         {
