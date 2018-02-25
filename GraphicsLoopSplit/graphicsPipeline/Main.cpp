@@ -203,6 +203,14 @@ int currentKeyAction = -3000;
 extern "C"
 {
 
+	__declspec(dllexport) int CreateEmptySceneObject() {
+	
+		SceneObject so;
+		so.ID = AllSceneObjects.size();
+		AllSceneObjects.push_back(so);
+
+		return so.ID;
+	}
 	__declspec(dllexport) int CreateSkyBox(char* right, char * left, char * top, char* bottom, char* front, char* back ) {
 	
 		//1. right
@@ -1426,7 +1434,7 @@ extern "C"
 		if (id > SceneSpotLights.size()-1)
 			return -1;
 
-		SceneSpotLights[id].position = glm::vec3(x, y, x);
+		SceneSpotLights[id].position = glm::vec3(x, y, z);
 		//cout << "C++: set position of spotlight" << endl;
 
 		return 0;
@@ -1435,8 +1443,8 @@ extern "C"
 		if (id > SceneSpotLights.size() - 1)
 			return -1;
 
-		SceneSpotLights[id].direction = glm::vec3(x, y, x);
-		cout << "C++: set direction of spotlight" << endl;
+		SceneSpotLights[id].direction = glm::vec3(x, y, z);
+	//	cout << "C++: set direction of spotlight" << endl;
 
 		return 0;
 	}

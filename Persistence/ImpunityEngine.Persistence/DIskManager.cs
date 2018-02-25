@@ -64,16 +64,16 @@ namespace ImpunityEngine.Persistence
             }
             foreach (var item in scene.AllPointLights)
             {
-                DetailPointLight(item, scene.AllPointLights);
+             //   DetailPointLight(item, scene.AllPointLights);
             }
             foreach (var item in scene.AllSpotLights)
             {
-                DetailSpotLight(item, scene.AllSpotLights);
+                //DetailSpotLight(item, scene.AllSpotLights);
             }
 
             foreach (var item in scene.AllDirectionalLights)
             {
-                DetailDirLight(item, scene.AllDirectionalLights);
+                //DetailDirLight(item, scene.AllDirectionalLights);
             }
 
             foreach (var item in scene.AllSkyboxes)
@@ -141,115 +141,119 @@ namespace ImpunityEngine.Persistence
             so.SetMaterialSpecular(ser.material.specular);
             so.SetShininess(ser.material.shininess);
         }
-        private static void DetailPointLight(SerializablePointLight ser, List<SerializablePointLight> allSer)
-        {
+        //private static void DetailPointLight(SerializablePointLight ser, List<SerializablePointLight> allSer)
+        //{
 
-            //Find the PointLight by Guid
-            PointLight so;
-            try { so = PointLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find PointLight " + ser.guid.ToString()); return; }
+        //    //Find the PointLight by Guid
+        //    PointLight so;
+        //    try { so = PointLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find PointLight " + ser.guid.ToString()); return; }
 
-            so.Name = ser.Name;
-            so.Tag = ser.Tag;
-            so.isStatic = ser.isStatic;
-            so.transform = ser.transform;
-            foreach (var imp in ser.Imps)//unknown if this works
-            {
-                so.Imps.Add(imp);
-            }
-            //we will have to set custom material/texture/shader details 
-            //one property at a time
-            //so don't worry about that, as we don't even have methods
-            //to set material values yet
+        //    so.Name = ser.Name;
+        //    so.Tag = ser.Tag;
+        //    so.isStatic = ser.isStatic;
+        //    so.transform = ser.transform;
+        //    foreach (var imp in ser.Imps)//unknown if this works
+        //    {
+        //        so.Imps.Add(imp);
+        //    }
+        //    //we will have to set custom material/texture/shader details 
+        //    //one property at a time
+        //    //so don't worry about that, as we don't even have methods
+        //    //to set material values yet
 
-            //We can also manage complex child/parent relationships here
+        //    //We can also manage complex child/parent relationships here
 
-            //point light variables
-            so.SetPosition(ser.position);
-            so.SetAmbient(ser.ambient);
-            so.SetDiffuse(ser.diffuse);
-            so.SetSpecular(ser.specular);
-            so.constant = ser.constant;
-            so.linear = ser.linear;
-            so.quadratic = ser.quadratic;
-            so.SetMaxDistance(ser.maxDistance);
-            so.SetEnabled(ser.enabled);
+        //    //point light variables
+        //    so.SetPosition(ser.position);
+        //    so.SetAmbient(ser.ambient);
+        //    so.SetDiffuse(ser.diffuse);
+        //    so.SetSpecular(ser.specular);
+        //    so.constant = ser.constant;
+        //    so.linear = ser.linear;
+        //    so.quadratic = ser.quadratic;
+        //    so.SetMaxDistance(ser.maxDistance);
+        //    so.SetEnabled(ser.enabled);
 
-            //you actually need to call the methods to set this...
-        }
-        private static void DetailSpotLight(SerializableSpotLight ser, List<SerializableSpotLight> allSer)
-        {
+        //    //you actually need to call the methods to set this...
+        //}
 
-            //Find the PointLight by Guid
-            SpotLight so;
-            try { so = SpotLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find spot light " + ser.guid.ToString()); return; }
 
-            so.Name = ser.Name;
-            so.Tag = ser.Tag;
-            so.isStatic = ser.isStatic;
-            so.transform = ser.transform;
-            foreach (var imp in ser.Imps)//unknown if this works
-            {
-                so.Imps.Add(imp);
-            }
-            //we will have to set custom material/texture/shader details 
-            //one property at a time
-            //so don't worry about that, as we don't even have methods
-            //to set material values yet
+        //private static void DetailSpotLight(SerializableSpotLight ser, List<SerializableSpotLight> allSer)
+        //{
 
-            //We can also manage complex child/parent relationships here
+        //    //Find the PointLight by Guid
+        //    SpotLight so;
+        //    try { so = SpotLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find spot light " + ser.guid.ToString()); return; }
 
-            //point light variables
-            so.SetPosition(ser.position);
-            so.SetAmbient(ser.ambient);
-            so.SetDiffuse(ser.diffuse);
-            so.SetSpecular(ser.specular);
+        //    so.Name = ser.Name;
+        //    so.Tag = ser.Tag;
+        //    so.isStatic = ser.isStatic;
+        //    so.transform = ser.transform;
+        //    foreach (var imp in ser.Imps)//unknown if this works
+        //    {
+        //        so.Imps.Add(imp);
+        //    }
+        //    //we will have to set custom material/texture/shader details 
+        //    //one property at a time
+        //    //so don't worry about that, as we don't even have methods
+        //    //to set material values yet
 
-            so.cutOffRatio = ser.cutOffRatio;
-            so.SetDirection(ser.direction);
-            so.SetCutOff(ser.cutOff);
+        //    //We can also manage complex child/parent relationships here
 
-            so.SetMaxDistance(ser.maxDistance);
-            so.SetEnabled(ser.enabled);
+        //    //point light variables
+        //    so.SetPosition(ser.position);
+        //    so.SetAmbient(ser.ambient);
+        //    so.SetDiffuse(ser.diffuse);
+        //    so.SetSpecular(ser.specular);
 
-            //you actually need to call the methods to set this...
-        }
-        private static void DetailDirLight(SerializableDirectionalLight ser, List<SerializableDirectionalLight> allSer)
-        {
+        //    so.cutOffRatio = ser.cutOffRatio;
+        //    so.SetDirection(ser.direction);
+        //    so.SetCutOff(ser.cutOff);
 
-            //Find the PointLight by Guid
-            DirectionalLight so;
-            try { so = DirectionalLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find spot light " + ser.guid.ToString()); return; }
+        //    so.SetMaxDistance(ser.maxDistance);
+        //    so.SetEnabled(ser.enabled);
 
-            so.Name = ser.Name;
-            so.Tag = ser.Tag;
-            so.isStatic = ser.isStatic;
-            so.transform = ser.transform;
-            foreach (var imp in ser.Imps)//unknown if this works
-            {
-                so.Imps.Add(imp);
-            }
-            //we will have to set custom material/texture/shader details 
-            //one property at a time
-            //so don't worry about that, as we don't even have methods
-            //to set material values yet
+        //    //you actually need to call the methods to set this...
+        //}
 
-            //We can also manage complex child/parent relationships here
 
-            //point light variables
-            // so.SetPosition(ser.position);
-            so.SetAmbient(ser.ambient);
-            so.SetDiffuse(ser.diffuse);
-            so.SetSpecular(ser.specular);
+        //private static void DetailDirLight(SerializableDirectionalLight ser, List<SerializableDirectionalLight> allSer)
+        //{
 
-            //so.cutOffRatio = ser.cutOffRatio;
-            so.SetDirection(ser.direction);
-            //  so.SetCutOff(ser.cutOff);
+        //    //Find the PointLight by Guid
+        //    DirectionalLight so;
+        //    try { so = DirectionalLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find spot light " + ser.guid.ToString()); return; }
 
-            //  so.SetMaxDistance(ser.maxDistance);
-            so.SetEnabled(ser.enabled);
+        //    so.Name = ser.Name;
+        //    so.Tag = ser.Tag;
+        //    so.isStatic = ser.isStatic;
+        //    so.transform = ser.transform;
+        //    foreach (var imp in ser.Imps)//unknown if this works
+        //    {
+        //        so.Imps.Add(imp);
+        //    }
+        //    //we will have to set custom material/texture/shader details 
+        //    //one property at a time
+        //    //so don't worry about that, as we don't even have methods
+        //    //to set material values yet
 
-            //you actually need to call the methods to set this...
-        }
+        //    //We can also manage complex child/parent relationships here
+
+        //    //point light variables
+        //    // so.SetPosition(ser.position);
+        //    so.SetAmbient(ser.ambient);
+        //    so.SetDiffuse(ser.diffuse);
+        //    so.SetSpecular(ser.specular);
+
+        //    //so.cutOffRatio = ser.cutOffRatio;
+        //    so.SetDirection(ser.direction);
+        //    //  so.SetCutOff(ser.cutOff);
+
+        //    //  so.SetMaxDistance(ser.maxDistance);
+        //    so.SetEnabled(ser.enabled);
+
+        //    //you actually need to call the methods to set this...
+        //}
 
         private static void LoadSceneObject(SerializableSceneObject ser)
         {
@@ -373,170 +377,174 @@ namespace ImpunityEngine.Persistence
         {
             if (so is PointLight)
             {
-                scene.AllPointLights.Add(SerializePointLight(so));
+             //   scene.AllPointLights.Add(SerializePointLight(so));
             }
             else if (so is DirectionalLight)
             {
-                scene.AllDirectionalLights.Add(SerializeDirectionalLight(so));
+               // scene.AllDirectionalLights.Add(SerializeDirectionalLight(so));
             }
             else if (so is SpotLight)
             {
-                scene.AllSpotLights.Add(SerializeSpotLight(so));
+            //    scene.AllSpotLights.Add(SerializeSpotLight(so));
             }
             else
             {
                 scene.AllSceneObjects.Add(SerializeSceneObject(so));
             }
         }
-        private static SerializablePointLight SerializePointLight(SceneObject so)
-        {
-            SerializablePointLight sp = new SerializablePointLight();
-            PointLight pl = (PointLight)so;
-            sp.LightID = pl.LightID;
-            sp.position = pl.position;
-            sp.ambient = pl.ambient;
-            sp.guid = so.guid;
-            sp.diffuse = pl.diffuse;
-            sp.specular = pl.specular;
-            sp.constant = pl.constant;
-            sp.linear = pl.linear;
-            sp.quadratic = pl.quadratic;
-            sp.maxDistance = pl.maxDistance;
-            sp.enabled = pl.enabled;
+        //private static SerializablePointLight SerializePointLight(SceneObject so)
+        //{
+        //    SerializablePointLight sp = new SerializablePointLight();
+        //    PointLight pl = (PointLight)so;
+        //    sp.LightID = pl.LightID;
+        //    sp.position = pl.position;
+        //    sp.ambient = pl.ambient;
+        //    sp.guid = so.guid;
+        //    sp.diffuse = pl.diffuse;
+        //    sp.specular = pl.specular;
+        //    sp.constant = pl.constant;
+        //    sp.linear = pl.linear;
+        //    sp.quadratic = pl.quadratic;
+        //    sp.maxDistance = pl.maxDistance;
+        //    sp.enabled = pl.enabled;
 
-            sp.modelPath = so.modelPath;
-            sp.Name = pl.Name;
-            sp.Tag = pl.Tag;
-            sp.ID = pl.ID;
-            sp.MeshID = pl.MeshID;
-            sp.ShaderID = pl.ShaderID;
-            sp.ParentID = pl.ParentID;
+        //    sp.modelPath = so.modelPath;
+        //    sp.Name = pl.Name;
+        //    sp.Tag = pl.Tag;
+        //    sp.ID = pl.ID;
+        //    sp.MeshID = pl.MeshID;
+        //    sp.ShaderID = pl.ShaderID;
+        //    sp.ParentID = pl.ParentID;
 
-            sp.isChild = pl.isChild;
-            sp.isStatic = pl.isStatic;
-            sp.transform = pl.transform;
-            sp.ChildIDs = new int[pl.Children.Count];
-            sp.ChildGuids = new List<Guid>();
-            for (int i = 0; i < so.Children.Count; i++)
-            {
-                sp.ChildIDs[i] = so.Children[i].ID;
-                sp.ChildGuids.Add(so.Children[i].guid);
-            }
-            sp.Imps = so.Imps;
-            //foreach (var imp in so.Imps)
-            //{
-            //    string type = imp.GetType().ToString();
-            //    int start = type.IndexOf(".") + 1;
-            //    string className = type.Substring(start);
-            //    sp.impTypes.Add(className);
-            //}
+        //    sp.isChild = pl.isChild;
+        //    sp.isStatic = pl.isStatic;
+        //    sp.transform = pl.transform;
+        //    sp.ChildIDs = new int[pl.Children.Count];
+        //    sp.ChildGuids = new List<Guid>();
+        //    for (int i = 0; i < so.Children.Count; i++)
+        //    {
+        //        sp.ChildIDs[i] = so.Children[i].ID;
+        //        sp.ChildGuids.Add(so.Children[i].guid);
+        //    }
+        //    sp.Imps = so.Imps;
+        //    //foreach (var imp in so.Imps)
+        //    //{
+        //    //    string type = imp.GetType().ToString();
+        //    //    int start = type.IndexOf(".") + 1;
+        //    //    string className = type.Substring(start);
+        //    //    sp.impTypes.Add(className);
+        //    //}
 
-            sp.material = pl.material;
+        //    sp.material = pl.material;
 
-            return sp;
-        }
-        private static SerializableDirectionalLight SerializeDirectionalLight(SceneObject so)
-        {
-            SerializableDirectionalLight sp = new SerializableDirectionalLight();
-            DirectionalLight pl = (DirectionalLight)so;
-            sp.LightID = pl.LightID;
-            //   sp.position = pl.position;
-            sp.ambient = pl.ambient;
-            sp.diffuse = pl.diffuse;
-            sp.guid = so.guid;
-            sp.specular = pl.specular;
-            //     sp.constant = pl.constant;
-            //sp.linear = pl.linear;
-            //sp.quadratic = pl.quadratic;
-            //sp.maxDistance = pl.maxDistance;
-            sp.enabled = pl.enabled;
-            sp.modelPath = so.modelPath;
-            sp.enabled = pl.enabled;
-            sp.direction = pl.direction;
+        //    return sp;
+        //}
 
-            sp.Name = pl.Name;
-            sp.Tag = pl.Tag;
-            sp.ID = pl.ID;
-            sp.MeshID = pl.MeshID;
-            sp.ShaderID = pl.ShaderID;
-            sp.ParentID = pl.ParentID;
+        //private static SerializableDirectionalLight SerializeDirectionalLight(SceneObject so)
+        //{
+        //    SerializableDirectionalLight sp = new SerializableDirectionalLight();
+        //    DirectionalLight pl = (DirectionalLight)so;
+        //    sp.LightID = pl.LightID;
+        //    //   sp.position = pl.position;
+        //    sp.ambient = pl.ambient;
+        //    sp.diffuse = pl.diffuse;
+        //    sp.guid = so.guid;
+        //    sp.specular = pl.specular;
+        //    //     sp.constant = pl.constant;
+        //    //sp.linear = pl.linear;
+        //    //sp.quadratic = pl.quadratic;
+        //    //sp.maxDistance = pl.maxDistance;
+        //    sp.enabled = pl.enabled;
+        //    sp.modelPath = so.modelPath;
+        //    sp.enabled = pl.enabled;
+        //    sp.direction = pl.direction;
 
-            sp.isChild = pl.isChild;
-            sp.isStatic = pl.isStatic;
-            sp.transform = pl.transform;
-            sp.ChildIDs = new int[pl.Children.Count];
-            sp.ChildGuids = new List<Guid>();
-            for (int i = 0; i < so.Children.Count; i++)
-            {
-                sp.ChildIDs[i] = so.Children[i].ID;
-                sp.ChildGuids.Add(so.Children[i].guid);
-            }
-            //foreach (var imp in so.Imps)
-            //{
-            //    string type = imp.GetType().ToString();
-            //    int start = type.IndexOf(".") + 1;
-            //    string className = type.Substring(start);
-            //    sp.impTypes.Add(className);
-            //}
-            sp.Imps = so.Imps;
+        //    sp.Name = pl.Name;
+        //    sp.Tag = pl.Tag;
+        //    sp.ID = pl.ID;
+        //    sp.MeshID = pl.MeshID;
+        //    sp.ShaderID = pl.ShaderID;
+        //    sp.ParentID = pl.ParentID;
 
-            sp.material = pl.material;
+        //    sp.isChild = pl.isChild;
+        //    sp.isStatic = pl.isStatic;
+        //    sp.transform = pl.transform;
+        //    sp.ChildIDs = new int[pl.Children.Count];
+        //    sp.ChildGuids = new List<Guid>();
+        //    for (int i = 0; i < so.Children.Count; i++)
+        //    {
+        //        sp.ChildIDs[i] = so.Children[i].ID;
+        //        sp.ChildGuids.Add(so.Children[i].guid);
+        //    }
+        //    //foreach (var imp in so.Imps)
+        //    //{
+        //    //    string type = imp.GetType().ToString();
+        //    //    int start = type.IndexOf(".") + 1;
+        //    //    string className = type.Substring(start);
+        //    //    sp.impTypes.Add(className);
+        //    //}
+        //    sp.Imps = so.Imps;
 
-            return sp;
-        }
-        private static SerializableSpotLight SerializeSpotLight(SceneObject so)
-        {
-            SerializableSpotLight sp = new SerializableSpotLight();
-            SpotLight pl = (SpotLight)so;
-            sp.LightID = pl.LightID;
-            sp.position = pl.position;
-            sp.ambient = pl.ambient;
-            sp.diffuse = pl.diffuse;
-            sp.guid = so.guid;
-            sp.specular = pl.specular;
-            //sp.constant = pl.constant;
-            //sp.linear = pl.linear;
-            //sp.quadratic = pl.quadratic;
-            sp.maxDistance = pl.maxDistance;
-            sp.enabled = pl.enabled;
+        //    sp.material = pl.material;
 
-            sp.cutOff = pl.cutOff;
-            sp.outerCutOff = pl.outerCutOff;
-            sp.cutOffRatio = pl.cutOffRatio;
-            sp.modelPath = so.modelPath;
-            sp.direction = pl.direction;
+        //    return sp;
+        //}
 
-            sp.Name = pl.Name;
-            sp.Tag = pl.Tag;
-            sp.ID = pl.ID;
-            sp.MeshID = pl.MeshID;
-            sp.ShaderID = pl.ShaderID;
-            sp.ParentID = pl.ParentID;
-            sp.enabled = pl.enabled;
 
-            sp.isChild = pl.isChild;
-            sp.isStatic = pl.isStatic;
-            sp.transform = pl.transform;
-            sp.ChildIDs = new int[pl.Children.Count];
-            sp.ChildGuids = new List<Guid>();
-            for (int i = 0; i < so.Children.Count; i++)
-            {
-                sp.ChildIDs[i] = so.Children[i].ID;
-                sp.ChildGuids.Add(so.Children[i].guid);
-            }
-            //foreach (var imp in so.Imps)
-            //{
-            //    string type = imp.GetType().ToString();
-            //    int start = type.IndexOf(".") + 1;
-            //    string className = type.Substring(start);
-            //    sp.impTypes.Add(className);
-            //}
-            sp.Imps = so.Imps;
+        //private static SerializableSpotLight SerializeSpotLight(SceneObject so)
+        //{
+        //    SerializableSpotLight sp = new SerializableSpotLight();
+        //    SpotLight pl = (SpotLight)so;
+        //    sp.LightID = pl.LightID;
+        //    sp.position = pl.position;
+        //    sp.ambient = pl.ambient;
+        //    sp.diffuse = pl.diffuse;
+        //    sp.guid = so.guid;
+        //    sp.specular = pl.specular;
+        //    //sp.constant = pl.constant;
+        //    //sp.linear = pl.linear;
+        //    //sp.quadratic = pl.quadratic;
+        //    sp.maxDistance = pl.maxDistance;
+        //    sp.enabled = pl.enabled;
 
-            sp.material = pl.material;
+        //    sp.cutOff = pl.cutOff;
+        //    sp.outerCutOff = pl.outerCutOff;
+        //    sp.cutOffRatio = pl.cutOffRatio;
+        //    sp.modelPath = so.modelPath;
+        //    sp.direction = pl.direction;
 
-            return sp;
-        }
+        //    sp.Name = pl.Name;
+        //    sp.Tag = pl.Tag;
+        //    sp.ID = pl.ID;
+        //    sp.MeshID = pl.MeshID;
+        //    sp.ShaderID = pl.ShaderID;
+        //    sp.ParentID = pl.ParentID;
+        //    sp.enabled = pl.enabled;
+
+        //    sp.isChild = pl.isChild;
+        //    sp.isStatic = pl.isStatic;
+        //    sp.transform = pl.transform;
+        //    sp.ChildIDs = new int[pl.Children.Count];
+        //    sp.ChildGuids = new List<Guid>();
+        //    for (int i = 0; i < so.Children.Count; i++)
+        //    {
+        //        sp.ChildIDs[i] = so.Children[i].ID;
+        //        sp.ChildGuids.Add(so.Children[i].guid);
+        //    }
+        //    //foreach (var imp in so.Imps)
+        //    //{
+        //    //    string type = imp.GetType().ToString();
+        //    //    int start = type.IndexOf(".") + 1;
+        //    //    string className = type.Substring(start);
+        //    //    sp.impTypes.Add(className);
+        //    //}
+        //    sp.Imps = so.Imps;
+
+        //    sp.material = pl.material;
+
+        //    return sp;
+        //}
+
         private static SerializableSceneObject SerializeSceneObject(SceneObject so)
         {
             SerializableSceneObject sp = new SerializableSceneObject();

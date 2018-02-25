@@ -181,7 +181,7 @@ namespace ImpunityEngine.Interoperability
         {
             Console.WriteLine("Chunk: " + chunk);
             //this will be something like n:name_i:3_p:1
-            SceneObject so = new SceneObject();
+            SceneObject so = new SceneObject(-1);
             if (chunk.Contains("n:"))
             {
                 int start = chunk.IndexOf("n:") + 2;

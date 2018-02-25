@@ -354,6 +354,10 @@ namespace ImpunityEngine.Interoperability
         public static extern int GetKey(StringBuilder sb);
 
 
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int CreateEmptySceneObject();
+
+
     }
 
 

@@ -520,7 +520,7 @@ namespace SceneEditLauncher
 
             try
             {
-                SpotLight.FindLightByID(result).SetCutOff(angle);
+                //SpotLight.FindLightByID(result).SetCutOff(angle);
             }
             catch (Exception)
             {
@@ -563,8 +563,8 @@ namespace SceneEditLauncher
                     {
                         if (useID == true)
                         {
-                            PointLight plight = PointLight.FindLightByID(result);
-                            plight.SetEnabled(enableState);
+                            //PointLight plight = PointLight.FindLightByID(result);
+                            //plight.SetEnabled(enableState);
                             //  PointLight.FindLightByID(result).SetPosition(position);
                         }
                     }
@@ -578,9 +578,9 @@ namespace SceneEditLauncher
                     {
                         try
                         {
-                            DirectionalLight dlight = DirectionalLight.FindLightByID(result);
+                        //    DirectionalLight dlight = DirectionalLight.FindLightByID(result);
                             //   dlight.SetDirection(position);
-                            dlight.SetEnabled(enableState);
+                        //    dlight.SetEnabled(enableState);
                         }
                         catch (NullReferenceException nex) { Console.WriteLine(nex.Message); }
                     }
@@ -591,9 +591,9 @@ namespace SceneEditLauncher
                     Console.WriteLine("Setting enable spotlight");
                     try
                     {
-                        SpotLight spot = SpotLight.FindLightByID(result);
+                     //   SpotLight spot = SpotLight.FindLightByID(result);
                         //   spot.SetPosition(position);
-                        spot.SetEnabled(enableState);
+                     //   spot.SetEnabled(enableState);
                     }
                     catch (NullReferenceException nex) { Console.WriteLine(nex.Message); }
                     return;
@@ -635,12 +635,12 @@ namespace SceneEditLauncher
             string key = args[3].ToLower();
             if (key == "pointlight" || key == "plight")
             {
-                try { PointLight.FindLightByID(result).SetMaxDistance(x); } catch { Console.WriteLine("Failed to set maxdist point light level."); }
+              //  try { PointLight.FindLightByID(result).SetMaxDistance(x); } catch { Console.WriteLine("Failed to set maxdist point light level."); }
                 return;
             }
             else if (key == "spotlight" || key == "slight")
             {
-                try { SpotLight.FindLightByID(result).SetMaxDistance(x); } catch { }
+              //  try { SpotLight.FindLightByID(result).SetMaxDistance(x); } catch { }
                 return;
             }
             else if (key == "directionallight" || key == "dlight")
@@ -675,17 +675,17 @@ namespace SceneEditLauncher
             string key = args[5].ToLower();
             if (key == "pointlight" || key == "plight")
             {
-                try { PointLight.FindLightByID(result).SetAmbient(ambient); } catch { Console.WriteLine("Failed to set ambient point light level."); }
+             //   try { PointLight.FindLightByID(result).SetAmbient(ambient); } catch { Console.WriteLine("Failed to set ambient point light level."); }
                 return;
             }
             else if (key == "spotlight" || key == "slight")
             {
-                try { SpotLight.FindLightByID(result).SetAmbient(ambient); } catch { }
+             //   try { SpotLight.FindLightByID(result).SetAmbient(ambient); } catch { }
                 return;
             }
             else if (key == "directionallight" || key == "dlight")
             {
-                try { DirectionalLight.FindLightByID(result).SetAmbient(ambient); } catch { }
+          //      try { DirectionalLight.FindLightByID(result).SetAmbient(ambient); } catch { }
                 return;
             }
         }
@@ -713,17 +713,17 @@ namespace SceneEditLauncher
             string key = args[5].ToLower();
             if (key == "pointlight" || key == "plight")
             {
-                try { PointLight.FindLightByID(result).SetDiffuse(color); } catch { Console.WriteLine("Failed to set diffuse point light level."); }
+            //    try { PointLight.FindLightByID(result).SetDiffuse(color); } catch { Console.WriteLine("Failed to set diffuse point light level."); }
                 return;
             }
             else if (key == "spotlight" || key == "slight")
             {
-                try { SpotLight.FindLightByID(result).SetDiffuse(color); } catch { }
+          //      try { SpotLight.FindLightByID(result).SetDiffuse(color); } catch { }
                 return;
             }
             else if (key == "directionallight" || key == "dlight")
             {
-                try { DirectionalLight.FindLightByID(result).SetDiffuse(color); } catch { }
+           //     try { DirectionalLight.FindLightByID(result).SetDiffuse(color); } catch { }
                 return;
             }
         }
@@ -751,17 +751,17 @@ namespace SceneEditLauncher
             string key = args[5].ToLower();
             if (key == "pointlight" || key == "plight")
             {
-                try { PointLight.FindLightByID(result).SetSpecular(color); } catch { Console.WriteLine("Failed to set specular point light level."); }
+           //     try { PointLight.FindLightByID(result).SetSpecular(color); } catch { Console.WriteLine("Failed to set specular point light level."); }
                 return;
             }
             else if (key == "spotlight" || key == "slight")
             {
-                try { SpotLight.FindLightByID(result).SetSpecular(color); } catch { }
+             //   try { SpotLight.FindLightByID(result).SetSpecular(color); } catch { }
                 return;
             }
             else if (key == "directionallight" || key == "dlight")
             {
-                try { DirectionalLight.FindLightByID(result).SetSpecular(color); } catch { }
+          //      try { DirectionalLight.FindLightByID(result).SetSpecular(color); } catch { }
                 return;
             }
         }
@@ -793,8 +793,8 @@ namespace SceneEditLauncher
                 {
                     if (light is PointLight)
                     {
-                        PointLight pl = (PointLight)light;
-                        Console.WriteLine("Point Light ID: " + pl.LightID + "==Guid:" + pl.guid);
+                   //     PointLight pl = (PointLight)light;
+                   //     Console.WriteLine("Point Light ID: " + pl.LightID + "==Guid:" + pl.guid);
                     }
                 }
             }
@@ -804,8 +804,8 @@ namespace SceneEditLauncher
                 {
                     if (light is DirectionalLight)
                     {
-                        DirectionalLight pl = (DirectionalLight)light;
-                        Console.WriteLine("Directional Light ID: " + pl.LightID + "--Guid:" + pl.guid);
+                   //     DirectionalLight pl = (DirectionalLight)light;
+                 //       Console.WriteLine("Directional Light ID: " + pl.LightID + "--Guid:" + pl.guid);
                     }
                 }
             }
@@ -815,8 +815,8 @@ namespace SceneEditLauncher
                 {
                     if (light is SpotLight)
                     {
-                        SpotLight pl = (SpotLight)light;
-                        Console.WriteLine("Spot Light ID: " + pl.LightID + "--Guid:" + pl.guid);
+                        //SpotLight pl = (SpotLight)light;
+                        //Console.WriteLine("Spot Light ID: " + pl.LightID + "--Guid:" + pl.guid);
                     }
                 }
             }
@@ -953,8 +953,8 @@ namespace SceneEditLauncher
                     {
                         if (useID == true)
                         {
-                            PointLight plight = PointLight.FindLightByID(result);
-                            plight.SetPosition(position);
+                       //     PointLight plight = PointLight.FindLightByID(result);
+                            //plight.SetPosition(position);
                             //  PointLight.FindLightByID(result).SetPosition(position);
                         }
                     }
@@ -968,8 +968,8 @@ namespace SceneEditLauncher
                     {
                         try
                         {
-                            DirectionalLight dlight = DirectionalLight.FindLightByID(result);
-                            dlight.SetDirection(position);
+                   //         DirectionalLight dlight = DirectionalLight.FindLightByID(result);
+                      //      dlight.SetDirection(position);
                         }
                         catch (NullReferenceException nex) { Console.WriteLine(nex.Message); }
                     }
@@ -980,8 +980,8 @@ namespace SceneEditLauncher
                     Console.WriteLine("Setting position of spotlight");
                     try
                     {
-                        SpotLight spot = SpotLight.FindLightByID(result);
-                        spot.SetPosition(position);
+            //            SpotLight spot = SpotLight.FindLightByID(result);
+              //          spot.SetPosition(position);
                     }
                     catch (NullReferenceException nex) { Console.WriteLine(nex.Message); }
                     return;

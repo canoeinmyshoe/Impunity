@@ -8,91 +8,93 @@ using ImpunityEngine.Interoperability;
 
 namespace ImpunityEngine
 {
-    public class DirectionalLight : SceneObject
+    public class DirectionalLight : Component
     {
-        public int LightID { get; set; }
+
         public Vector3 direction { get; set; }
         public Vector3 ambient { get; set; }
         public Vector3 diffuse { get; set; }
         public Vector3 specular { get; set; }
-      //  public bool enabled { get; set; }
-
+        public bool dynamic = true;
         public DirectionalLight(int id)
         {
-            LightID = id;
-            ID = -1;
+            ID = id;
+            enabled = true;
+            guid = Guid.NewGuid();
+
             direction = new Vector3(0.0f);
             ambient = new Vector3(0.2f);
             diffuse = new Vector3(0.5f);
             specular = new Vector3(1.0f);
-            enabled = true;
-            isStatic = false;
-            guid = Guid.NewGuid();
         }
         public DirectionalLight(int id, Vector3 indirection)
         {
-            LightID = id;
-            ID = -1;
+            ID = id;
+            enabled = true;
+            guid = Guid.NewGuid();
+
             direction = indirection;
             ambient = new Vector3(0.2f);
             diffuse = new Vector3(0.5f);
             specular = new Vector3(1.0f);
-            enabled = true;
-            isStatic = false;
-            guid = Guid.NewGuid();
         }
 
-        public override void Update()
+
+        public override void Update(SceneObject sceneObject)
         {
-          //  base.Update();
+            if (dynamic != true)
+                return;
 
-            //Update the directional light's transform
+            Vector3 forward = sceneObject.Forward();
+            SetDirection(forward);
         }
 
-        public static DirectionalLight FindLightByID(int id)
-        {
-            foreach (var light in Control.AllSceneObjects)
-            {
-                if (light is DirectionalLight)
-                {
-                    DirectionalLight d = (DirectionalLight)light;
-                    if (d.LightID == id)
-                        return d;
-                }
-            }
-            throw new NullReferenceException($"Directional light ID \"{id}\" not found");
-        }
-        public static DirectionalLight FindLightByGuid(Guid gid)
-        {
+        
 
-            foreach (var light in Control.AllSceneObjects)
-            {
-                if (light.guid == gid)
-                {
-                    return (DirectionalLight)light;
-                }
-            }
-            throw new NullReferenceException();
-        }
+        //public static DirectionalLight FindLightByID(int id)
+        //{
+        //    foreach (var light in Control.AllSceneObjects)
+        //    {
+        //        if (light is DirectionalLight)
+        //        {
+        //            DirectionalLight d = (DirectionalLight)light;
+        //            if (d.LightID == id)
+        //                return d;
+        //        }
+        //    }
+        //    throw new NullReferenceException($"Directional light ID \"{id}\" not found");
+        //}
+        //public static DirectionalLight FindLightByGuid(Guid gid)
+        //{
+
+        //    foreach (var light in Control.AllSceneObjects)
+        //    {
+        //        if (light.guid == gid)
+        //        {
+        //            return (DirectionalLight)light;
+        //        }
+        //    }
+        //    throw new NullReferenceException();
+        //}
 
         public void SetDirection(Vector3 vec) {
             direction = vec;
-            Bridge.SetDirLightDirection(LightID, vec);
+            Bridge.SetDirLightDirection(ID, vec);
         }
         public void SetAmbient(Vector3 color)
         {
             ambient = color;
-            Bridge.SetDLightAmbient(LightID, ambient);
+            Bridge.SetDLightAmbient(ID, ambient);
         }
         public void SetDiffuse(Vector3 color)
         {
             diffuse = color;
-            Bridge.SetDLightDiffuse(LightID, diffuse);
+            Bridge.SetDLightDiffuse(ID, diffuse);
         }
         public void SetSpecular(Vector3 color)
         {
             specular = color;
-            Bridge.SetDLightSpecular(LightID, specular);
+            Bridge.SetDLightSpecular(ID, specular);
         }
         public void SetEnabled(bool enable)
         {
@@ -108,7 +110,7 @@ namespace ImpunityEngine
                 enabled = false;
             }
 
-            Bridge.SetDLightEnabled(LightID, value);
+            Bridge.SetDLightEnabled(ID, value);
         }
     }
 }

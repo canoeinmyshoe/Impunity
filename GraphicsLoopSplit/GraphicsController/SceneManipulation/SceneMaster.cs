@@ -17,14 +17,36 @@ namespace ImpunityEngine.SceneManipulation
     {
         public static SceneObject SelectedSceneObject;
 
+        public static SceneObject CreateEmptySceneObject()
+        {
+            Console.WriteLine("Creating empty SceneObject to which the point light shall be attached as component...");
+            int id = Bridge.CreateEmptySceneObject();
+            SceneObject so = new SceneObject(id);
+            Control.AllSceneObjects.Add(so);
+            return so;
+        }
         public static void CreatePointLight()
         {
+            //What we will do now is 
+            //1. Create an empty SceneObject in the c++ world
+            //2. Get its ID, and give it to a new sceneObject in c# world
+            //3. Create a point light in c++ world, get its ID
+            //4. Create a point light in c# world, give it the ID
+            //5. Add this point light to the empty SceneObject's list of Components
+            
             int i = Bridge.CreatePointLight(0, 0, 0);
             Console.WriteLine("C#: Point light ID: " + i);
             PointLight plight = new PointLight(i, new Vector3(0));
             Console.WriteLine("Wow!");
-            SelectedSceneObject = plight;
-            Control.AllSceneObjects.Add(plight);
+            //  SelectedSceneObject = plight;
+            //    Control.AllSceneObjects.Add(plight);
+
+            Console.WriteLine("Creating empty SceneObject to which the point light shall be attached as component...");
+            int id = Bridge.CreateEmptySceneObject();
+            SceneObject so = new SceneObject(id);
+            so.Components.Add(plight);
+            so.Name = "Point Light";
+            Control.AllSceneObjects.Add(so);
         }
         public static void CreatePointLight(Guid guid)
         {
@@ -32,13 +54,23 @@ namespace ImpunityEngine.SceneManipulation
             //    Console.WriteLine("C#: Point light ID: " + i);
             PointLight plight = new PointLight(i, new Vector3(0));
             //  Console.WriteLine("Wow!");
-            SelectedSceneObject = plight;
+        //    SelectedSceneObject = plight;
             plight.guid = guid;
-            Control.AllSceneObjects.Add(plight);
+       //     Control.AllSceneObjects.Add(plight);
         }
 
         public static void CreateDirectionalLight()
         {
+
+
+            //What we will do now is 
+            //1. Create an empty SceneObject in the c++ world
+            //2. Get its ID, and give it to a new sceneObject in c# world
+            //3. Create a d light in c++ world, get its ID
+            //4. Create a d light in c# world, give it the ID
+            //5. Add this d light to the empty SceneObject's list of Components
+
+
             float x = 0;
             float y = 0;
             float z = 0;
@@ -46,8 +78,12 @@ namespace ImpunityEngine.SceneManipulation
             Console.WriteLine("C#: Directional Light ID: " + id);
             DirectionalLight dlight = new DirectionalLight(id, new Vector3(x, y, z));
             Console.WriteLine("Added a new directional light.");
-            SelectedSceneObject = dlight;
-            Control.AllSceneObjects.Add(dlight);
+            //  SelectedSceneObject = dlight;
+            //   Control.AllSceneObjects.Add(dlight);
+            SceneObject so = CreateEmptySceneObject();
+            so.Components.Add(dlight);
+            so.Name = "Directional Light";
+
         }
         public static void CreateDirectionalLight(Guid guid)
         {
@@ -59,8 +95,8 @@ namespace ImpunityEngine.SceneManipulation
             DirectionalLight dlight = new DirectionalLight(id, new Vector3(x, y, z));
             Console.WriteLine("Added a new directional light.");
             dlight.guid = guid;
-            SelectedSceneObject = dlight;
-            Control.AllSceneObjects.Add(dlight);
+            //SelectedSceneObject = dlight;
+         //   Control.AllSceneObjects.Add(dlight);
         }
 
         public static void CreateSpotLight()
@@ -71,16 +107,12 @@ namespace ImpunityEngine.SceneManipulation
             Console.WriteLine("C#: Spot Light ID: " + id);
             SpotLight spot = new SpotLight(id, new Vector3(x, y, z), new Vector3(dx, dy, dz));
             Console.WriteLine("Added new spotlight!");
-            Control.AllSceneObjects.Add(spot);
+            //       Control.AllSceneObjects.Add(spot);
 
-            int count = 0;
-            foreach (var item in Control.AllSceneObjects)
-            {
-                if (item is SpotLight)
-                    count += 1;
-            }
+            SceneObject so = CreateEmptySceneObject();
+            so.Name = "SpotLight";
+            so.Components.Add(spot);
 
-            Console.WriteLine("Spotlight count: " + count);
         }
         public static void CreateSpotLight(Guid guid)
         {
@@ -91,7 +123,7 @@ namespace ImpunityEngine.SceneManipulation
             SpotLight spot = new SpotLight(id, new Vector3(x, y, z), new Vector3(dx, dy, dz));
             //     Console.WriteLine("Added new spotlight!");
             spot.guid = guid;
-            Control.AllSceneObjects.Add(spot);
+          //  Control.AllSceneObjects.Add(spot);
 
             int count = 0;
             foreach (var item in Control.AllSceneObjects)
@@ -432,16 +464,16 @@ namespace ImpunityEngine.SceneManipulation
             }
             foreach (var item in scene.AllPointLights)
             {
-              DetailPointLight(item, scene.AllPointLights);
+              //DetailPointLight(item, scene.AllPointLights);
             }
             foreach (var item in scene.AllSpotLights)
             {
-                DetailSpotLight(item, scene.AllSpotLights);
+                //DetailSpotLight(item, scene.AllSpotLights);
             }
 
             foreach (var item in scene.AllDirectionalLights)
             {
-                DetailDirLight(item, scene.AllDirectionalLights);
+                //DetailDirLight(item, scene.AllDirectionalLights);
             }
         }
         private static void DetailSceneObject(SerializableSceneObject ser, List<SerializableSceneObject> allSer)
@@ -502,117 +534,117 @@ namespace ImpunityEngine.SceneManipulation
             so.SetShininess(ser.material.shininess);
         }
 
-        private static void DetailPointLight(SerializablePointLight ser, List<SerializablePointLight> allSer)
-        {
+        //private static void DetailPointLight(SerializablePointLight ser, List<SerializablePointLight> allSer)
+        //{
 
-            //Find the PointLight by Guid
-            PointLight so;
-            try { so = PointLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find PointLight " + ser.guid.ToString()); return; }
+        //    //Find the PointLight by Guid
+        //    PointLight so;
+        //    try { so = PointLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find PointLight " + ser.guid.ToString()); return; }
 
-            so.Name = ser.Name;
-            so.Tag = ser.Tag;
-            so.isStatic = ser.isStatic;
-            so.transform = ser.transform;
-            //foreach (var imp in ser.Imps)//unknown if this works
-            //{
-            //    so.Imps.Add(imp);
-            //}
-            //we will have to set custom material/texture/shader details 
-            //one property at a time
-            //so don't worry about that, as we don't even have methods
-            //to set material values yet
+        //    so.Name = ser.Name;
+        //    so.Tag = ser.Tag;
+        //    so.isStatic = ser.isStatic;
+        //    so.transform = ser.transform;
+        //    //foreach (var imp in ser.Imps)//unknown if this works
+        //    //{
+        //    //    so.Imps.Add(imp);
+        //    //}
+        //    //we will have to set custom material/texture/shader details 
+        //    //one property at a time
+        //    //so don't worry about that, as we don't even have methods
+        //    //to set material values yet
 
-            //We can also manage complex child/parent relationships here
+        //    //We can also manage complex child/parent relationships here
 
-            //point light variables
-            so.SetPosition(ser.position);
-            so.SetAmbient(ser.ambient);
-            so.SetDiffuse(ser.diffuse);
-            so.SetSpecular(ser.specular);
-            so.constant = ser.constant;
-            so.linear = ser.linear;
-            so.quadratic = ser.quadratic;
-            so.SetMaxDistance(ser.maxDistance);
-            so.SetEnabled(ser.enabled);
+        //    //point light variables
+        //    so.SetPosition(ser.position);
+        //    so.SetAmbient(ser.ambient);
+        //    so.SetDiffuse(ser.diffuse);
+        //    so.SetSpecular(ser.specular);
+        //    so.constant = ser.constant;
+        //    so.linear = ser.linear;
+        //    so.quadratic = ser.quadratic;
+        //    so.SetMaxDistance(ser.maxDistance);
+        //    so.SetEnabled(ser.enabled);
 
-            //you actually need to call the methods to set this...
-        }
+        //    //you actually need to call the methods to set this...
+        //}
 
-        private static void DetailSpotLight(SerializableSpotLight ser, List<SerializableSpotLight> allSer)
-        {
+        //private static void DetailSpotLight(SerializableSpotLight ser, List<SerializableSpotLight> allSer)
+        //{
 
-            //Find the PointLight by Guid
-            SpotLight so;
-            try { so = SpotLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find spot light " + ser.guid.ToString()); return; }
+        //    //Find the PointLight by Guid
+        //    SpotLight so;
+        //    try { so = SpotLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find spot light " + ser.guid.ToString()); return; }
 
-            so.Name = ser.Name;
-            so.Tag = ser.Tag;
-            so.isStatic = ser.isStatic;
-            so.transform = ser.transform;
-            //foreach (var imp in ser.Imps)//unknown if this works
-            //{
-            //    so.Imps.Add(imp);
-            //}
-            //we will have to set custom material/texture/shader details 
-            //one property at a time
-            //so don't worry about that, as we don't even have methods
-            //to set material values yet
+        //    so.Name = ser.Name;
+        //    so.Tag = ser.Tag;
+        //    so.isStatic = ser.isStatic;
+        //    so.transform = ser.transform;
+        //    //foreach (var imp in ser.Imps)//unknown if this works
+        //    //{
+        //    //    so.Imps.Add(imp);
+        //    //}
+        //    //we will have to set custom material/texture/shader details 
+        //    //one property at a time
+        //    //so don't worry about that, as we don't even have methods
+        //    //to set material values yet
 
-            //We can also manage complex child/parent relationships here
+        //    //We can also manage complex child/parent relationships here
 
-            //point light variables
-            so.SetPosition(ser.position);
-            so.SetAmbient(ser.ambient);
-            so.SetDiffuse(ser.diffuse);
-            so.SetSpecular(ser.specular);
+        //    //point light variables
+        //    so.SetPosition(ser.position);
+        //    so.SetAmbient(ser.ambient);
+        //    so.SetDiffuse(ser.diffuse);
+        //    so.SetSpecular(ser.specular);
 
-            so.cutOffRatio = ser.cutOffRatio;
-            so.SetDirection(ser.direction);
-            so.SetCutOff(ser.cutOff);
+        //    so.cutOffRatio = ser.cutOffRatio;
+        //    so.SetDirection(ser.direction);
+        //    so.SetCutOff(ser.cutOff);
 
-            so.SetMaxDistance(ser.maxDistance);
-            so.SetEnabled(ser.enabled);
+        //    so.SetMaxDistance(ser.maxDistance);
+        //    so.SetEnabled(ser.enabled);
 
-            //you actually need to call the methods to set this...
-        }
+        //    //you actually need to call the methods to set this...
+        //}
 
-        private static void DetailDirLight(SerializableDirectionalLight ser, List<SerializableDirectionalLight> allSer)
-        {
+        //private static void DetailDirLight(SerializableDirectionalLight ser, List<SerializableDirectionalLight> allSer)
+        //{
 
-            //Find the PointLight by Guid
-            DirectionalLight so;
-            try { so = DirectionalLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find spot light " + ser.guid.ToString()); return; }
+        //    //Find the PointLight by Guid
+        //    DirectionalLight so;
+        //    try { so = DirectionalLight.FindLightByGuid(ser.guid); } catch { Console.WriteLine("WARNING: Failed to find spot light " + ser.guid.ToString()); return; }
 
-            so.Name = ser.Name;
-            so.Tag = ser.Tag;
-            so.isStatic = ser.isStatic;
-            so.transform = ser.transform;
-            //foreach (var imp in ser.Imps)//unknown if this works
-            //{
-            //    so.Imps.Add(imp);
-            //}
-            //we will have to set custom material/texture/shader details 
-            //one property at a time
-            //so don't worry about that, as we don't even have methods
-            //to set material values yet
+        //    so.Name = ser.Name;
+        //    so.Tag = ser.Tag;
+        //    so.isStatic = ser.isStatic;
+        //    so.transform = ser.transform;
+        //    //foreach (var imp in ser.Imps)//unknown if this works
+        //    //{
+        //    //    so.Imps.Add(imp);
+        //    //}
+        //    //we will have to set custom material/texture/shader details 
+        //    //one property at a time
+        //    //so don't worry about that, as we don't even have methods
+        //    //to set material values yet
 
-            //We can also manage complex child/parent relationships here
+        //    //We can also manage complex child/parent relationships here
 
-            //point light variables
-           // so.SetPosition(ser.position);
-            so.SetAmbient(ser.ambient);
-            so.SetDiffuse(ser.diffuse);
-            so.SetSpecular(ser.specular);
+        //    //point light variables
+        //   // so.SetPosition(ser.position);
+        //    so.SetAmbient(ser.ambient);
+        //    so.SetDiffuse(ser.diffuse);
+        //    so.SetSpecular(ser.specular);
 
-            //so.cutOffRatio = ser.cutOffRatio;
-            so.SetDirection(ser.direction);
-          //  so.SetCutOff(ser.cutOff);
+        //    //so.cutOffRatio = ser.cutOffRatio;
+        //    so.SetDirection(ser.direction);
+        //  //  so.SetCutOff(ser.cutOff);
 
-          //  so.SetMaxDistance(ser.maxDistance);
-            so.SetEnabled(ser.enabled);
+        //  //  so.SetMaxDistance(ser.maxDistance);
+        //    so.SetEnabled(ser.enabled);
 
-            //you actually need to call the methods to set this...
-        }
+        //    //you actually need to call the methods to set this...
+        //}
 
         
         private static void LoadSceneObject(SerializableSceneObject ser) {
@@ -724,15 +756,15 @@ namespace ImpunityEngine.SceneManipulation
         {
             if (so is PointLight)
             {
-                scene.AllPointLights.Add(SerializePointLight(so));
+         //       scene.AllPointLights.Add(SerializePointLight(so));
             }
             else if (so is DirectionalLight)
             {
-                scene.AllDirectionalLights.Add(SerializeDirectionalLight(so));
+            //    scene.AllDirectionalLights.Add(SerializeDirectionalLight(so));
             }
             else if (so is SpotLight)
             {
-                scene.AllSpotLights.Add(SerializeSpotLight(so));
+             //   scene.AllSpotLights.Add(SerializeSpotLight(so));
             }
             else
             {
@@ -740,152 +772,159 @@ namespace ImpunityEngine.SceneManipulation
             }
         }
 
-        private static SerializablePointLight SerializePointLight(SceneObject so)
-        {
-            SerializablePointLight sp = new SerializablePointLight();
-            PointLight pl = (PointLight)so;
-            sp.LightID = pl.LightID;
-            sp.position = pl.position;
-            sp.ambient = pl.ambient;
-            sp.guid = so.guid;
-            sp.diffuse = pl.diffuse;
-            sp.specular = pl.specular;
-            sp.constant = pl.constant;
-            sp.linear = pl.linear;
-            sp.quadratic = pl.quadratic;
-            sp.maxDistance = pl.maxDistance;
-            sp.enabled = pl.enabled;
 
-            sp.modelPath = so.modelPath;
-            sp.Name = pl.Name;
-            sp.Tag = pl.Tag;
-            sp.ID = pl.ID;
-            sp.MeshID = pl.MeshID;
-            sp.ShaderID = pl.ShaderID;
-            sp.ParentID = pl.ParentID;
+        //private static SerializablePointLight SerializePointLight(SceneObject so)
+        //{
+        //    SerializablePointLight sp = new SerializablePointLight();
+        //    PointLight pl = (PointLight)so;
+        //    sp.LightID = pl.LightID;
+        //    sp.position = pl.position;
+        //    sp.ambient = pl.ambient;
+        //    sp.guid = so.guid;
+        //    sp.diffuse = pl.diffuse;
+        //    sp.specular = pl.specular;
+        //    sp.constant = pl.constant;
+        //    sp.linear = pl.linear;
+        //    sp.quadratic = pl.quadratic;
+        //    sp.maxDistance = pl.maxDistance;
+        //    sp.enabled = pl.enabled;
 
-            sp.isChild = pl.isChild;
-            sp.isStatic = pl.isStatic;
-            sp.transform = pl.transform;
-            sp.ChildIDs = new int[pl.Children.Count];
-            sp.ChildGuids = new List<Guid>();
-            for (int i = 0; i < so.Children.Count; i++)
-            {
-                sp.ChildIDs[i] = so.Children[i].ID;
-                sp.ChildGuids.Add(so.Children[i].guid);
-            }
-            //foreach (var imp in so.Imps)
-            //{
-            //    string type = imp.GetType().ToString();
-            //    int start = type.IndexOf(".") + 1;
-            //    string className = type.Substring(start);
-            //    sp.impTypes.Add(className);
-            //}
+        //    sp.modelPath = so.modelPath;
+        //    sp.Name = pl.Name;
+        //    sp.Tag = pl.Tag;
+        //    sp.ID = pl.ID;
+        //    sp.MeshID = pl.MeshID;
+        //    sp.ShaderID = pl.ShaderID;
+        //    sp.ParentID = pl.ParentID;
 
-            sp.material = pl.material;
+        //    sp.isChild = pl.isChild;
+        //    sp.isStatic = pl.isStatic;
+        //    sp.transform = pl.transform;
+        //    sp.ChildIDs = new int[pl.Children.Count];
+        //    sp.ChildGuids = new List<Guid>();
+        //    for (int i = 0; i < so.Children.Count; i++)
+        //    {
+        //        sp.ChildIDs[i] = so.Children[i].ID;
+        //        sp.ChildGuids.Add(so.Children[i].guid);
+        //    }
+        //    //foreach (var imp in so.Imps)
+        //    //{
+        //    //    string type = imp.GetType().ToString();
+        //    //    int start = type.IndexOf(".") + 1;
+        //    //    string className = type.Substring(start);
+        //    //    sp.impTypes.Add(className);
+        //    //}
 
-            return sp;
-        }
-        private static SerializableDirectionalLight SerializeDirectionalLight(SceneObject so)
-        {
-            SerializableDirectionalLight sp = new SerializableDirectionalLight();
-            DirectionalLight pl = (DirectionalLight)so;
-            sp.LightID = pl.LightID;
-         //   sp.position = pl.position;
-            sp.ambient = pl.ambient;
-            sp.diffuse = pl.diffuse;
-            sp.guid = so.guid;
-            sp.specular = pl.specular;
-       //     sp.constant = pl.constant;
-            //sp.linear = pl.linear;
-            //sp.quadratic = pl.quadratic;
-            //sp.maxDistance = pl.maxDistance;
-            sp.enabled = pl.enabled;
-            sp.modelPath = so.modelPath;
-            sp.enabled = pl.enabled;
-            sp.direction = pl.direction;
+        //    sp.material = pl.material;
 
-            sp.Name = pl.Name;
-            sp.Tag = pl.Tag;
-            sp.ID = pl.ID;
-            sp.MeshID = pl.MeshID;
-            sp.ShaderID = pl.ShaderID;
-            sp.ParentID = pl.ParentID;
+        //    return sp;
+        //}
 
-            sp.isChild = pl.isChild;
-            sp.isStatic = pl.isStatic;
-            sp.transform = pl.transform;
-            sp.ChildIDs = new int[pl.Children.Count];
-            sp.ChildGuids = new List<Guid>();
-            for (int i = 0; i < so.Children.Count; i++)
-            {
-                sp.ChildIDs[i] = so.Children[i].ID;
-                sp.ChildGuids.Add(so.Children[i].guid);
-            }
-            //foreach (var imp in so.Imps)
-            //{
-            //    string type = imp.GetType().ToString();
-            //    int start = type.IndexOf(".") + 1;
-            //    string className = type.Substring(start);
-            //    sp.impTypes.Add(className);
-            //}
 
-            sp.material = pl.material;
+       // private static SerializableDirectionalLight SerializeDirectionalLight(SceneObject so)
+       // {
+       //     SerializableDirectionalLight sp = new SerializableDirectionalLight();
+       //     DirectionalLight pl = (DirectionalLight)so;
+       //     sp.LightID = pl.LightID;
+       //  //   sp.position = pl.position;
+       //     sp.ambient = pl.ambient;
+       //     sp.diffuse = pl.diffuse;
+       //     sp.guid = so.guid;
+       //     sp.specular = pl.specular;
+       ////     sp.constant = pl.constant;
+       //     //sp.linear = pl.linear;
+       //     //sp.quadratic = pl.quadratic;
+       //     //sp.maxDistance = pl.maxDistance;
+       //     sp.enabled = pl.enabled;
+       //     sp.modelPath = so.modelPath;
+       //     sp.enabled = pl.enabled;
+       //     sp.direction = pl.direction;
 
-            return sp;
-        }
-        private static SerializableSpotLight SerializeSpotLight(SceneObject so)
-        {
-            SerializableSpotLight sp = new SerializableSpotLight();
-            SpotLight pl = (SpotLight)so;
-            sp.LightID = pl.LightID;
-            sp.position = pl.position;
-            sp.ambient = pl.ambient;
-            sp.diffuse = pl.diffuse;
-            sp.guid = so.guid;
-            sp.specular = pl.specular;
-            //sp.constant = pl.constant;
-            //sp.linear = pl.linear;
-            //sp.quadratic = pl.quadratic;
-            sp.maxDistance = pl.maxDistance;
-            sp.enabled = pl.enabled;
+       //     sp.Name = pl.Name;
+       //     sp.Tag = pl.Tag;
+       //     sp.ID = pl.ID;
+       //     sp.MeshID = pl.MeshID;
+       //     sp.ShaderID = pl.ShaderID;
+       //     sp.ParentID = pl.ParentID;
 
-            sp.cutOff = pl.cutOff;
-            sp.outerCutOff = pl.outerCutOff;
-            sp.cutOffRatio = pl.cutOffRatio;
-            sp.modelPath = so.modelPath;
-            sp.direction = pl.direction;
+       //     sp.isChild = pl.isChild;
+       //     sp.isStatic = pl.isStatic;
+       //     sp.transform = pl.transform;
+       //     sp.ChildIDs = new int[pl.Children.Count];
+       //     sp.ChildGuids = new List<Guid>();
+       //     for (int i = 0; i < so.Children.Count; i++)
+       //     {
+       //         sp.ChildIDs[i] = so.Children[i].ID;
+       //         sp.ChildGuids.Add(so.Children[i].guid);
+       //     }
+       //     //foreach (var imp in so.Imps)
+       //     //{
+       //     //    string type = imp.GetType().ToString();
+       //     //    int start = type.IndexOf(".") + 1;
+       //     //    string className = type.Substring(start);
+       //     //    sp.impTypes.Add(className);
+       //     //}
 
-            sp.Name = pl.Name;
-            sp.Tag = pl.Tag;
-            sp.ID = pl.ID;
-            sp.MeshID = pl.MeshID;
-            sp.ShaderID = pl.ShaderID;
-            sp.ParentID = pl.ParentID;
-            sp.enabled = pl.enabled;
+       //     sp.material = pl.material;
 
-            sp.isChild = pl.isChild;
-            sp.isStatic = pl.isStatic;
-            sp.transform = pl.transform;
-            sp.ChildIDs = new int[pl.Children.Count];
-            sp.ChildGuids = new List<Guid>();
-            for (int i = 0; i < so.Children.Count; i++)
-            {
-                sp.ChildIDs[i] = so.Children[i].ID;
-                sp.ChildGuids.Add(so.Children[i].guid);
-            }
-            //foreach (var imp in so.Imps)
-            //{
-            //    string type = imp.GetType().ToString();
-            //    int start = type.IndexOf(".") + 1;
-            //    string className = type.Substring(start);
-            //    sp.impTypes.Add(className);
-            //}
+       //     return sp;
+       // }
 
-            sp.material = pl.material;
 
-            return sp;
-        }
+        //private static SerializableSpotLight SerializeSpotLight(SceneObject so)
+        //{
+        //    SerializableSpotLight sp = new SerializableSpotLight();
+        //    SpotLight pl = (SpotLight)so;
+        //    sp.LightID = pl.LightID;
+        //    sp.position = pl.position;
+        //    sp.ambient = pl.ambient;
+        //    sp.diffuse = pl.diffuse;
+        //    sp.guid = so.guid;
+        //    sp.specular = pl.specular;
+        //    //sp.constant = pl.constant;
+        //    //sp.linear = pl.linear;
+        //    //sp.quadratic = pl.quadratic;
+        //    sp.maxDistance = pl.maxDistance;
+        //    sp.enabled = pl.enabled;
+
+        //    sp.cutOff = pl.cutOff;
+        //    sp.outerCutOff = pl.outerCutOff;
+        //    sp.cutOffRatio = pl.cutOffRatio;
+        //    sp.modelPath = so.modelPath;
+        //    sp.direction = pl.direction;
+
+        //    sp.Name = pl.Name;
+        //    sp.Tag = pl.Tag;
+        //    sp.ID = pl.ID;
+        //    sp.MeshID = pl.MeshID;
+        //    sp.ShaderID = pl.ShaderID;
+        //    sp.ParentID = pl.ParentID;
+        //    sp.enabled = pl.enabled;
+
+        //    sp.isChild = pl.isChild;
+        //    sp.isStatic = pl.isStatic;
+        //    sp.transform = pl.transform;
+        //    sp.ChildIDs = new int[pl.Children.Count];
+        //    sp.ChildGuids = new List<Guid>();
+        //    for (int i = 0; i < so.Children.Count; i++)
+        //    {
+        //        sp.ChildIDs[i] = so.Children[i].ID;
+        //        sp.ChildGuids.Add(so.Children[i].guid);
+        //    }
+        //    //foreach (var imp in so.Imps)
+        //    //{
+        //    //    string type = imp.GetType().ToString();
+        //    //    int start = type.IndexOf(".") + 1;
+        //    //    string className = type.Substring(start);
+        //    //    sp.impTypes.Add(className);
+        //    //}
+
+        //    sp.material = pl.material;
+
+        //    return sp;
+        //}
+
+
         private static SerializableSceneObject SerializeSceneObject(SceneObject so)
         {
             SerializableSceneObject sp = new SerializableSceneObject();
@@ -949,14 +988,14 @@ namespace ImpunityEngine.SceneManipulation
             }
             else if (type == (int)SelectionTypes.pointlight)
             {
-                SelectedSceneObject = PointLight.FindLightByID(index);
+           //     SelectedSceneObject = PointLight.FindLightByID(index);
             }
             else if (type == (int)SelectionTypes.spotlight)
             {
-                SelectedSceneObject = SpotLight.FindLightByID(index);
+             //   SelectedSceneObject = SpotLight.FindLightByID(index);
             }
             else if (type == (int)SelectionTypes.directionallight) {
-                SelectedSceneObject = DirectionalLight.FindLightByID(index);
+            //    SelectedSceneObject = DirectionalLight.FindLightByID(index);
             }
         }
 
@@ -965,31 +1004,31 @@ namespace ImpunityEngine.SceneManipulation
             if (SelectedSceneObject == null)
                 return;
 
-            if (SelectedSceneObject is PointLight)
+            //if (SelectedSceneObject is PointLight)
+            //{
+            //    PointLight dl = (PointLight)SelectedSceneObject;
+            //    if (axis == "x")
+            //        dl.SetPosition(new Vector3(dl.position.x + dist,
+            //            dl.position.y, dl.position.z));
+            //    else if (axis == "y")
+            //        dl.SetPosition(new Vector3(dl.position.x,
+            //           dl.position.y + dist, dl.position.z));
+            //    else if (axis == "z")
+            //        dl.SetPosition(new Vector3(dl.position.x,
+            //            dl.position.y, dl.position.z + dist));
+            //}
+             if (SelectedSceneObject is SpotLight)
             {
-                PointLight dl = (PointLight)SelectedSceneObject;
-                if (axis == "x")
-                    dl.SetPosition(new Vector3(dl.position.x + dist,
-                        dl.position.y, dl.position.z));
-                else if (axis == "y")
-                    dl.SetPosition(new Vector3(dl.position.x,
-                       dl.position.y + dist, dl.position.z));
-                else if (axis == "z")
-                    dl.SetPosition(new Vector3(dl.position.x,
-                        dl.position.y, dl.position.z + dist));
-            }
-            else if (SelectedSceneObject is SpotLight)
-            {
-                SpotLight dl = (SpotLight)SelectedSceneObject;
-                if (axis == "x")
-                    dl.SetPosition(new Vector3(dl.position.x + dist,
-                        dl.position.y, dl.position.z));
-                else if (axis == "y")
-                    dl.SetPosition(new Vector3(dl.position.x,
-                       dl.position.y + dist, dl.position.z));
-                else if (axis == "z")
-                    dl.SetPosition(new Vector3(dl.position.x,
-                        dl.position.y, dl.position.z + dist));
+                //SpotLight dl = (SpotLight)SelectedSceneObject;
+                //if (axis == "x")
+                //    dl.SetPosition(new Vector3(dl.position.x + dist,
+                //        dl.position.y, dl.position.z));
+                //else if (axis == "y")
+                //    dl.SetPosition(new Vector3(dl.position.x,
+                //       dl.position.y + dist, dl.position.z));
+                //else if (axis == "z")
+                //    dl.SetPosition(new Vector3(dl.position.x,
+                //        dl.position.y, dl.position.z + dist));
             }
             else if (SelectedSceneObject is DirectionalLight)
             {
@@ -1026,29 +1065,29 @@ namespace ImpunityEngine.SceneManipulation
             }
             else if (SelectedSceneObject is SpotLight)
             {
-                SpotLight dl = (SpotLight)SelectedSceneObject;
-                if (axis == "x")
-                    dl.SetDirection(new Vector3(dl.direction.x + degree,
-                        dl.direction.y, dl.direction.z));
-                else if (axis == "y")
-                    dl.SetDirection(new Vector3(dl.direction.x,
-                       dl.direction.y + degree, dl.direction.z));
-                else if (axis == "z")
-                    dl.SetDirection(new Vector3(dl.direction.x,
-                        dl.direction.y, dl.direction.z + degree));
+                //SpotLight dl = (SpotLight)SelectedSceneObject;
+                //if (axis == "x")
+                //    dl.SetDirection(new Vector3(dl.direction.x + degree,
+                //        dl.direction.y, dl.direction.z));
+                //else if (axis == "y")
+                //    dl.SetDirection(new Vector3(dl.direction.x,
+                //       dl.direction.y + degree, dl.direction.z));
+                //else if (axis == "z")
+                //    dl.SetDirection(new Vector3(dl.direction.x,
+                //        dl.direction.y, dl.direction.z + degree));
             }
             else if (SelectedSceneObject is DirectionalLight)
             {
-                DirectionalLight dl = (DirectionalLight)SelectedSceneObject;
-                if (axis == "x")
-                    dl.SetDirection(new Vector3(dl.direction.x + degree,
-                        dl.direction.y, dl.direction.z));
-                else if (axis == "y")
-                    dl.SetDirection(new Vector3(dl.direction.x,
-                       dl.direction.y + degree, dl.direction.z));
-                else if (axis == "z")
-                    dl.SetDirection(new Vector3(dl.direction.x,
-                        dl.direction.y, dl.direction.z + degree));
+              //  DirectionalLight dl = (DirectionalLight)SelectedSceneObject;
+                //if (axis == "x")
+                //    dl.SetDirection(new Vector3(dl.direction.x + degree,
+                //        dl.direction.y, dl.direction.z));
+                //else if (axis == "y")
+                //    dl.SetDirection(new Vector3(dl.direction.x,
+                //       dl.direction.y + degree, dl.direction.z));
+                //else if (axis == "z")
+                //    dl.SetDirection(new Vector3(dl.direction.x,
+                //        dl.direction.y, dl.direction.z + degree));
             }
             else
             {
@@ -1080,29 +1119,29 @@ namespace ImpunityEngine.SceneManipulation
             }
             else if (SelectedSceneObject is SpotLight)
             {
-                SpotLight dl = (SpotLight)SelectedSceneObject;
-                if (axis == "x")
-                    dl.SetDirection(new Vector3(dl.direction.x + degree,
-                        dl.direction.y, dl.direction.z));
-                else if (axis == "y")
-                    dl.SetDirection(new Vector3(dl.direction.x,
-                       dl.direction.y + degree, dl.direction.z));
-                else if (axis == "z")
-                    dl.SetDirection(new Vector3(dl.direction.x,
-                        dl.direction.y, dl.direction.z + degree));
+                //SpotLight dl = (SpotLight)SelectedSceneObject;
+                //if (axis == "x")
+                //    dl.SetDirection(new Vector3(dl.direction.x + degree,
+                //        dl.direction.y, dl.direction.z));
+                //else if (axis == "y")
+                //    dl.SetDirection(new Vector3(dl.direction.x,
+                //       dl.direction.y + degree, dl.direction.z));
+                //else if (axis == "z")
+                //    dl.SetDirection(new Vector3(dl.direction.x,
+                //        dl.direction.y, dl.direction.z + degree));
             }
             else if (SelectedSceneObject is DirectionalLight)
             {
-                DirectionalLight dl = (DirectionalLight)SelectedSceneObject;
-                if (axis == "x")
-                    dl.SetDirection(new Vector3(dl.direction.x + degree,
-                        dl.direction.y, dl.direction.z));
-                else if (axis == "y")
-                    dl.SetDirection(new Vector3(dl.direction.x,
-                       dl.direction.y + degree, dl.direction.z));
-                else if (axis == "z")
-                    dl.SetDirection(new Vector3(dl.direction.x,
-                        dl.direction.y, dl.direction.z + degree));
+                //DirectionalLight dl = (DirectionalLight)SelectedSceneObject;
+                //if (axis == "x")
+                //    dl.SetDirection(new Vector3(dl.direction.x + degree,
+                //        dl.direction.y, dl.direction.z));
+                //else if (axis == "y")
+                //    dl.SetDirection(new Vector3(dl.direction.x,
+                //       dl.direction.y + degree, dl.direction.z));
+                //else if (axis == "z")
+                //    dl.SetDirection(new Vector3(dl.direction.x,
+                //        dl.direction.y, dl.direction.z + degree));
             }
             else
             {
