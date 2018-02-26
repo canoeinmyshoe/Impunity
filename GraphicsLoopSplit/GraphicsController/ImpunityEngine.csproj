@@ -47,20 +47,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Component.cs" />
     <Compile Include="Control.cs" />
     <Compile Include="DirectionalLight.cs" />
     <Compile Include="ExampleImpunityScripts\Character.cs" />
-    <Compile Include="CLE.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Interoperability\Bridge.cs" />
-    <Compile Include="Interoperability\CommandLinerInterpreter.cs" />
     <Compile Include="Interoperability\NativeTranslator.cs" />
     <Compile Include="ImpunityClass.cs" />
+    <Compile Include="IUpdatable.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="OpenGLExamples\OpenGLExampleController.cs" />
     <Compile Include="Persistence\SerializableSceneObject.cs" />
     <Compile Include="PointLight.cs" />
-    <Compile Include="GraphicsProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -74,6 +73,7 @@
     <Compile Include="Skybox.cs" />
     <Compile Include="SpotLight.cs" />
     <Compile Include="Texture.cs" />
+    <Compile Include="Time.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="Vector3.cs" />
     <Compile Include="Vector3Methods.cs" />

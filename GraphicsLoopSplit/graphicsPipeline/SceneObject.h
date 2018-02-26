@@ -262,11 +262,13 @@ public:
 			float wy = -sin(SceneDirectionalLights[i].direction.y)*sin(SceneDirectionalLights[i].direction.x)*sin(SceneDirectionalLights[i].direction.z) + cos(SceneDirectionalLights[i].direction.y)*cos(SceneDirectionalLights[i].direction.z);
 			float ze = cos(SceneDirectionalLights[i].direction.x)*sin(SceneDirectionalLights[i].direction.z);*/
 
-			float ex = sin(glm::radians(SceneDirectionalLights[i].direction.z));
+		/*	float ex = sin(glm::radians(SceneDirectionalLights[i].direction.z));
 			float wy = -(sin(glm::radians(SceneDirectionalLights[i].direction.x)) * cos(glm::radians(SceneDirectionalLights[i].direction.z)));
 			float ze = -1.0*cos(glm::radians(SceneDirectionalLights[i].direction.x)) * cos(glm::radians(SceneDirectionalLights[i].direction.y));
-
-
+*/
+			float ex = SceneDirectionalLights[i].direction.x;
+			float wy = SceneDirectionalLights[i].direction.y;
+			float ze = SceneDirectionalLights[i].direction.z;
 
 			string eye = std::to_string(i);
 			std::string s = "directionalLights[" + eye + "].direction";
@@ -327,17 +329,19 @@ public:
 			//https://www.opengl.org/discussion_boards/showthread.php/175515-Get-Direction-from-Transformation-Matrix-or-Quat
 
 			//Let's try a totally different approach
-			glm::mat4  lightMatrix = glm::mat4(1);
-			lightMatrix = glm::translate(lightMatrix, SceneSpotLights[i].position);
-			glm::quat lightRotation = toQuaternion(SceneSpotLights[i].direction);
-			lightMatrix *= glm::mat4_cast(lightRotation);
-		//	directn = lightMatrix[2].xyz;
+		//	glm::mat4  lightMatrix = glm::mat4(1);
+		//	lightMatrix = glm::translate(lightMatrix, SceneSpotLights[i].position);
+		//	glm::quat lightRotation = toQuaternion(SceneSpotLights[i].direction);
+		//	lightMatrix *= glm::mat4_cast(lightRotation);
+		////	directn = lightMatrix[2].xyz;
 
-			//ACED IT!
-			float ex = -lightMatrix[2][0];
-			float wy = -lightMatrix[2][1];
-			float ze = -lightMatrix[2][2];
-			glm::vec3 directn =  glm::normalize(glm::vec3(ex, wy, ze));
+		//	//ACED IT!
+		//	float ex = -lightMatrix[2][0];
+		//	float wy = -lightMatrix[2][1];
+		//	float ze = -lightMatrix[2][2];
+		//	glm::vec3 directn =  glm::normalize(glm::vec3(ex, wy, ze));
+
+			glm::vec3 directn = SceneSpotLights[i].direction;
 
 		
 			string eye = std::to_string(i);

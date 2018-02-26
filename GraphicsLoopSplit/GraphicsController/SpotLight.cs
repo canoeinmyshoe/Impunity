@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using ImpunityEngine.Interoperability;
 namespace ImpunityEngine
 {
-    public class SpotLight : SceneObject
+    public class SpotLight : Component
     {
-        public int LightID { get; set; }
-        public Vector3 position { get; set; }
+
+
         public Vector3 ambient { get; set; }
         public Vector3 diffuse { get; set; }
         public Vector3 specular { get; set; }
@@ -18,14 +18,15 @@ namespace ImpunityEngine
         public float cutOff { get; set; }
         public float outerCutOff { get; set; }
         public float maxDistance { get; set; }
-     //   public bool enabled { get; set; }
         public float cutOffRatio = 0.8333f;
 
         public SpotLight(int id)
         {
-            LightID = id;
-            ID = -1;
-            position = new Vector3(0);
+            ID = id;
+            guid = Guid.NewGuid();
+            enabled = true;
+
+
             direction = new Vector3(0);
             cutOff = 12.5f;
             outerCutOff = 15.0f;
@@ -33,15 +34,14 @@ namespace ImpunityEngine
             diffuse = new Vector3(0.5f);
             specular = new Vector3(1.0f);
             maxDistance = 25.0f;
-            isStatic = false;
-            guid = Guid.NewGuid();
+         
         }
         public SpotLight(int id, Vector3 inposition, Vector3 indirection)
         {
-            LightID = id;
-            ID = -1;
+            ID = id;
             guid = Guid.NewGuid();
-            position = inposition;
+            enabled = true;
+            
             direction = indirection;
             cutOff = 12.5f;
             outerCutOff = 15.0f;
@@ -49,68 +49,42 @@ namespace ImpunityEngine
             diffuse = new Vector3(0.5f);
             specular = new Vector3(1.0f);
             maxDistance = 25.0f;
-            isStatic = false;
         }
 
-        public override void Update()
+        public override void Update(SceneObject sceneObject)
         {
             //  base.Update();
             //do nothing
+            Vector3 forward = sceneObject.Forward();
+            SetDirection(forward);
 
-            //set the light transform in a different way, as it corresponds to a different vector in c++
+            SetPosition(sceneObject.transform.position);
         }
-
-
-        public static SpotLight FindLightByID(int id)
-        {
-            foreach (var light in Control.AllSceneObjects)
-            {
-                if (light is SpotLight)
-                {
-                    SpotLight sl = (SpotLight)light;
-                    if (sl.LightID == id)
-                        return sl;
-                }
-            }
-            throw new NullReferenceException($"Spot light ID \"{id}\" not found");
-        }
-        public static SpotLight FindLightByGuid(Guid gid)
-        {
-
-            foreach (var light in Control.AllSceneObjects)
-            {
-                if (light.guid == gid)
-                {
-                    return (SpotLight)light;
-                }
-            }
-            throw new NullReferenceException();
-        }
-
+        
         public void SetPosition(Vector3 pos)
         {
-            position = pos;
-            Bridge.SetSpotLightPosition(LightID, position);
+           // position = pos;
+            Bridge.SetSpotLightPosition(ID, pos);
         }
         public void SetDirection(Vector3 dir)
         {
             direction = dir;
-            Bridge.SetSpotLightDirection(LightID, direction);
+            Bridge.SetSpotLightDirection(ID, direction);
         }
         public void SetAmbient(Vector3 color)
         {
             ambient = color;
-            Bridge.SetSLightAmbient(LightID, ambient);
+            Bridge.SetSLightAmbient(ID, ambient);
         }
         public void SetDiffuse(Vector3 color)
         {
             diffuse = color;
-            Bridge.SetSLightDiffuse(LightID, diffuse);
+            Bridge.SetSLightDiffuse(ID, diffuse);
         }
         public void SetSpecular(Vector3 color)
         {
             specular = color;
-            Bridge.SetSLightSpecular(LightID, specular);
+            Bridge.SetSLightSpecular(ID, specular);
         }
         public void SetEnabled(bool enable)
         {
@@ -125,13 +99,13 @@ namespace ImpunityEngine
                 value = 0;
                 enabled = false;
             }
-            Bridge.SetSLightEnabled(LightID, value);
+            Bridge.SetSLightEnabled(ID, value);
         }
 
         public void SetMaxDistance(float radius)
         {
             maxDistance = radius;
-            Bridge.SetMaxDistanceSLight(LightID, radius);
+            Bridge.SetMaxDistanceSLight(ID, radius);
         }
 
         public void SetCutOff(float angle)
@@ -139,7 +113,7 @@ namespace ImpunityEngine
             cutOff = angle;
             outerCutOff = cutOff / cutOffRatio;
             //Console.WriteLine("Outer cutoff: " + outerCutOff);
-            Bridge.SetSpotLightCutOff(LightID, cutOff, outerCutOff);
+            Bridge.SetSpotLightCutOff(ID, cutOff, outerCutOff);
         }
 
 

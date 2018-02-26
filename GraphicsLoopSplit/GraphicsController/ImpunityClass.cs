@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace ImpunityEngine
 {
-    public abstract class ImpunityClass
+    public abstract class ImpunityClass : Component
     {
       //  public SceneObject sceneObject { get; set; }
-        public bool enabled = true;
+       
         public ImpunityClass() {
-          //  sceneObject = null;
+            //  sceneObject = null;
+            ID = -1;
+            enabled = true;
+            guid = Guid.NewGuid();
         }
         public ImpunityClass(SceneObject so)
         {
@@ -22,7 +25,7 @@ namespace ImpunityEngine
            // var s = Resource1.MyName;
             //Do a bunch of stuff at startup
         }
-        public virtual void Update(SceneObject sceneObject)
+        public override void Update(SceneObject sceneObject)
         {
             //do a bunch of stuff every frame
         }

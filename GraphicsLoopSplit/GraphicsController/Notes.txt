@@ -146,6 +146,16 @@ Merge branch with master to get the new local transform variables. - Done!
 
 
 
+What needs to happen since refactoring the lights:
+
+1. The sceneObject needs a getComponent method. The variables therein can then be changed freely. -DONE
+2. Components must be persisted. - DONE
+3. Impunity classes must be put in components - DONE
+4. Persistince of imps as comps - DONE
+5. cleanup of useless light manipulation code in comInterp - DONE
+6. Camera control should then be able to control the camera with a regular transform from a sceneObject!
+7. The Camera should be a component as well!
+8. Cleanup deprecated camera code
 
 
 

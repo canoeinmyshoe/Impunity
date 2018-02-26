@@ -23,18 +23,23 @@ namespace UserClasses
                 if (!asm.FullName.ToString().ToLower().Contains("userclasses"))
                     continue;
 
-                Console.WriteLine("=========***" + asm.FullName.ToString() + "***==========");
+         //       Console.WriteLine("=========***" + asm.FullName.ToString() + "***==========");
                 foreach (Type t in asm.GetTypes())
                 {
                 //      Console.WriteLine(t.FullName.ToString() + "   vs.   " +className);
                     if (t.Name.ToString() == className)
                     {
-                        Console.WriteLine("EUREKA!"); //Excellent!
+                      //  Console.WriteLine("EUREKA!"); //Excellent!
+
                         var inst = (ImpunityClass)Activator.CreateInstance(t);
+
+
                      //   inst.sceneObject = SceneMaster.SelectedSceneObject;
                         inst.Start(SceneMaster.SelectedSceneObject);
-                        SceneMaster.SelectedSceneObject.Imps.Add(inst);
-                        
+                        //   SceneMaster.SelectedSceneObject.Imps.Add(inst);
+
+
+                        SceneMaster.SelectedSceneObject.Components.Add(inst);
                         return;
                     }
 
@@ -56,11 +61,11 @@ namespace UserClasses
                 if (!asm.FullName.ToString().ToLower().Contains("userclasses"))
                     continue;
 
-                Console.WriteLine("=========***" + asm.FullName.ToString() + "***==========");
+             //   Console.WriteLine("=========***" + asm.FullName.ToString() + "***==========");
                 foreach (Type t in asm.GetTypes())
                 {
 
-                    Console.WriteLine("Adding " + t.Name + " to Type[]");
+              //      Console.WriteLine("Adding " + t.Name + " to Type[]");
                     utypes.Add(t);
                 }
             }

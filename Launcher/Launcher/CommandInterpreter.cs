@@ -15,7 +15,6 @@ using System.Collections;
 using UserClasses;
 using ImpunityEngine.Persistence;
 
-
 namespace SceneEditLauncher
 {
     class CommandInterpreter
@@ -47,6 +46,7 @@ namespace SceneEditLauncher
         delegate void _setPosition(string[] args);
         delegate void _pauseEngine(string[] args);
         delegate void _quitEditor(string[] args);
+        delegate void _testGetComponent(string[] args);
         #endregion
 
         public CommandInterpreter() {
@@ -78,18 +78,18 @@ namespace SceneEditLauncher
             Methods.Add("scene", lod); Methods.Add("load", lod);
             _saveScene sav = SaveScene;
             Methods.Add("save", sav);
-            _setCutOff cut = SetCutOff;
-            Methods.Add("cutoff", cut);
-            _setEnabled en = SetEnabled;
-            Methods.Add("enable", en); Methods.Add("setactive", en);
-            _setMaxDist dis = SetMaxDist;
-            Methods.Add("maxdist", dis); Methods.Add("maxdistance", dis);
-            _setAmbientLevel amb = SetAmbientLevel;
-            Methods.Add("amb", amb); Methods.Add("ambient", amb);
-            _setDiffuseLevel diff = SetDiffuseLevel;
-            Methods.Add("diff", diff); Methods.Add("diffuse", diff);
-            _setSpecularLevel spec = SetSpecularLevel;
-            Methods.Add("spec", spec); Methods.Add("specular", spec);
+            //_setCutOff cut = SetCutOff;
+            //Methods.Add("cutoff", cut);
+            //_setEnabled en = SetEnabled;
+            //Methods.Add("enable", en); Methods.Add("setactive", en);
+            //_setMaxDist dis = SetMaxDist;
+            //Methods.Add("maxdist", dis); Methods.Add("maxdistance", dis);
+            //_setAmbientLevel amb = SetAmbientLevel;
+            //Methods.Add("amb", amb); Methods.Add("ambient", amb);
+            //_setDiffuseLevel diff = SetDiffuseLevel;
+            //Methods.Add("diff", diff); Methods.Add("diffuse", diff);
+            //_setSpecularLevel spec = SetSpecularLevel;
+            //Methods.Add("spec", spec); Methods.Add("specular", spec);
             _showList lis = ShowList;
             Methods.Add("list", lis);
             _create crt = Create;
@@ -106,6 +106,8 @@ namespace SceneEditLauncher
             Methods.Add("pause", pe); Methods.Add("p", pe);
             _quitEditor qe = QuitEditor;
             Methods.Add("quit", qe); Methods.Add("q", qe);
+            _testGetComponent tgc = GetComponent;
+            Methods.Add("getcomponent", tgc); Methods.Add("getcomp", tgc);
         }
    
         public void ProcessInput(string input)
@@ -138,6 +140,233 @@ namespace SceneEditLauncher
         }
 
         #region Methods referred to by the delegates
+
+
+        private void ConfigureDirectionalLight(string[] args)
+        {
+            string key = args[1].ToLower();//this would have been dlight or directionallight
+            string varType = args[2].ToLower();
+            string firstValue = args[3].ToLower();
+
+            if (SceneMaster.SelectedSceneObject == null)
+                return;
+            DirectionalLight sl;
+            try
+            {
+                sl = (DirectionalLight)SceneMaster.SelectedSceneObject.GetComponent(typeof(DirectionalLight));
+            }
+            catch { return; }
+
+            if (varType == "amb" || varType == "ambient")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                sl.SetAmbient(color);
+            }
+            else if (varType == "diff" || varType == "diffuse")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                sl.SetDiffuse(color);
+            }
+            else if (varType == "spec" || varType == "specular")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                sl.SetSpecular(color);
+            }
+            else if (varType == "enabled" || varType == "setactive")
+            {
+                try
+                {
+                    bool value = false;
+                    if (firstValue == "true")
+                    {
+                        value = true;
+                    }
+                    else
+                    {
+                        value = false;
+                    }
+                    sl.SetEnabled(value);
+                }
+                catch { return; }
+            }
+        }
+        private void ConfigureSpotLight(string[] args)
+        {
+            string key = args[1].ToLower();//this would have been slight or spotlight
+            string varType = args[2].ToLower();
+            string firstValue = args[3].ToLower();
+
+            if (SceneMaster.SelectedSceneObject == null)
+                return;
+            SpotLight sl;
+            try
+            {
+                sl = (SpotLight)SceneMaster.SelectedSceneObject.GetComponent(typeof(SpotLight));
+            }
+            catch { return; }
+
+            if (varType == "amb" || varType == "ambient")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                sl.SetAmbient(color);
+            }
+            else if (varType == "diff" || varType == "diffuse")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                sl.SetDiffuse(color);
+            }
+            else if (varType == "spec" || varType == "specular")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                sl.SetSpecular(color);
+            }
+            else if (varType == "distance" || varType == "dist" || varType == "maxdistance" || varType == "maxdist")
+            {
+                try
+                {
+                    float x = Convert.ToSingle(firstValue);
+                    sl.SetMaxDistance(x);
+                }
+                catch { return; }
+            }
+            else if (varType == "cutoff" || varType == "angle" || varType == "spread")
+            {
+                try
+                {
+                    float x = Convert.ToSingle(firstValue);
+                    sl.SetCutOff(x);
+                }
+                catch { return; }
+            }
+            else if (varType == "enabled" || varType == "setactive" || varType == "enable")
+            {
+                try
+                {
+                    bool value = false;
+                    if (firstValue == "true" ||firstValue == "t")
+                    {
+                        value = true;
+                    }
+                    else
+                    {
+                        value = false;
+                    }
+                    sl.SetEnabled(value);
+                }
+                catch { return; }
+            }
+        }
+        void GetComponent(string[] args)
+        {
+            //args[0] getcomponent
+            //args[1] component type
+            //args[2] the variable to change
+            //args[3 - 6] the value to which the variable is to be changed
+
+            //eg.  "getcomp plight amb .1 .1 .1"
+            if (3 > args.Length - 1)
+                return;
+            if (SceneMaster.SelectedSceneObject == null)
+                return;
+            Console.WriteLine("Getting component of type " + args[1]);
+
+            string key = args[1].ToLower();
+            string varType = args[2].ToLower();
+            string firstValue = args[3].ToLower();
+            
+            if (key == "plight" || key == "pointlight")
+            {
+                ConfigurePointLight(args);
+            }
+            else if (key == "slight" || key == "spotlight")
+            {
+                ConfigureSpotLight(args);
+            }
+            else if (key == "dlight" || key == "directionallight")
+            {
+                ConfigureDirectionalLight(args);
+            }
+        }
+        private void ConfigurePointLight(string[] args)
+        {
+            string key = args[1].ToLower();
+            string varType = args[2].ToLower();
+            string firstValue = args[3].ToLower();
+
+            if (varType == "amb" || varType == "ambient")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                SceneMaster.SetPointLightAmbient(color);
+            }
+            else if (varType == "diff" || varType == "diffuse")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                SceneMaster.SetPointLightDiffuse(color);
+            }
+            else if (varType == "spec" || varType == "specular")
+            {
+                if (6 > args.Length)
+                    return;
+                Vector3 color = StringToVec3(args[3], args[4], args[5]);
+                SceneMaster.SetPointLightSpecular(color);
+            }
+            else if (varType == "distance" || varType == "dist" || varType == "maxdistance" || varType == "maxdist")
+            {
+                try
+                {
+                    float x = Convert.ToSingle(firstValue);
+                    PointLight p = (PointLight)SceneMaster.SelectedSceneObject.GetComponent(typeof(PointLight));
+                    p.SetMaxDistance(x);
+                }
+                catch { return; }
+            }
+            else if (varType == "enabled" || varType == "setactive")
+            {
+                try
+                {
+                    bool value = false;
+                    if (firstValue == "true")
+                    {
+                        value = true;
+                    }
+                    else {
+                        value = false;
+                    }
+                    PointLight p = (PointLight)SceneMaster.SelectedSceneObject.GetComponent(typeof(PointLight));
+                    p.SetEnabled(value);
+                }
+                catch { return; }
+            }
+        }
+        private Vector3 StringToVec3(string ex, string wy, string ze)
+        {
+            float x = 0; float y = 0; float z = 0;
+            try
+            {
+                x = Convert.ToSingle(ex); y = Convert.ToSingle(wy);z = Convert.ToSingle(ze);
+                return new Vector3(x, y, z);
+            }
+            catch (Exception)
+            {
+                throw new FormatException("Failed to convert string to vector3");
+            }
+        }
         void QuitEditor(string[] args) {
             Console.WriteLine("Have a nice life, bro.");
             CommandLineEditor.shouldRun = false;
@@ -168,31 +397,7 @@ namespace SceneEditLauncher
 
             //we need to do this from UserClasses!
             AssemblyManager.ListAssemblies(className);
-
-            #region deprecated assembly search
-            //foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
-            //{
-
-            //    if (asm.FullName.ToString().ToLower().Contains("mscorlib") || asm.FullName.ToString().ToLower().Contains("system") ||
-            //        asm.FullName.ToString().ToLower().Contains("microsoft"))
-            //        continue;
-
-            //    Console.WriteLine("=========***" + asm.FullName.ToString() + "***==========");
-            //    foreach (Type t in asm.GetTypes())
-            //    {
-            //     //   Console.WriteLine(t.FullName.ToString());
-            //        if (t.Name.ToString() == className)
-            //        {
-            //            Console.WriteLine("EUREKA!"); //Excellent!
-            //            var inst = (ImpunityClass)Activator.CreateInstance(t);
-            //            SceneMaster.SelectedSceneObject.Imps.Add(inst);
-            //            inst.Start();
-            //        //    return;
-            //        }
-
-            //    }
-            //}
-            #endregion
+            
         }
         public object GetInstance(string strFullyQualifiedName)
         {
@@ -297,7 +502,6 @@ namespace SceneEditLauncher
             catch { return; }
             SceneMaster.SetMaterialTiling(x, y);
         }
-        //Swaps diffuse map of selected object, if possible
         void SwapDiffuseMap(string[] args)
         {
             int index = 0;
@@ -452,31 +656,15 @@ namespace SceneEditLauncher
             int index = 0;
             //we are expecting 
             //args[index + 1] ---- ID of sceneObject to select
-            //args[index + 2] ---- type of sceneObject to select
-            if (index + 2 > args.Length - 1)
+            //args[index + 2] ---- type of sceneObject to select - DEPRECATED
+            if (index + 1 > args.Length - 1)
                 return;
             Console.WriteLine("Selecting scene object: " + args[index + 1]);
             int result;
             if (!int.TryParse(args[index + 1], out result))
                 return;
-            string key = args[index + 2].ToLower();
-            if (key == "sceneobject" || key == "so")
-            {
-                //tell/get selection to c++
-                SceneMaster.SelectSceneObject(result, (int)SelectionTypes.regular);
-            }
-            else if (key == "pointlight" || key == "plight")
-            {
-                SceneMaster.SelectSceneObject(result, (int)SelectionTypes.pointlight);
-            }
-            else if (key == "spotlight" || key == "slight")
-            {
-                SceneMaster.SelectSceneObject(result, (int)SelectionTypes.spotlight);
-            }
-            else if (key == "directionallight" || key == "dlight")
-            {
-                SceneMaster.SelectSceneObject(result, (int)SelectionTypes.directionallight);
-            }
+
+            SceneMaster.SelectSceneObject(result);
         }
 
         void LoadScene(string[] args)
@@ -502,270 +690,7 @@ namespace SceneEditLauncher
             DIskManager.SaveSceneAs(args[index + 1]);
 
         }
-        void SetCutOff(string[] args)
-        {
-            int index = 0;
-            //we are expecting 
-            //args[index + 1] -- spotLight ID
-            //args[index + 2] -- angle
-
-            if (index + 2 > args.Length - 1)
-                return;
-
-            int result;
-            if (!int.TryParse(args[index + 1], out result))
-                return;
-            float angle = 0;
-            try { angle = Convert.ToSingle(args[index + 2]); } catch { return; }
-
-            try
-            {
-                SpotLight.FindLightByID(result).SetCutOff(angle);
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Failed to set spot light cutOff");
-            }
-        }
-        void SetEnabled(string[] args)
-        {
-            int index = 0;
-            //we're expecting either an ID or a name args[index + 1]
-            //followed by a true or false args[index + 2]
-            //followed by optional further clarification of light type args[index + 3]
-
-
-            if (index + 2 > args.Length - 1) { Console.WriteLine("ERROR: INVALID COMMAND"); return; }
-
-
-            //the user may have specied a light type(or other) and the end of this line
-            Console.WriteLine("ID or Name: " + args[index + 1]);
-
-            bool useID = false;
-            int result;
-            if (int.TryParse(args[index + 1], out result))
-            {
-                useID = true;
-            }
-            bool enableState = false;
-            if (args[index + 2].ToLower() == "true" || args[index + 2].ToLower() == "t")
-            {
-                enableState = true;
-            }
-
-            if (index + 3 <= args.Length - 1)
-            {
-                if (args[index + 3].ToLower() == "pointlight" || args[index + 3].ToLower() == "plight")
-                {
-                    //set the pLight position...which is done in the class itself, if found
-                    Console.WriteLine("Setting point light enabled=" + enableState.ToString());
-                    try
-                    {
-                        if (useID == true)
-                        {
-                            PointLight plight = PointLight.FindLightByID(result);
-                            plight.SetEnabled(enableState);
-                            //  PointLight.FindLightByID(result).SetPosition(position);
-                        }
-                    }
-                    catch (Exception ERR) { Console.WriteLine("The Point light " + (result) + " not found: " + ERR.Message); }
-                    return;
-                }
-                else if (args[index + 3].ToLower() == "directionallight" || args[index + 3].ToLower() == "dlight")
-                {
-                    Console.WriteLine("Setting enable directional light");
-                    if (useID == true)
-                    {
-                        try
-                        {
-                            DirectionalLight dlight = DirectionalLight.FindLightByID(result);
-                            //   dlight.SetDirection(position);
-                            dlight.SetEnabled(enableState);
-                        }
-                        catch (NullReferenceException nex) { Console.WriteLine(nex.Message); }
-                    }
-                    return;
-                }
-                else if (args[index + 3].ToLower() == "spotlight" || args[index + 3].ToLower() == "slight")
-                {
-                    Console.WriteLine("Setting enable spotlight");
-                    try
-                    {
-                        SpotLight spot = SpotLight.FindLightByID(result);
-                        //   spot.SetPosition(position);
-                        spot.SetEnabled(enableState);
-                    }
-                    catch (NullReferenceException nex) { Console.WriteLine(nex.Message); }
-                    return;
-                }
-            }
-
-            return;
-
-            if (useID == true)
-            {
-                //   SetByID(result, position);
-            }
-            else
-            {
-                // SetByName(args[index], position);
-            }
-
-        }
-
-        void SetMaxDist(string[] args)
-        {
-            int index = 0;
-            //we are expecting (after index) 
-            //args[index + 1]  - ID of light
-            //args[index + 2] - new ambient value
-            //args[index + 3} - light type to search for
-            if (index + 3 > args.Length - 1)
-                return;
-            int result;
-            if (!int.TryParse(args[index + 1], out result))
-                return;
-            float x = 0;
-            try
-            {
-                x = Convert.ToSingle(args[index + 2]);
-            }
-            catch { return; }
-
-            string key = args[3].ToLower();
-            if (key == "pointlight" || key == "plight")
-            {
-                try { PointLight.FindLightByID(result).SetMaxDistance(x); } catch { Console.WriteLine("Failed to set maxdist point light level."); }
-                return;
-            }
-            else if (key == "spotlight" || key == "slight")
-            {
-                try { SpotLight.FindLightByID(result).SetMaxDistance(x); } catch { }
-                return;
-            }
-            else if (key == "directionallight" || key == "dlight")
-            {
-                Console.WriteLine("Directional lights do not have a max distance property");
-                //    try { DirectionalLight.FindLightByID(result).SetAmbient(ambient); } catch { }
-                return;
-            }
-        }
-
-        void SetAmbientLevel(string[] args)
-        {
-            int index = 0;
-            //we are expecting (after index) 
-            //args[index + ]  - ID of light
-            //args[index + 2-5] - new ambient value
-            //args[index + 6] - type of light
-            if (index + 5 > args.Length - 1)
-                return;
-            int result;
-            if (!int.TryParse(args[index + 1], out result))
-                return;
-            float x = 0, y = 0, z = 0;
-            try
-            {
-                x = Convert.ToSingle(args[index + 2]);
-                y = Convert.ToSingle(args[index + 3]);
-                z = Convert.ToSingle(args[index + 4]);
-            }
-            catch { return; }
-            Vector3 ambient = new Vector3(x, y, z);
-            string key = args[5].ToLower();
-            if (key == "pointlight" || key == "plight")
-            {
-                try { PointLight.FindLightByID(result).SetAmbient(ambient); } catch { Console.WriteLine("Failed to set ambient point light level."); }
-                return;
-            }
-            else if (key == "spotlight" || key == "slight")
-            {
-                try { SpotLight.FindLightByID(result).SetAmbient(ambient); } catch { }
-                return;
-            }
-            else if (key == "directionallight" || key == "dlight")
-            {
-                try { DirectionalLight.FindLightByID(result).SetAmbient(ambient); } catch { }
-                return;
-            }
-        }
-        void SetDiffuseLevel(string[] args)
-        {
-            int index = 0;
-            //we are expecting (after index) 
-            //args[index + ]  - ID of light
-            //args[index + 2-5] - new ambient value
-            //args[index + 6] - type of light
-            if (index + 5 > args.Length - 1)
-                return;
-            int result;
-            if (!int.TryParse(args[index + 1], out result))
-                return;
-            float x = 0, y = 0, z = 0;
-            try
-            {
-                x = Convert.ToSingle(args[index + 2]);
-                y = Convert.ToSingle(args[index + 3]);
-                z = Convert.ToSingle(args[index + 4]);
-            }
-            catch { return; }
-            Vector3 color = new Vector3(x, y, z);
-            string key = args[5].ToLower();
-            if (key == "pointlight" || key == "plight")
-            {
-                try { PointLight.FindLightByID(result).SetDiffuse(color); } catch { Console.WriteLine("Failed to set diffuse point light level."); }
-                return;
-            }
-            else if (key == "spotlight" || key == "slight")
-            {
-                try { SpotLight.FindLightByID(result).SetDiffuse(color); } catch { }
-                return;
-            }
-            else if (key == "directionallight" || key == "dlight")
-            {
-                try { DirectionalLight.FindLightByID(result).SetDiffuse(color); } catch { }
-                return;
-            }
-        }
-        void SetSpecularLevel( string[] args)
-        {
-            int index = 0;
-            //we are expecting (after index) 
-            //args[index + ]  - ID of light
-            //args[index + 2-5] - new ambient value
-            //args[index + 6] - type of light
-            if (index + 5 > args.Length - 1)
-                return;
-            int result;
-            if (!int.TryParse(args[index + 1], out result))
-                return;
-            float x = 0, y = 0, z = 0;
-            try
-            {
-                x = Convert.ToSingle(args[index + 2]);
-                y = Convert.ToSingle(args[index + 3]);
-                z = Convert.ToSingle(args[index + 4]);
-            }
-            catch { return; }
-            Vector3 color = new Vector3(x, y, z);
-            string key = args[5].ToLower();
-            if (key == "pointlight" || key == "plight")
-            {
-                try { PointLight.FindLightByID(result).SetSpecular(color); } catch { Console.WriteLine("Failed to set specular point light level."); }
-                return;
-            }
-            else if (key == "spotlight" || key == "slight")
-            {
-                try { SpotLight.FindLightByID(result).SetSpecular(color); } catch { }
-                return;
-            }
-            else if (key == "directionallight" || key == "dlight")
-            {
-                try { DirectionalLight.FindLightByID(result).SetSpecular(color); } catch { }
-                return;
-            }
-        }
-
+        
 
         void ShowList( string[] args)
         {
@@ -793,8 +718,8 @@ namespace SceneEditLauncher
                 {
                     if (light is PointLight)
                     {
-                        PointLight pl = (PointLight)light;
-                        Console.WriteLine("Point Light ID: " + pl.LightID + "==Guid:" + pl.guid);
+                   //     PointLight pl = (PointLight)light;
+                   //     Console.WriteLine("Point Light ID: " + pl.LightID + "==Guid:" + pl.guid);
                     }
                 }
             }
@@ -804,8 +729,8 @@ namespace SceneEditLauncher
                 {
                     if (light is DirectionalLight)
                     {
-                        DirectionalLight pl = (DirectionalLight)light;
-                        Console.WriteLine("Directional Light ID: " + pl.LightID + "--Guid:" + pl.guid);
+                   //     DirectionalLight pl = (DirectionalLight)light;
+                 //       Console.WriteLine("Directional Light ID: " + pl.LightID + "--Guid:" + pl.guid);
                     }
                 }
             }
@@ -815,8 +740,8 @@ namespace SceneEditLauncher
                 {
                     if (light is SpotLight)
                     {
-                        SpotLight pl = (SpotLight)light;
-                        Console.WriteLine("Spot Light ID: " + pl.LightID + "--Guid:" + pl.guid);
+                        //SpotLight pl = (SpotLight)light;
+                        //Console.WriteLine("Spot Light ID: " + pl.LightID + "--Guid:" + pl.guid);
                     }
                 }
             }
@@ -848,40 +773,15 @@ namespace SceneEditLauncher
                 Console.WriteLine("Creating spot light.");
                 SceneMaster.CreateSpotLight();
             }
-            else if (key == "model" || key == "mdl")
-            {
-                Console.WriteLine("Creating model");
-                //LoadModel(index, args);
-            }
-            else if (key == "texture" || key == "image" || key == "img" || key == "tex")
-            {
 
-                Console.WriteLine("Loading texture...");
-             //   LoadTexture(index, args);
-            }
-            else if (key == "cubemap" || key == "skybox")
-            {
-                Console.WriteLine("Creating cube map...");
-                //CreateCubeMap(index, args);
-            }
-            else if (key == "sceneobject" || key == "so") {
-                CreateEmptySceneObject();
-            }
         }
+
 
         void CreateCubeMap(string[] args) {
             //if (index + 1 > args.Length - 1)
             //    return;
 
             SceneMaster.CreateCubeMap();
-        }
-        void CreateEmptySceneObject()
-        {
-
-            SceneObject so = new SceneObject(true);
-            so.Name = "Empty SceneObject";
-            Control.AllSceneObjects.Add(so);
-            Console.WriteLine("New scene object created.");
         }
         void LoadTexture(string[] args)
         {
@@ -953,8 +853,8 @@ namespace SceneEditLauncher
                     {
                         if (useID == true)
                         {
-                            PointLight plight = PointLight.FindLightByID(result);
-                            plight.SetPosition(position);
+                       //     PointLight plight = PointLight.FindLightByID(result);
+                            //plight.SetPosition(position);
                             //  PointLight.FindLightByID(result).SetPosition(position);
                         }
                     }
@@ -968,8 +868,8 @@ namespace SceneEditLauncher
                     {
                         try
                         {
-                            DirectionalLight dlight = DirectionalLight.FindLightByID(result);
-                            dlight.SetDirection(position);
+                   //         DirectionalLight dlight = DirectionalLight.FindLightByID(result);
+                      //      dlight.SetDirection(position);
                         }
                         catch (NullReferenceException nex) { Console.WriteLine(nex.Message); }
                     }
@@ -980,8 +880,8 @@ namespace SceneEditLauncher
                     Console.WriteLine("Setting position of spotlight");
                     try
                     {
-                        SpotLight spot = SpotLight.FindLightByID(result);
-                        spot.SetPosition(position);
+            //            SpotLight spot = SpotLight.FindLightByID(result);
+              //          spot.SetPosition(position);
                     }
                     catch (NullReferenceException nex) { Console.WriteLine(nex.Message); }
                     return;
@@ -1021,20 +921,9 @@ namespace SceneEditLauncher
 
         }
 
-        void SpaghettiScene()
-        {
-            Control c = new Control();
-            OpenGLExampleController ogl = new OpenGLExampleController();
-            ogl.DrawObjects();
-        }
+
         #endregion
 
     }
-    enum SelectionTypes
-    {
-        regular = 0,
-        pointlight = 1,
-        spotlight = 2,
-        directionallight = 3
-    }
+  
 }

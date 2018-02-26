@@ -243,7 +243,7 @@ namespace ImpunityEngine.Interoperability
 
         #region SceneObject Selection
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SelectSceneObject(int index, int type);
+        public static extern int SelectSceneObject(int index);
         #endregion
 
 
@@ -352,6 +352,10 @@ namespace ImpunityEngine.Interoperability
 
         [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int GetKey(StringBuilder sb);
+
+
+        [DllImport("graphicsPipeline.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int CreateEmptySceneObject();
 
 
     }
